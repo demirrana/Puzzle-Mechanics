@@ -45,11 +45,13 @@ public class Interactable : MonoBehaviour
 
         if (!toggledOn)
         {
+            PlayerScriptsManager.Instance.DisableInteractionScript();
             animator.SetBool(isGoing, true);
             animator.SetBool(isComing, false);
         }
         else
         {
+            PlayerScriptsManager.Instance.DisableInteractionScript();
             animator.SetBool(isComing, true);
             animator.SetBool(isGoing, false);
         }
