@@ -1,0 +1,34 @@
+{
+  "days": [
+    {
+      "day": 1,
+      "dialogues": [
+        {
+          "speaker": "Eylem",
+          "text": "Burada tek başına mısın?",
+          "isThought": false
+        },
+        {
+          "speaker": "Child",
+          "text": "Evet...",
+          "isThought": false
+        },
+        {
+          "speaker": "Eylem",
+          "text": "(Neden acaba?)",
+          "isThought": true
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "dialogues": [
+        {
+          "speaker": "Child",
+          "text": "Nereye gidiyoruz?",
+          "isThought": false
+        }
+      ]
+    }
+  ]
+}
