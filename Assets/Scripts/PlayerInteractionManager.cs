@@ -8,7 +8,7 @@ public class PlayerInteractionManager : MonoBehaviour
     public event EventHandler OnAnyObjectApproached;
     public event EventHandler<Interactable> OnAnyObjectInteracted;
 
-    private float proximityThreshold = 0.3f;
+    [SerializeField] private float proximityThreshold = 1f;
 
     private void Awake()
     {
