@@ -5,6 +5,17 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     public event EventHandler OnGotInteracted;
+    
+    private Animator animator;
+
+    private bool toggledOn = false;
+    private String isGoing = "isGoing";
+    private String isComing = "isComing";
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();   
+    }
 
     private void Start()
     {
@@ -31,5 +42,18 @@ public class Interactable : MonoBehaviour
     public virtual void GetInteracted_Interactable(object sender, EventArgs e)
     {
         Debug.Log("This object is interacted by the player.");
+
+        if (!toggledOn)
+        {
+            animator.SetBool(isGoing, true);
+            animator.SetBool(isComing, false);
+        }
+        else
+        {
+            animator.SetBool(isComing, true);
+            animator.SetBool(isGoing, false);
+        }
+
+        toggledOn = !toggledOn;
     }
 }
