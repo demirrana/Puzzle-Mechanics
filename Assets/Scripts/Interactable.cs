@@ -9,8 +9,8 @@ public class Interactable : MonoBehaviour
     private Animator animator;
 
     private bool toggledOn = false;
-    private String isGoing = "isGoing";
-    private String isComing = "isComing";
+    private const String IsGoing = "IsGoing";
+    private const String IsComing = "IsComing";
 
     private void Awake()
     {
@@ -39,21 +39,18 @@ public class Interactable : MonoBehaviour
         OnGotInteracted?.Invoke(this, null);
     }
 
-    public virtual void GetInteracted_Interactable(object sender, EventArgs e)
+    protected virtual void GetInteracted_Interactable(object sender, EventArgs e)
     {
         Debug.Log("This object is interacted by the player.");
+        PlayerScriptsManager.Instance.DisableInteractionScript();
 
         if (!toggledOn)
         {
-            PlayerScriptsManager.Instance.DisableInteractionScript();
-            animator.SetBool(isGoing, true);
-            animator.SetBool(isComing, false);
+            animator.SetTrigger(IsGoing);
         }
         else
         {
-            PlayerScriptsManager.Instance.DisableInteractionScript();
-            animator.SetBool(isComing, true);
-            animator.SetBool(isGoing, false);
+            animator.SetTrigger(IsComing);
         }
 
         toggledOn = !toggledOn;
