@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
@@ -7,8 +8,14 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
+        //Might be a problem since PlayerInteractionManager is disabled and enabled along the game!!!!!!!!
         PlayerInteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
         OnGotInteracted += GetInteracted_Interactable;
+    }
+
+    public void GetInteracted()
+    {
+        OnGotInteracted?.Invoke(this, null);
     }
 
     public bool CanObjectBeInteracted()
