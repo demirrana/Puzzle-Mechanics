@@ -7,8 +7,8 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
-        PlayerInteractionManager.Instance.OnAnyObjectInteracted += ObjectInteracted_PlayerInteractionManager;
-        OnGotInteracted += GetInteracted;
+        PlayerInteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
+        OnGotInteracted += GetInteracted_Interactable;
     }
 
     public bool CanObjectBeInteracted()
@@ -16,12 +16,12 @@ public class Interactable : MonoBehaviour
         return true;
     }
 
-    protected virtual void ObjectInteracted_PlayerInteractionManager(object sender, Interactable interactableObject)
+    protected virtual void InteractableInteracted_PlayerInteractionManager(object sender, Interactable interactableObject)
     {
         OnGotInteracted?.Invoke(this, null);
     }
 
-    protected virtual void GetInteracted(object sender, EventArgs e)
+    public virtual void GetInteracted_Interactable(object sender, EventArgs e)
     {
         Debug.Log("This object is interacted by the player.");
     }
