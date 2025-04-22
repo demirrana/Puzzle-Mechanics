@@ -19,9 +19,8 @@ public class PlayerInteractionManager : MonoBehaviour
 
     private void Start()
     {
-        OnAnyObjectColliderApproached += AnyObjectApproached_PlayerInteractionManager;
+        OnAnyObjectColliderApproached += AnyObjectColliderApproached_PlayerInteractionManager;
         OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
-        OnInteractionKeyPressed += InteractionKeyPressed_PlayerInteractionManager;
     }
 
     private void Update()
@@ -41,12 +40,12 @@ public class PlayerInteractionManager : MonoBehaviour
         }
     }
 
-    private void AnyObjectApproached_PlayerInteractionManager(object sender, Collider collider)
+    private void AnyObjectColliderApproached_PlayerInteractionManager(object sender, Collider collider)
     {
         GetAnyObjectApproached(collider);
     }
 
-    //Gets the Interactable object near and returns it
+    //Gets the Interactable object near and invokes the event OnInteractableApproached with it
     private void GetAnyObjectApproached(Collider hitCollider)
     {
         //Collider hitCollider = GetAnyColliderApproached();
@@ -81,11 +80,6 @@ public class PlayerInteractionManager : MonoBehaviour
         }
 
         return false;
-    }
-
-    private void InteractionKeyPressed_PlayerInteractionManager(object sender, EventArgs e)
-    {
-        OnInteractableInteracted?.Invoke(this, null);
     }
 
     private void SetInstance()
