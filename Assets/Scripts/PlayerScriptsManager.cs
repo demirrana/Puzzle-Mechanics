@@ -2,8 +2,15 @@ using UnityEngine;
 
 public class PlayerScriptsManager : MonoBehaviour
 {
+    public static PlayerScriptsManager Instance { get; private set; }
+
     private PlayerMovementManager playerMovementManager;
     private PlayerInteractionManager playerInteractionManager;
+
+    private void Awake()
+    {
+        SetInstance();
+    }
 
     private void Start()
     {
@@ -51,5 +58,14 @@ public class PlayerScriptsManager : MonoBehaviour
     public void EnableInteractionScript()
     {
         playerInteractionManager.enabled = true;
+    }
+
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
     }
 }
