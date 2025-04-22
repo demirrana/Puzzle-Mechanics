@@ -5,12 +5,12 @@ public class PlayerInteractionManager : MonoBehaviour
 {
     public static PlayerInteractionManager Instance { get; private set; }
 
-    public event EventHandler<Collider> OnAnyObjectColliderApproached;
+    public event EventHandler<Collider> OnAnObjectColliderApproached;
     public event EventHandler<Interactable> OnInteractableApproached;
-    public event EventHandler OnInteractionKeyPressed;
+    public event EventHandler OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<Interactable> OnInteractableInteracted;
 
-    [SerializeField] private float proximityThreshold = 1f;
+    [SerializeField] private float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
 
     private void Awake()
     {
@@ -19,34 +19,34 @@ public class PlayerInteractionManager : MonoBehaviour
 
     private void Start()
     {
-        OnAnyObjectColliderApproached += AnyObjectColliderApproached_PlayerInteractionManager;
+        OnAnObjectColliderApproached += AnObjectColliderApproached_PlayerInteractionManager;
         OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
     }
 
     private void Update()
     {
-        GetAnyColliderApproached();
+        DetectAnObjectColliderApproached();
     }
 
     //Raycast should be detecting all the objects which are interactable and along the height of the character!!
-    private void GetAnyColliderApproached()
+    private void DetectAnObjectColliderApproached()
     {
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward; //I might have to use parent's forward vector
         int layerMask = LayerMask.GetMask("Interactable"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (Physics.Raycast(origin, direction, out RaycastHit hitInfo, proximityThreshold, layerMask))
         {
-            OnAnyObjectColliderApproached?.Invoke(this, hitInfo.collider);
+            OnAnObjectColliderApproached?.Invoke(this, hitInfo.collider);
         }
     }
 
-    private void AnyObjectColliderApproached_PlayerInteractionManager(object sender, Collider collider)
+    private void AnObjectColliderApproached_PlayerInteractionManager(object sender, Collider collider)
     {
-        GetAnyObjectApproached(collider);
+        DetectAnInteractableApproached(collider);
     }
 
     //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    private void GetAnyObjectApproached(Collider hitCollider)
+    private void DetectAnInteractableApproached(Collider hitCollider)
     {
         //Collider hitCollider = GetAnyColliderApproached();
         if (hitCollider != null)
