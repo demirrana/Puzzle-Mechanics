@@ -15,6 +15,11 @@ public class PlayerInteractionManager : MonoBehaviour
         SetInstance();  
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         GetAnyObjectApproached();
@@ -45,6 +50,7 @@ public class PlayerInteractionManager : MonoBehaviour
             Interactable interactableObject = hitObject.GetComponent<Interactable>();
             if (interactableObject != null)
             {
+                Debug.Log("Object near and its name is:" + interactableObject.name);
                 return interactableObject;
             }
         }
