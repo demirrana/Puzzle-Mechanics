@@ -2299,6 +2299,7 @@ GameObject:
   - component: {fileID: 1860901267}
   - component: {fileID: 1860901271}
   - component: {fileID: 1860901272}
+  - component: {fileID: 1860901273}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
@@ -2389,7 +2390,7 @@ Transform:
   m_GameObject: {fileID: 1860901266}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04817873, y: 0.4, z: 10.011043}
+  m_LocalPosition: {x: -0.04817873, y: 0.4, z: 10.01104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2429,6 +2430,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1860901273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860901266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b8e1b2dbc5d324fbfade3bbeeecb40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1861728847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2549,6 +2562,7 @@ GameObject:
   - component: {fileID: 1868460031}
   - component: {fileID: 1868460032}
   - component: {fileID: 1868460033}
+  - component: {fileID: 1868460034}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2611,6 +2625,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   proximityThreshold: 1
+--- !u!114 &1868460034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868460029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f1117f449d6624080165bea446a516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997342647
 GameObject:
   m_ObjectHideFlags: 0
