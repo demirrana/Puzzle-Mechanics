@@ -3114,6 +3114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2030912846}
+  - component: {fileID: 2030912847}
   m_Layer: 5
   m_Name: InteractionPanel
   m_TagString: Untagged
@@ -3142,6 +3143,20 @@ RectTransform:
   m_AnchoredPosition: {x: 780, y: 350}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2030912847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030912845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd2267a888de6740a9ea21ddbc2f2f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionPanelBackground: {fileID: 558324389}
+  interactionKeyText: {fileID: 839198081}
 --- !u!1 &2093601006
 GameObject:
   m_ObjectHideFlags: 0
