@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OnAnimationsExit : MonoBehaviour
+public class OnAnimationsFinish : MonoBehaviour
 {
     public void EnablePlayerInteraction()
     {
