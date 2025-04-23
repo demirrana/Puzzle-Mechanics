@@ -1,17 +1,20 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
     public static PlayerInteractionManager Instance { get; private set; }
 
-    public event EventHandler<Collider> OnAnObjectColliderApproached;
+    public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable> OnInteractableApproached;
     public event EventHandler OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<Interactable> OnInteractableInteracted;
 
     [SerializeField] private float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
+    [SerializeField] private float playerHeight = 1.67f; //Can be moved to another script
+    [SerializeField] private int rayCount = 5;
 
     private void Awake()
     {
@@ -20,7 +23,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
     private void Start()
     {
-        OnAnObjectColliderApproached += AnObjectColliderApproached_PlayerInteractionManager;
+        OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager;
         OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
     }
 
@@ -29,43 +32,84 @@ public class PlayerInteractionManager : MonoBehaviour
         DetectAnObjectColliderApproached();
     }
 
-    //Raycast should be detecting all the objects which are interactable and along the height of the character!!
+    //5 rays are cast along the height of the player to detect more than one objects near if there are any
     private void DetectAnObjectColliderApproached()
     {
-        Vector3 origin = transform.position;
+        Vector3 rayOriginBottom = transform.position;
+        Vector3 rayOriginTop = transform.position + new Vector3(0f, playerHeight, 0f);
         Vector3 direction = transform.forward; //I might have to use parent's forward vector
-        //int layerMask = LayerMask.GetMask("Interactable"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (Physics.Raycast(origin, direction, out RaycastHit hitInfo, proximityThreshold))
+        
+        List<Vector3> rayOrigins = new();
+
+        float differenceInY = (rayOriginTop.y - rayOriginBottom.y) / (rayCount - 1);
+
+        for (int i = 0; i < rayCount; i++)
         {
-            OnAnObjectColliderApproached?.Invoke(this, hitInfo.collider);
+            float currentY = rayOriginBottom.y + i * differenceInY;
+            rayOrigins.Add(new Vector3(rayOriginBottom.x, currentY, rayOriginBottom.z));
         }
-        else
+
+        List<Collider> hitColliders = new List<Collider>();  
+
+        foreach (Vector3 rayOrigin in rayOrigins)
         {
-            OnNoInteractableNear?.Invoke(this, null);
+            if (Physics.Raycast(rayOrigin, direction, out RaycastHit hitInfo, proximityThreshold))
+            {
+                if (!hitColliders.Contains(hitInfo.collider))
+                {
+                    hitColliders.Add(hitInfo.collider);
+                }
+            }
+        }
+
+        switch (hitColliders.Count)
+        {
+            case 0:
+                OnNoInteractableNear?.Invoke(this, null);
+                break;
+            default:
+                OnObjectCollidersApproached?.Invoke(this, hitColliders);
+                break;
         }
     }
 
-    private void AnObjectColliderApproached_PlayerInteractionManager(object sender, Collider collider)
+    private void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
     {
-        DetectAnInteractableApproached(collider);
+        DetectAnInteractableApproached(colliderList);
     }
 
     //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    private void DetectAnInteractableApproached(Collider hitCollider)
+    private void DetectAnInteractableApproached(List<Collider> colliderList)
     {
-        //Collider hitCollider = GetAnyColliderApproached();
-        if (hitCollider != null)
-        {
-            GameObject hitObject = hitCollider.gameObject;
+        List<Interactable> interactableObjects = new();
 
-             //Making sure the object is an interactable one
-            Interactable interactableObject = hitObject.GetComponent<Interactable>();
-            if (interactableObject != null)
+        foreach (Collider collider in colliderList)
+        {
+            if (collider != null)
             {
-                //Debug.Log("Object near and its name is:" + interactableObject.name);
-                OnInteractableApproached?.Invoke(this, interactableObject);
+                GameObject hitObject = collider.gameObject;
+
+                //Making sure the object is an interactable one
+                if (hitObject.TryGetComponent<Interactable>(out var interactableObject))
+                {
+                    interactableObjects.Add(interactableObject);
+                }
             }
         }
+
+        switch (interactableObjects.Count)
+        {
+            case 0:
+                break;
+            case 1:
+                OnInteractableApproached?.Invoke(this, interactableObjects[0]);
+                break;
+            //TO BE CHANGED IN THE FUTURE
+            default:
+                OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
+                break;
+        }
+        
     }
 
     private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
