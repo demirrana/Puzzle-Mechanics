@@ -107,6 +107,7 @@ public class PlayerInteractionManager : MonoBehaviour
             //TO BE CHANGED IN THE FUTURE
             default:
             Debug.Log("There are more than 1 interactables");
+            //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
                 OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
                 break;
         }
