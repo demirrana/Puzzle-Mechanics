@@ -41,8 +41,8 @@ public class Interactable : MonoBehaviour
 
     protected virtual void GetInteracted_Interactable(object sender, EventArgs e)
     {
-        Debug.Log("This object is interacted by the player.");
         PlayerScriptsManager.Instance.DisableInteractionScript();
+        Debug.Log("This object is interacted by the player and the interaction script is disabled.");
 
         if (!toggledOn)
         {

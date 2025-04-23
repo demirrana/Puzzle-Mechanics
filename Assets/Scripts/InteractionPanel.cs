@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,15 +20,24 @@ public class InteractionPanel : MonoBehaviour
     {
         PlayerInteractionManager.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
         PlayerInteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
+        PlayerInteractionManager.Instance.OnNoObjectNear += NoInteractableNear_PlayerInteractionManager;
     }
 
     private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
+        Debug.Log("Interactable approached");
         Show();
     }
 
     private void InteractableInteracted_PlayerInteractionManager(object sender, Interactable interactable)
     {
+        Debug.Log("Interactable interacted");
+        Hide();
+    }
+
+    private void NoInteractableNear_PlayerInteractionManager(object sender, EventArgs e)
+    {
+        Debug.Log("No Interactable approached");
         Hide();
     }
 

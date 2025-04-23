@@ -5,6 +5,7 @@ public class PlayerInteractionManager : MonoBehaviour
 {
     public static PlayerInteractionManager Instance { get; private set; }
 
+    public event EventHandler OnNoObjectNear;
     public event EventHandler<Collider> OnAnObjectColliderApproached;
     public event EventHandler<Interactable> OnInteractableApproached;
     public event EventHandler OnInteractionKeyPressed; //Invoked if an interactable is approached
@@ -37,6 +38,10 @@ public class PlayerInteractionManager : MonoBehaviour
         if (Physics.Raycast(origin, direction, out RaycastHit hitInfo, proximityThreshold, layerMask))
         {
             OnAnObjectColliderApproached?.Invoke(this, hitInfo.collider);
+        }
+        else
+        {
+            OnNoObjectNear?.Invoke(this, null);
         }
     }
 
