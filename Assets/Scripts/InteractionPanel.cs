@@ -25,19 +25,19 @@ public class InteractionPanel : MonoBehaviour
 
     private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
-        Debug.Log("Interactable approached");
+        //Debug.Log("Interactable approached");
         Show();
     }
 
     private void InteractableInteracted_PlayerInteractionManager(object sender, Interactable interactable)
     {
-        Debug.Log("Interactable interacted");
+        //Debug.Log("Interactable interacted");
         Hide();
     }
 
     private void NoInteractableNear_PlayerInteractionManager(object sender, EventArgs e)
     {
-        Debug.Log("No Interactable approached");
+        //Debug.Log("No Interactable approached");
         Hide();
     }
 

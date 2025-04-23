@@ -20,7 +20,6 @@ public class Interactable : MonoBehaviour
     private void Start()
     {
         //Might be a problem since PlayerInteractionManager is disabled and enabled along the game!!!!!!!!
-        PlayerInteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
         OnGotInteracted += GetInteracted_Interactable;
     }
 
@@ -32,11 +31,6 @@ public class Interactable : MonoBehaviour
     public bool CanObjectBeInteracted()
     {
         return true;
-    }
-
-    protected virtual void InteractableInteracted_PlayerInteractionManager(object sender, Interactable interactableObject)
-    {
-        OnGotInteracted?.Invoke(this, null);
     }
 
     protected virtual void GetInteracted_Interactable(object sender, EventArgs e)

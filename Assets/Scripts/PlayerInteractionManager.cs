@@ -106,6 +106,7 @@ public class PlayerInteractionManager : MonoBehaviour
                 break;
             //TO BE CHANGED IN THE FUTURE
             default:
+            Debug.Log("There are more than 1 interactables");
                 OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
                 break;
         }
@@ -117,6 +118,7 @@ public class PlayerInteractionManager : MonoBehaviour
         if (IsInteractionKeyPressed())
         {
             OnInteractableInteracted?.Invoke(sender, interactable);
+            interactable.GetInteracted();
         }
     }
 
