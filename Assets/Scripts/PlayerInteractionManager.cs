@@ -5,8 +5,8 @@ public class PlayerInteractionManager : MonoBehaviour
 {
     public static PlayerInteractionManager Instance { get; private set; }
 
-    public event EventHandler OnNoObjectNear;
     public event EventHandler<Collider> OnAnObjectColliderApproached;
+    public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable> OnInteractableApproached;
     public event EventHandler OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<Interactable> OnInteractableInteracted;
@@ -41,7 +41,7 @@ public class PlayerInteractionManager : MonoBehaviour
         }
         else
         {
-            OnNoObjectNear?.Invoke(this, null);
+            OnNoInteractableNear?.Invoke(this, null);
         }
     }
 

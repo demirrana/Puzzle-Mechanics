@@ -20,7 +20,7 @@ public class InteractionPanel : MonoBehaviour
     {
         PlayerInteractionManager.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
         PlayerInteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
-        PlayerInteractionManager.Instance.OnNoObjectNear += NoInteractableNear_PlayerInteractionManager;
+        PlayerInteractionManager.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
     }
 
     private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
