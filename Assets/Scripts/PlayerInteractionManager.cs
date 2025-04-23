@@ -34,8 +34,8 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward; //I might have to use parent's forward vector
-        int layerMask = LayerMask.GetMask("Interactable"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (Physics.Raycast(origin, direction, out RaycastHit hitInfo, proximityThreshold, layerMask))
+        //int layerMask = LayerMask.GetMask("Interactable"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (Physics.Raycast(origin, direction, out RaycastHit hitInfo, proximityThreshold))
         {
             OnAnObjectColliderApproached?.Invoke(this, hitInfo.collider);
         }
