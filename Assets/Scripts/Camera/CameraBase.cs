@@ -10,4 +10,14 @@ public class CameraBase : MonoBehaviour
     {
         return cameraName;
     }
+
+    protected void ZoomIn(Transform targetTransform)
+    {
+
+    }
+
+    protected void ZoomOut(Transform targetTransform)
+    {
+
+    }
 }
