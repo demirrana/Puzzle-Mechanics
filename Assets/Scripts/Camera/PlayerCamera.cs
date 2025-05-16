@@ -4,8 +4,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerCamera : CameraBase
 {
+    public static PlayerCamera Instance { get; private set; }
+
     private void Awake()
     {
+        SetInstance();
+
         cameraName = CameraManager.CameraName.PlayerCamera;
     }
 
@@ -18,4 +22,13 @@ public class PlayerCamera : CameraBase
         
     }
 
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        Instance = this;
+    }
 }

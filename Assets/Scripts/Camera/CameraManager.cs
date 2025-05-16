@@ -1,31 +1,43 @@
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.InputSystem;
+using System.Linq;
+using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
 {
     public CameraManager Instance { get; private set; }
 
-    [SerializeField] private CinemachineVirtualCameraBase[] cameraList;
+    [SerializeField] private List<CinemachineVirtualCameraBase> cameraList;
 
     public enum CameraName 
     {
         PlayerCamera,
-        KidCamera,
-        OldManCamera,
-        PlayerDoorCamera,
-        NeighborDoorCamera,
-
+        GameplayCamera,
     }
 
     private CameraName activeCameraName;
+    private int activeCameraIndex;
+    private CameraBase activeCamera;
+    private Dictionary<CameraName, CameraBase> cameraMap;
 
     private void Awake()
     {
         SetInstance();
 
         activeCameraName = CameraName.PlayerCamera; //Can be changed based on the game's first look
+        activeCameraIndex = 0;
+        activeCamera = PlayerCamera.Instance;
         SetActiveCamera(activeCameraName);
+    }
+
+    private void Start()
+    {
+        cameraMap = new Dictionary<CameraName, CameraBase>
+        {
+            { CameraName.PlayerCamera, PlayerCamera.Instance },
+            { CameraName.GameplayCamera, GameplayCamera.Instance },
+        };   
     }
 
     void Update()
@@ -33,16 +45,7 @@ public class CameraManager : MonoBehaviour
         //To be deleted
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if (cameraList[0].Priority > cameraList[1].Priority)
-            {
-                cameraList[1].Priority = 10;
-                cameraList[0].Priority = 0;
-            }
-            else
-            {
-                cameraList[0].Priority = 10;
-                cameraList[1].Priority = 0;
-            }
+            SwitchToNextCamera();
         }
     }
 
@@ -55,6 +58,19 @@ public class CameraManager : MonoBehaviour
         GetCameraUnderTheName(activeCameraName).Priority = 0;
         
         activeCameraName = cameraName;
+        activeCamera = cameraMap.ElementAt(activeCameraIndex).Value;
+    }
+
+    private void SwitchToNextCamera()
+    {
+        if (activeCameraIndex == cameraMap.Count - 1)
+        {
+            activeCameraIndex = 0;
+        }
+        else
+            activeCameraIndex++;
+
+        SetActiveCamera(cameraMap.Keys.ElementAt(activeCameraIndex));
     }
 
     public CinemachineVirtualCameraBase GetCameraUnderTheName(CameraName cameraName)
