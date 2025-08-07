@@ -111,7 +111,11 @@ public class PlayerInteractionManager : MonoBehaviour
                 OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
                 break;
         }
-        
+    }
+
+    protected void Invoke_OnInteractableApproached(object sender, Interactable interactable)
+    {
+        OnInteractableApproached?.Invoke(sender, interactable);
     }
 
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
@@ -132,6 +136,11 @@ public class PlayerInteractionManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    protected void Invoke_OnInteractionKeyPressed(object sender)
+    {
+        OnInteractionKeyPressed?.Invoke(sender, null);
     }
 
     private void SetInstance()
