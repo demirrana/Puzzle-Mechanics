@@ -1,16 +1,65 @@
+using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
-public class Player5thPuzzleInteractionManager : MonoBehaviour
+public class Player5thPuzzleInteractionManager : PlayerInteractionManager
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Interactable interactableAtHand;
+
+    private void Awake()
     {
-        
+        interactableAtHand = null;
     }
 
-    // Update is called once per frame
-    void Update()
+    override protected void DetectAnInteractableApproached(List<Interactable> interactableObjects)
     {
-        
+        if (interactableAtHand == null)
+        {
+            switch (interactableObjects.Count)
+            {
+                case 0:
+                    break;
+                case 1:
+                    Invoke_OnInteractableApproached(this, interactableObjects[0]);
+                    break;
+                //TO BE CHANGED IN THE FUTURE
+                default:
+                    Debug.Log("There are more than 1 interactables");
+                    //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
+                    Invoke_OnInteractableApproached(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
+                    break;
+            }
+        }
+        else
+        {
+            foreach (Interactable interactable in interactableObjects)
+            {
+                if (interactable.GetType() == typeof(Interactable5thPuzzle)) //to be changed to table's type
+                {
+                    Invoke_OnInteractableApproached(this, interactable);
+                    return;
+                }
+            }
+
+            Invoke_OnInteractableApproached(this, interactableAtHand); //when player drops the object
+        }
+    }
+
+    override protected bool IsInteractionKeyPressed()
+    {
+        if (interactableAtHand == null && Input.GetKeyDown(KeyCode.E))
+        {
+            Invoke_OnInteractionKeyPressed(this);
+            return true;
+        }
+        else if (interactableAtHand != null)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
