@@ -127,16 +127,16 @@ public class PlayerInteractionManager : MonoBehaviour
 
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
-        if (IsInteractionKeyPressed())
+        if (IsInteractionKeyPressed(interactable))
         {
             OnInteractableInteracted?.Invoke(sender, interactable);
             interactable.GetInteracted();
         }
     }
 
-    protected virtual bool IsInteractionKeyPressed()
+    protected virtual bool IsInteractionKeyPressed(Interactable interactable)
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(interactable.GetInteractionKey1()))
         {
             OnInteractionKeyPressed?.Invoke(this, null);
             return true;
