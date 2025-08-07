@@ -18,7 +18,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
     private void Awake()
     {
-        SetInstance();  
+        SetInstance();
     }
 
     private void Start()
@@ -33,7 +33,7 @@ public class PlayerInteractionManager : MonoBehaviour
     }
 
     //5 rays are cast along the height of the player to detect more than one objects near if there are any
-    private void DetectAnObjectColliderApproached()
+    protected void DetectAnObjectColliderApproached()
     {
         Vector3 rayOriginBottom = transform.position;
         Vector3 rayOriginTop = transform.position + new Vector3(0f, playerHeight, 0f);
@@ -73,13 +73,13 @@ public class PlayerInteractionManager : MonoBehaviour
         }
     }
 
-    private void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
+    protected void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
     {
         DetectAnInteractableApproached(colliderList);
     }
 
     //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    private void DetectAnInteractableApproached(List<Collider> colliderList)
+    protected void DetectAnInteractableApproached(List<Collider> colliderList)
     {
         List<Interactable> interactableObjects = new();
 
@@ -114,7 +114,7 @@ public class PlayerInteractionManager : MonoBehaviour
         
     }
 
-    private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
+    protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
         if (IsInteractionKeyPressed())
         {
@@ -123,7 +123,7 @@ public class PlayerInteractionManager : MonoBehaviour
         }
     }
 
-    private bool IsInteractionKeyPressed()
+    protected virtual bool IsInteractionKeyPressed()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
