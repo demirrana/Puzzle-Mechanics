@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
     private CameraName activeCameraName;
     private int activeCameraIndex;
     private CameraBase activeCamera;
-    private Dictionary<CameraName, CameraBase> cameraMap;
+    private Dictionary<CameraName, CameraBase> cameraMap; //Will be changed to a List of KeyValuePair.
 
     private void Awake()
     {
@@ -56,7 +56,8 @@ public class CameraManager : MonoBehaviour
     {
         GetCameraUnderTheName(cameraName).Priority = 10;
         GetCameraUnderTheName(activeCameraName).Priority = 0;
-        
+
+        //activeCameraIndex = cameraMap. 
         activeCameraName = cameraName;
         activeCamera = cameraMap.ElementAt(activeCameraIndex).Value;
     }
