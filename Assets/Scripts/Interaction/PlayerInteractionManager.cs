@@ -79,7 +79,7 @@ public class PlayerInteractionManager : MonoBehaviour
     }
 
     //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    protected void DetectAnInteractableApproached(List<Collider> colliderList)
+    protected virtual void DetectAnInteractableApproached(List<Collider> colliderList)
     {
         List<Interactable> interactableObjects = new();
 
