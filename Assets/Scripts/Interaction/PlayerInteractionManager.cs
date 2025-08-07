@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteractionManager : MonoBehaviour
@@ -75,11 +76,11 @@ public class PlayerInteractionManager : MonoBehaviour
 
     protected void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
     {
-        DetectAnInteractableApproached(colliderList);
+        List<Interactable> interactableObjects = GetNearInteractablesList(colliderList);
+        DetectAnInteractableApproached(interactableObjects);
     }
 
-    //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    protected virtual void DetectAnInteractableApproached(List<Collider> colliderList)
+    protected List<Interactable> GetNearInteractablesList(List<Collider> colliderList)
     {
         List<Interactable> interactableObjects = new();
 
@@ -97,6 +98,12 @@ public class PlayerInteractionManager : MonoBehaviour
             }
         }
 
+        return interactableObjects;
+    }
+
+    //Gets the Interactable object near and invokes the event OnInteractableApproached with it
+    protected virtual void DetectAnInteractableApproached(List<Interactable> interactableObjects)
+    {
         switch (interactableObjects.Count)
         {
             case 0:
@@ -106,8 +113,8 @@ public class PlayerInteractionManager : MonoBehaviour
                 break;
             //TO BE CHANGED IN THE FUTURE
             default:
-            Debug.Log("There are more than 1 interactables");
-            //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
+                Debug.Log("There are more than 1 interactables");
+                //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
                 OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
                 break;
         }
