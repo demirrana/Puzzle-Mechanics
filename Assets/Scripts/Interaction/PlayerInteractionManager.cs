@@ -80,7 +80,7 @@ public class PlayerInteractionManager : MonoBehaviour
         DetectAnInteractableApproached(interactableObjects);
     }
 
-    protected List<Interactable> GetNearInteractablesList(List<Collider> colliderList)
+    protected virtual List<Interactable> GetNearInteractablesList(List<Collider> colliderList)
     {
         List<Interactable> interactableObjects = new();
 
