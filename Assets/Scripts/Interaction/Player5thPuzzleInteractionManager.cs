@@ -47,19 +47,19 @@ public class Player5thPuzzleInteractionManager : PlayerInteractionManager
 
     override protected bool IsInteractionKeyPressed(Interactable interactable)
     {
-        if (interactableAtHand == null && Input.GetKeyDown(interactable.GetInteractionKey1())) //to collect from the floor
+        if (interactableAtHand == null && Input.GetKeyDown(interactable.GetInteractionKey())) //to collect from the floor
         {
             Invoke_OnInteractionKeyPressed(this);
             return true;
         }
         else if (interactableAtHand != null)
         {
-            if (interactable == interactableAtHand && Input.GetKeyDown(interactable.GetInteractionKey2())) //to drop the object
+            if (interactable == interactableAtHand && Input.GetKeyDown(interactable.GetInteractionKey())) //to drop the object
             {
                 Invoke_OnInteractionKeyPressed(this);
                 return true;
             }
-            else if (Input.GetKeyDown(interactable.GetInteractionKey1())) //to put on the table
+            else if (Input.GetKeyDown(interactable.GetInteractionKey())) //to put on the table
             {
                 Invoke_OnInteractionKeyPressed(this);
                 return true;

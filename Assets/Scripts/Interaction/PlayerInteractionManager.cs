@@ -136,7 +136,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
     protected virtual bool IsInteractionKeyPressed(Interactable interactable)
     {
-        if (Input.GetKeyDown(interactable.GetInteractionKey1()))
+        if (Input.GetKeyDown(interactable.GetInteractionKey()))
         {
             OnInteractionKeyPressed?.Invoke(this, null);
             return true;
