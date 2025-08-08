@@ -6,8 +6,7 @@ public class Interactable : MonoBehaviour
 {
     public event EventHandler OnGotInteracted;
 
-    protected virtual KeyCode InteractionKey1 => KeyCode.E;
-    protected virtual KeyCode InteractionKey2 => KeyCode.F;
+    protected virtual KeyCode InteractionKey => KeyCode.E;
 
     private void Start()
     {
@@ -25,14 +24,9 @@ public class Interactable : MonoBehaviour
         return true;
     }
 
-    public KeyCode GetInteractionKey1()
+    public KeyCode GetInteractionKey()
     {
-        return InteractionKey1;
-    }
-
-    public KeyCode GetInteractionKey2()
-    {
-        return InteractionKey2;
+        return InteractionKey;
     }
     
     protected virtual void GetInteracted_Interactable(object sender, EventArgs e)
