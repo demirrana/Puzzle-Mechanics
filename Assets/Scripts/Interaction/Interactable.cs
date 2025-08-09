@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public event EventHandler OnGotInteracted;
+    public event EventHandler<IInteractionBehaviour> OnGotInteracted;
 
-    protected virtual KeyCode InteractionKey => KeyCode.E;
+    protected List<IInteractionBehaviour> behavioursList = new();
 
     private void Start()
     {
@@ -14,9 +16,9 @@ public class Interactable : MonoBehaviour
         OnGotInteracted += GetInteracted_Interactable;
     }
 
-    public void GetInteracted()
+    public void GetInteracted(IInteractionBehaviour interactionBeaviour)
     {
-        OnGotInteracted?.Invoke(this, null);
+        OnGotInteracted?.Invoke(this, interactionBeaviour);
     }
 
     public bool CanObjectBeInteracted()
@@ -24,12 +26,31 @@ public class Interactable : MonoBehaviour
         return true;
     }
 
-    public KeyCode GetInteractionKey()
+    public KeyCode GetInteractionKey(IInteractionBehaviour interactionBehaviour)
     {
-        return InteractionKey;
+        return interactionBehaviour.InteractionKeyCode;
+    }
+
+    public List<IInteractionBehaviour> GetInteractionBehaviours()
+    {
+        return behavioursList;
+    }
+
+    protected void AddBehaviour(IInteractionBehaviour interactionBehaviour)
+    {
+        behavioursList.Add(interactionBehaviour);
+    }
+
+    protected IInteractionBehaviour DeleteBehaviour<T>(IInteractionBehaviour interactionBehaviour) where T : IInteractionBehaviour
+    {
+        var behaviour = behavioursList. FirstOrDefault(b => b is T);
+        if (behaviour != null)
+            behavioursList.Remove(behaviour);
+
+        return behaviour;
     }
     
-    protected virtual void GetInteracted_Interactable(object sender, EventArgs e)
+    protected virtual void GetInteracted_Interactable(object sender, IInteractionBehaviour interactionBehaviour)
     {
         Debug.Log("This object is interacted by the player.");
     }

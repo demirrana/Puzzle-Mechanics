@@ -11,7 +11,19 @@ public class PlayerInteractionManager : MonoBehaviour
     public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable> OnInteractableApproached;
     public event EventHandler OnInteractionKeyPressed; //Invoked if an interactable is approached
-    public event EventHandler<Interactable> OnInteractableInteracted;
+    public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted;
+
+    public class InteractionBehaviourEventArgs : EventArgs
+    {
+        public Interactable InteractedObject { get; }
+        public IInteractionBehaviour InteractionBehaviour { get; }
+
+        public InteractionBehaviourEventArgs(Interactable interactable, IInteractionBehaviour interactionBehaviour)
+        {
+            InteractedObject = interactable;
+            InteractionBehaviour = interactionBehaviour;
+        }
+    }
 
     [SerializeField] private float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
     [SerializeField] private float playerHeight = 1.67f; //Can be moved to another script
@@ -127,16 +139,19 @@ public class PlayerInteractionManager : MonoBehaviour
 
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
-        if (IsInteractionKeyPressed(interactable))
+        foreach (IInteractionBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
         {
-            OnInteractableInteracted?.Invoke(sender, interactable);
-            interactable.GetInteracted();
+            if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
+            {
+                OnInteractableInteracted?.Invoke(sender, new InteractionBehaviourEventArgs(interactable, interactionBehaviour));
+                interactable.GetInteracted(interactionBehaviour);
+            }
         }
     }
 
-    protected virtual bool IsInteractionKeyPressed(Interactable interactable)
+    protected virtual bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
     {
-        if (Input.GetKeyDown(interactable.GetInteractionKey()))
+        if (Input.GetKeyDown(interactionKeyCode))
         {
             OnInteractionKeyPressed?.Invoke(this, null);
             return true;

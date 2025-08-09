@@ -29,7 +29,7 @@ public class InteractionPanel : MonoBehaviour
         Show();
     }
 
-    private void InteractableInteracted_PlayerInteractionManager(object sender, Interactable interactable)
+    private void InteractableInteracted_PlayerInteractionManager(object sender, PlayerInteractionManager.InteractionBehaviourEventArgs e)
     {
         //Debug.Log("Interactable interacted");
         Hide();
