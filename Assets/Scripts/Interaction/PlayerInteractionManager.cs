@@ -143,6 +143,7 @@ public class PlayerInteractionManager : MonoBehaviour
         {
             if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
             {
+                Debug.Log("Key is pressed");
                 OnInteractableInteracted?.Invoke(sender, new InteractionBehaviourEventArgs(interactable, interactionBehaviour));
                 interactable.GetInteracted(interactionBehaviour);
             }

@@ -10,15 +10,18 @@ public class Interactable : MonoBehaviour
 
     protected List<IInteractionBehaviour> behavioursList = new();
 
-    private void Start()
+    protected virtual void Start()
     {
         //Might be a problem since PlayerInteractionManager is disabled and enabled along the game!!!!!!!!
+        //Debug.Log($"[Base Start] {name} subscribing to OnGotInteracted. InstanceID={GetInstanceID()}");
         OnGotInteracted += GetInteracted_Interactable;
     }
 
     public void GetInteracted(IInteractionBehaviour interactionBeaviour)
     {
+        //Debug.Log("GetInteracted from Interactable class is called.");
         OnGotInteracted?.Invoke(this, interactionBeaviour);
+        //Debug.Log("Interaction behavior name: " + interactionBeaviour.ToString());
     }
 
     public bool CanObjectBeInteracted()
@@ -43,15 +46,22 @@ public class Interactable : MonoBehaviour
 
     protected IInteractionBehaviour DeleteBehaviour<T>(IInteractionBehaviour interactionBehaviour) where T : IInteractionBehaviour
     {
-        var behaviour = behavioursList. FirstOrDefault(b => b is T);
+        var behaviour = behavioursList.FirstOrDefault(b => b is T);
         if (behaviour != null)
             behavioursList.Remove(behaviour);
 
         return behaviour;
     }
-    
+
     protected virtual void GetInteracted_Interactable(object sender, IInteractionBehaviour interactionBehaviour)
     {
+        //Debug.Log($"[Base Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("This object is interacted by the player.");
+    }
+
+    public virtual void UpdatePosition(Transform newTransform)
+    {
+        gameObject.transform.position = newTransform.position;
+        //Debug.Log("Position is updated.");
     }
 }
