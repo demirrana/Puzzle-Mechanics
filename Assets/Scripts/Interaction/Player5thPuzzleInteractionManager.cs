@@ -11,6 +11,30 @@ public class Player5thPuzzleInteractionManager : PlayerInteractionManager
         interactableAtHand = null;
     }
 
+    override protected List<Interactable> GetNearInteractablesList(List<Collider> colliderList)
+    {
+        List<Interactable> interactableObjects = new();
+
+        foreach (Collider collider in colliderList)
+        {
+            if (collider != null)
+            {
+                GameObject hitObject = collider.gameObject;
+                Interactable[] interactableComponents = hitObject.GetComponents<Interactable>();
+
+                if (interactableComponents.Length != 0)
+                {
+                    foreach (Interactable interactable in interactableComponents)
+                    {
+                        interactableObjects.Add(interactable);
+                    }
+                }
+            }
+        }
+
+        return interactableObjects;
+    }
+
     override protected void DetectAnInteractableApproached(List<Interactable> interactableObjects)
     {
         if (interactableAtHand == null)
