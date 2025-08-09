@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class PlayerInteractionManager : MonoBehaviour
     [SerializeField] private float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
     [SerializeField] private float playerHeight = 1.67f; //Can be moved to another script
     [SerializeField] private int rayCount = 5;
+    [SerializeField] private Transform handTransform;
+
+    private bool handsFull = false;
 
     private void Awake()
     {
@@ -42,7 +46,10 @@ public class PlayerInteractionManager : MonoBehaviour
 
     private void Update()
     {
-        DetectAnObjectColliderApproached();
+        if (handsFull)
+            DetectInteractableDropped();
+        else
+            DetectAnObjectColliderApproached();
     }
 
     //5 rays are cast along the height of the player to detect more than one objects near if there are any
@@ -148,6 +155,12 @@ public class PlayerInteractionManager : MonoBehaviour
                 interactable.GetInteracted(interactionBehaviour);
             }
         }
+    }
+
+    protected void DetectInteractableDropped() //used for when hand is full and that object can be dropped anytime
+    {
+        Interactable interactableInHand = handTransform.GetChild(0).GetComponent<Interactable>();
+        OnInteractableApproached?.Invoke(this, interactableInHand);   
     }
 
     protected virtual bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
