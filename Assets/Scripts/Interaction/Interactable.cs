@@ -59,9 +59,8 @@ public class Interactable : MonoBehaviour
         Debug.Log("This object is interacted by the player.");
     }
 
-    public virtual void UpdatePosition(Transform newTransform)
+    public virtual void UpdatePosition(Vector3 newPosition)
     {
-        gameObject.transform.position = newTransform.position;
-        //Debug.Log("Position is updated.");
+        gameObject.transform.position = newPosition;
     }
 }

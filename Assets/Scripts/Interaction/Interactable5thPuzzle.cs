@@ -45,9 +45,9 @@ public class Interactable5thPuzzle : Interactable
         OnInteractableStateChanged?.Invoke(this, newState);
     }
 
-    override public void UpdatePosition(Transform newTransform)
+    override public void UpdatePosition(Vector3 newPosition)
     {
-        gameObject.transform.position = newTransform.position;
+        gameObject.transform.position = newPosition;
     }
 
     private void Interactable5thPuzzle_OnInteractableStateChanged(object sender, Interactable5thPuzzleState newState)
@@ -56,10 +56,12 @@ public class Interactable5thPuzzle : Interactable
         switch (newState)
         {
             case Interactable5thPuzzleState.InHand:
-                UpdatePosition(PlayerInteractionManager.Instance.transform);
+                UpdatePosition(PlayerInteractionManager.Instance.transform.position + PlayerInteractionManager.Instance.transform.up);
                 gameObject.transform.SetParent(PlayerInteractionManager.Instance.transform);
                 break;
             case Interactable5thPuzzleState.OnFloor:
+                UpdatePosition(PlayerInteractionManager.Instance.transform.position + PlayerInteractionManager.Instance.transform.forward);
+                gameObject.transform.SetParent(PuzzleSceneObjectsManager.Instance.transform);
                 break;
             case Interactable5thPuzzleState.OnTable:
                 break;
