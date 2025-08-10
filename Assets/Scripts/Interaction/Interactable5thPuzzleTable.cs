@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class Interactable5thPuzzleTable : MonoBehaviour
+public class Interactable5thPuzzleTable : Interactable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void GetInteracted_Interactable(object sender, IInteractionBehaviour interactionBehaviour)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        //Debug.Log($"[Child Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
+        Debug.Log("GetInteracted_Interactable of Interactable5thPuzzleTable is called.");
+        interactionBehaviour.Interact(this);
+        Debug.Log("Behaviour keycode: " + interactionBehaviour.InteractionKeyCode.ToString());
+    }   
 }
