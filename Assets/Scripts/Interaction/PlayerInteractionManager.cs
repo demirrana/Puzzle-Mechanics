@@ -48,8 +48,7 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         if (handsFull)
             DetectInteractableDropped();
-        else
-            DetectAnObjectColliderApproached();
+        DetectAnObjectColliderApproached();
     }
 
     //5 rays are cast along the height of the player to detect more than one objects near if there are any
