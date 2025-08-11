@@ -56,11 +56,11 @@ public class Interactable5thPuzzle : Interactable
         switch (newState)
         {
             case Interactable5thPuzzleState.InHand:
-                UpdatePosition(PlayerInteractionManager.Instance.transform.position + PlayerInteractionManager.Instance.transform.up);
-                gameObject.transform.SetParent(PlayerInteractionManager.Instance.transform);
+                UpdatePosition(InteractionManager.Instance.transform.position + InteractionManager.Instance.transform.up);
+                gameObject.transform.SetParent(InteractionManager.Instance.transform);
                 break;
             case Interactable5thPuzzleState.OnFloor:
-                UpdatePosition(PlayerInteractionManager.Instance.transform.position + PlayerInteractionManager.Instance.transform.forward);
+                UpdatePosition(InteractionManager.Instance.transform.position + InteractionManager.Instance.transform.forward);
                 gameObject.transform.SetParent(PuzzleSceneObjectsManager.Instance.transform);
                 break;
             case Interactable5thPuzzleState.OnTable:

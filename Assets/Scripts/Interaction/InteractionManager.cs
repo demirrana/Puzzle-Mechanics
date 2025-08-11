@@ -4,9 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerInteractionManager : MonoBehaviour
+public class InteractionManager : MonoBehaviour
 {
-    public static PlayerInteractionManager Instance { get; private set; }
+    public static InteractionManager Instance { get; private set; }
 
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;

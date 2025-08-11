@@ -5,7 +5,7 @@ public class PlayerScriptsManager : MonoBehaviour
     public static PlayerScriptsManager Instance { get; private set; }
 
     private PlayerMovementManager playerMovementManager;
-    private PlayerInteractionManager playerInteractionManager;
+    private InteractionManager playerInteractionManager;
 
     private void Awake()
     {
@@ -15,7 +15,7 @@ public class PlayerScriptsManager : MonoBehaviour
     private void Start()
     {
         playerMovementManager = PlayerMovementManager.Instance;
-        playerInteractionManager = PlayerInteractionManager.Instance;
+        playerInteractionManager = InteractionManager.Instance;
     }
 
     public bool IsMovementEnabled()

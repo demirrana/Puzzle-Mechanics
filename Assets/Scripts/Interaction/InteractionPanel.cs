@@ -18,9 +18,9 @@ public class InteractionPanel : MonoBehaviour
 
     private void Start()
     {
-        PlayerInteractionManager.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
-        PlayerInteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
-        PlayerInteractionManager.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
+        InteractionManager.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
+        InteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
+        InteractionManager.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
     }
 
     private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
@@ -29,7 +29,7 @@ public class InteractionPanel : MonoBehaviour
         Show();
     }
 
-    private void InteractableInteracted_PlayerInteractionManager(object sender, PlayerInteractionManager.InteractionBehaviourEventArgs e)
+    private void InteractableInteracted_PlayerInteractionManager(object sender, InteractionManager.InteractionBehaviourEventArgs e)
     {
         //Debug.Log("Interactable interacted");
         Hide();
