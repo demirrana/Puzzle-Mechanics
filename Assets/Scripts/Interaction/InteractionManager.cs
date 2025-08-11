@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 
 public class InteractionManager : MonoBehaviour
 {
-    public static InteractionManager Instance { get; private set; }
 
     public event EventHandler<Interactable> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
@@ -30,9 +29,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private Transform handTransform;
 
 
-    private void Awake()
     {
-        SetInstance();
     }
 
     {
