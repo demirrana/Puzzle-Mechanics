@@ -83,6 +83,11 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    protected void RaiseInteractionConditionsMet(object sender, Interactable interactable)
+    {
+        OnInteractionConditionsMet?.Invoke(sender, interactable);
+    }
+
     protected Transform GetHandTransform()
     {
         return handTransform;
