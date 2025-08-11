@@ -8,11 +8,9 @@ public class InteractionManager : MonoBehaviour
 {
     public static InteractionManager Instance { get; private set; }
 
-    public event EventHandler<List<Collider>> OnObjectCollidersApproached;
-    public event EventHandler OnNoInteractableNear;
-    public event EventHandler<Interactable> OnInteractableApproached;
-    public event EventHandler OnInteractionKeyPressed; //Invoked if an interactable is approached
-    public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted;
+    public event EventHandler<Interactable> OnInteractionConditionsMet;
+    public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
+    public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
 
     public class InteractionBehaviourEventArgs : EventArgs
     {
