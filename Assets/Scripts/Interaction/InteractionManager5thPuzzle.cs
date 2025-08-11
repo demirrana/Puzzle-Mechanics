@@ -35,6 +35,18 @@ public class InteractionManager5thPuzzle : InteractionManager
         DetectInteractionConditionsMet();
     }
 
+    protected override void DetectInteractionConditionsMet()
+    {
+        if (currentState == GameState.WorldView)
+        {
+            DetectInteractionConditionsMet_WorldView();
+        }
+        else
+        {
+            DetectInteractionConditionsMet_TableView();
+        }
+    }
+
     }
 
     private void SetInstance()
