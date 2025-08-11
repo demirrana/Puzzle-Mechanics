@@ -30,6 +30,11 @@ public class InteractionManager5thPuzzle : InteractionManager
         OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
     }
 
+    private void Update()
+    {
+        DetectInteractionConditionsMet();
+    }
+
     }
 
     private void SetInstance()
