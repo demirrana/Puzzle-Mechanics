@@ -55,8 +55,12 @@ public class InteractionManager : MonoBehaviour
 
     }
 
+    //Invokes the key pressing process by checking that behaviour's specific key
+    protected void DetectBehaviourApplied(Interactable interactable, IInteractionBehaviour interactionBehaviour)
     {
+        if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
         {
+            OnInteractionKeyPressed?.Invoke(this, new InteractionBehaviourEventArgs(interactable, interactionBehaviour));
         }
     }
 
