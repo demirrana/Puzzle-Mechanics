@@ -22,6 +22,14 @@ public class InteractionManager5thPuzzle : InteractionManager
     {
         SetInstance();
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager;
+        OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
+    }
+
     }
 
     private void SetInstance()
