@@ -45,7 +45,7 @@ public class InteractionManager : MonoBehaviour
 
     protected virtual void InteractionManager_InteractionConditionsMet(object sender, Interactable interactable)
     {
-
+        DetectBehavioursApplied(interactable);
     }
 
     protected virtual void InteractionManager_InteractionKeyPressed(object sender, InteractionBehaviourEventArgs e)
@@ -62,7 +62,15 @@ public class InteractionManager : MonoBehaviour
 
     protected virtual void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
     {
+        e.InteractedObject.GetInteracted(e.InteractionBehaviour);
+    }
 
+    protected void DetectBehavioursApplied(Interactable interactable)
+    {
+        foreach (IInteractionBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
+        {
+            DetectBehaviourApplied(interactable, interactionBehaviour);
+        }
     }
 
     //Invokes the key pressing process by checking that behaviour's specific key
