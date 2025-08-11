@@ -50,7 +50,14 @@ public class InteractionManager : MonoBehaviour
 
     protected virtual void InteractionManager_InteractionKeyPressed(object sender, InteractionBehaviourEventArgs e)
     {
-
+        if (IsInteractedOnceKeyIsPressed())
+        {
+            OnInteractableInteracted?.Invoke(this, e);
+        }
+        else
+        {
+            //another condition
+        }
     }
 
     protected virtual void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
@@ -63,7 +70,8 @@ public class InteractionManager : MonoBehaviour
     {
         if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
         {
-            OnInteractionKeyPressed?.Invoke(this, new InteractionBehaviourEventArgs(interactable, interactionBehaviour));
+            InteractionBehaviourEventArgs e = new(interactable, interactionBehaviour);
+            OnInteractionKeyPressed?.Invoke(this, e);
         }
     }
 
