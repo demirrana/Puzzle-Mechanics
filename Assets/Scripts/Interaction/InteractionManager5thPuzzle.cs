@@ -166,6 +166,10 @@ public class InteractionManager5thPuzzle : InteractionManager
         }
     }
 
+    protected void RaiseInteractableApproached(object sender, Interactable interactable)
+    {
+        OnInteractableApproached?.Invoke(sender, interactable);
+    }
 
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
