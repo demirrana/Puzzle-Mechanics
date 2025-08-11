@@ -93,6 +93,11 @@ public class InteractionManager : MonoBehaviour
         return handTransform;
     }
 
+    protected bool AreHandsFull()
+    {
+        return interactableInHand != null;
+    }
+
     //Creates a distinction between (key required for that interaction is pressed) and (interaction taking place)
     protected bool IsInteractedOnceKeyIsPressed()
     {
