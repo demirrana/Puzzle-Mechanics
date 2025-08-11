@@ -29,19 +29,27 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private Transform handTransform;
 
 
+    protected virtual void Start()
     {
+        OnInteractionConditionsMet += InteractionManager_InteractionConditionsMet;
+        OnInteractionKeyPressed += InteractionManager_InteractionKeyPressed;
+        OnInteractableInteracted += InteractionManager_InteractableInteracted;
     }
 
     {
     }
 
+    protected virtual void InteractionManager_InteractionConditionsMet(object sender, Interactable interactable)
     {
 
     }
 
+    protected virtual void InteractionManager_InteractionKeyPressed(object sender, InteractionBehaviourEventArgs e)
     {
+
     }
 
+    protected virtual void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
     {
 
     }
