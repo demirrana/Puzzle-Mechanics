@@ -38,7 +38,9 @@ public class InteractionManager : MonoBehaviour
         OnInteractableInteracted += InteractionManager_InteractableInteracted;
     }
 
+    protected virtual void DetectInteractionConditionsMet()
     {
+        Debug.Log("Base class called DetectWhenInteractionConditionsMet");
     }
 
     protected virtual void InteractionManager_InteractionConditionsMet(object sender, Interactable interactable)
