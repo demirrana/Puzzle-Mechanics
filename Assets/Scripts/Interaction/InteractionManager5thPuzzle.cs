@@ -64,6 +64,21 @@ public class InteractionManager5thPuzzle : InteractionManager
         }
     }
 
+    protected void DetectInteractionConditionsMet_TableView()
+    {
+        if (AreHandsFull())
+        {
+            //object should be dragged around
+            DetectEmptySlotsOnTable();
+            RaiseInteractionConditionsMet(this, interactableInHand); //exitting table view
+        }
+        else
+        {
+            DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
+        }
+        RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance); //closing table view
+    }
+
     }
 
     private void SetInstance()
