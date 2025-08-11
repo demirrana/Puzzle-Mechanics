@@ -18,7 +18,10 @@ public class InteractionManager5thPuzzle : InteractionManager
 
     private GameState currentState = GameState.WorldView;
 
+    private void Awake()
     {
+        SetInstance();
+    }
     }
 
     private void SetInstance()
