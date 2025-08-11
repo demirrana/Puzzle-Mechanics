@@ -47,6 +47,23 @@ public class InteractionManager5thPuzzle : InteractionManager
         }
     }
 
+    protected void DetectInteractionConditionsMet_WorldView()
+    {
+        if (AreHandsFull())
+        {
+            RaiseInteractionConditionsMet(this, interactableInHand); //dropping object
+
+            if (IsNear(Interactable5thPuzzleTable.Instance.transform) && Interactable5thPuzzleTable.Instance.HasEmptySlots())
+            {
+                RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance);
+            }
+        }
+        else
+        {
+            DetectAnyColliderApproached();
+        }
+    }
+
     }
 
     private void SetInstance()
