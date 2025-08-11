@@ -179,6 +179,22 @@ public class InteractionManager5thPuzzle : InteractionManager
         }
     }
 
+    private void DetectEmptySlotsOnTable()
+    {
+        if (Interactable5thPuzzleTable.Instance.HasEmptySlots())
+        {
+            RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance.GetPointedEmptySlot());
+        }
+    }
+
+    private void DetectFullSlotsOnTable()
+    {
+        if (!Interactable5thPuzzleTable.Instance.HasEmptySlots())
+        {
+            Interactable5thPuzzleTableSlot pointedFullSlot = Interactable5thPuzzleTable.Instance.GetPointedFullSlot();
+            RaiseInteractionConditionsMet(this, pointedFullSlot);
+            RaiseInteractionConditionsMet(this, pointedFullSlot.GetInteractableOnSlot());
+        }
     }
 
     private void SetInstance()
