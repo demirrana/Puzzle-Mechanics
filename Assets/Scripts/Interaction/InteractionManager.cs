@@ -23,9 +23,9 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
-    [SerializeField] private float playerHeight = 1.67f; //Can be moved to another script
-    [SerializeField] private int rayCount = 5;
+    [SerializeField] protected float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
+    [SerializeField] protected float playerHeight = 1.67f; //Can be moved to another script
+    [SerializeField] protected int rayCount = 5;
     [SerializeField] private Transform handTransform;
 
     private Interactable interactableInHand = null;
