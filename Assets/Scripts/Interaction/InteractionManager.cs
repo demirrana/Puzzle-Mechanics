@@ -54,14 +54,17 @@ public class InteractionManager : MonoBehaviour
     {
     }
 
+    //Creates a distinction between (key required for that interaction is pressed) and (interaction taking place)
+    protected bool IsInteractedOnceKeyIsPressed()
     {
+        return interactedOnceKeyIsPressed;
     }
 
-    protected virtual bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
+    private bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
     {
         if (Input.GetKeyDown(interactionKeyCode))
         {
-            OnInteractionKeyPressed?.Invoke(this, null);
+            //OnInteractionKeyPressed?.Invoke(this, null); !!!!could be on the extending classes
             return true;
         }
 
