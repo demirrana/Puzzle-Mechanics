@@ -64,7 +64,9 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    protected Transform GetHandTransform()
     {
+        return handTransform;
     }
 
     //Creates a distinction between (key required for that interaction is pressed) and (interaction taking place)
