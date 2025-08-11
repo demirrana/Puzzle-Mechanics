@@ -28,6 +28,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private int rayCount = 5;
     [SerializeField] private Transform handTransform;
 
+    private Interactable interactableInHand = null;
     private bool interactedOnceKeyIsPressed = true;
 
     protected virtual void Start()
