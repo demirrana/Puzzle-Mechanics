@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Interactable5thPuzzleTable : Interactable
+public class Interactable5thPuzzleTable : Interactable5thPuzzle
 {
     public static Interactable5thPuzzleTable Instance { get; private set; }
 
