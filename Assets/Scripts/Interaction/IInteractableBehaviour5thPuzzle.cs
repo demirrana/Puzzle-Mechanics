@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public virtual KeyCode InteractionKeyCode => KeyCode.E;
 
     public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -18,7 +18,7 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
 
 public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -45,7 +45,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 
 public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -70,7 +70,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
 
 public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.F;
+    public override KeyCode InteractionKeyCode => KeyCode.F;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -94,7 +94,7 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 
 public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -118,7 +118,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 
 public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -143,7 +143,7 @@ public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
 
 public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -167,7 +167,7 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
 
 public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -191,7 +191,7 @@ public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzz
 
 public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -215,7 +215,7 @@ public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
 
 public class InteractableBehaviourEmptySlot : IInteractableBehaviour5thPuzzle
 {
-    public KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
