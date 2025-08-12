@@ -45,7 +45,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 
 public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour5thPuzzle
 {
-    public override KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.F;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
@@ -167,7 +167,7 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
 
 public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzzle
 {
-    public override KeyCode InteractionKeyCode => KeyCode.E;
+    public override KeyCode InteractionKeyCode => KeyCode.F;
 
     public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
