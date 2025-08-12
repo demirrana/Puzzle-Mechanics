@@ -116,6 +116,19 @@ public class InteractionManager : MonoBehaviour
         return hitColliders;
     }
 
+    protected bool IsNear(Transform transform)
+    {
+        List<Collider> hitColliders = GetCollidersApproached();
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.gameObject == transform.gameObject)
+                return true;
+        }
+
+        return false;
+    }
+
     protected void RaiseInteractionConditionsMet(object sender, Interactable interactable)
     {
         OnInteractionConditionsMet?.Invoke(sender, interactable);
