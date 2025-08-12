@@ -79,39 +79,6 @@ public class InteractionManager5thPuzzle : InteractionManager
         RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance); //closing table view
     }
 
-    //5 rays are cast along the height of the player to detect more than one objects near if there are any
-    protected List<Collider> GetCollidersApproached()
-    {
-        Vector3 rayOriginBottom = transform.position;
-        Vector3 rayOriginTop = transform.position + new Vector3(0f, playerHeight, 0f);
-        Vector3 direction = transform.forward; //I might have to use parent's forward vector
-
-        List<Vector3> rayOrigins = new();
-
-        float differenceInY = (rayOriginTop.y - rayOriginBottom.y) / (rayCount - 1);
-
-        for (int i = 0; i < rayCount; i++)
-        {
-            float currentY = rayOriginBottom.y + i * differenceInY;
-            rayOrigins.Add(new Vector3(rayOriginBottom.x, currentY, rayOriginBottom.z));
-        }
-
-        List<Collider> hitColliders = new List<Collider>();
-
-        foreach (Vector3 rayOrigin in rayOrigins)
-        {
-            if (Physics.Raycast(rayOrigin, direction, out RaycastHit hitInfo, proximityThreshold))
-            {
-                if (!hitColliders.Contains(hitInfo.collider))
-                {
-                    hitColliders.Add(hitInfo.collider);
-                }
-            }
-        }
-
-        return hitColliders;
-    }
-
     protected void DetectAnyColliderApproached()
     {
         List<Collider> hitColliders = GetCollidersApproached();
