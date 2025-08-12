@@ -1,21 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour<Interactable5thPuzzle>
+public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    void IInteractableBehaviour.Interact(Interactable interactable)
-    {
-        Interact(interactable as Interactable5thPuzzle);
-    }
-
-    public virtual void Interact(Interactable5thPuzzle interactable)
+    public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         Debug.Log("IInteractableBehaviour5thPuzzle has called Interact.");
     }
 
-    public virtual List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public virtual List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         return null;
     }
@@ -25,7 +20,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -34,10 +29,10 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
         }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
 
@@ -52,7 +47,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -61,10 +56,10 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
         }
         Debug.Log("Collect from table");
 
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.ExittingTableView);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.ExittingTableView);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourDropOnFloor());
@@ -77,7 +72,7 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 {
     public KeyCode InteractionKeyCode => KeyCode.F;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -86,10 +81,10 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
         }
         Debug.Log("Drop on floor");
 
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.OnFloor);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.OnFloor);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourPickUpFromFloor());
@@ -101,7 +96,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -110,10 +105,10 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
         }
         Debug.Log("Drop on table");
 
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourDragOnTable());
@@ -125,7 +120,7 @@ public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -134,10 +129,10 @@ public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
         }
         Debug.Log("Drop on table");
 
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourPickUpFromTableToHand());
@@ -150,7 +145,7 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -159,10 +154,10 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
         }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourCloseTableView());
@@ -174,7 +169,7 @@ public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzz
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -183,10 +178,10 @@ public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzz
         }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourOpenTableView());
@@ -198,7 +193,7 @@ public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -207,10 +202,10 @@ public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
         }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourEmptySlot());
@@ -222,7 +217,7 @@ public class InteractableBehaviourEmptySlot : IInteractableBehaviour5thPuzzle
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -231,10 +226,10 @@ public class InteractableBehaviourEmptySlot : IInteractableBehaviour5thPuzzle
         }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
     }
 
-    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours(List<IInteractableBehaviour5thPuzzle> behaviours)
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourFullSlot());

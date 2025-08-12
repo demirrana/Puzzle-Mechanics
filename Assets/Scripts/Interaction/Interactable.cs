@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
 {
-    public event EventHandler<IInteractableBehaviour> OnGotInteracted;
+    public event EventHandler<T> OnGotInteracted;
 
-    protected List<IInteractableBehaviour> behavioursList = new();
+    protected List<T> behavioursList = new();
 
     protected virtual void Start()
     {
@@ -17,7 +17,7 @@ public class Interactable : MonoBehaviour
         OnGotInteracted += GetInteracted_Interactable;
     }
 
-    public void GetInteracted(IInteractableBehaviour interactionBeaviour)
+    public void GetInteracted(T interactionBeaviour)
     {
         //Debug.Log("GetInteracted from Interactable class is called.");
         OnGotInteracted?.Invoke(this, interactionBeaviour);
@@ -29,22 +29,22 @@ public class Interactable : MonoBehaviour
         return true;
     }
 
-    public KeyCode GetInteractionKey(IInteractableBehaviour interactionBehaviour)
+    public KeyCode GetInteractionKey(T interactionBehaviour)
     {
         return interactionBehaviour.InteractionKeyCode;
     }
 
-    public List<IInteractableBehaviour> GetInteractionBehaviours()
+    public List<T> GetInteractionBehaviours()
     {
         return behavioursList;
     }
 
-    protected void AddBehaviour(IInteractableBehaviour interactionBehaviour)
+    protected void AddBehaviour(T interactionBehaviour)
     {
         behavioursList.Add(interactionBehaviour);
     }
 
-    protected IInteractableBehaviour DeleteBehaviour<T>(IInteractableBehaviour interactionBehaviour) where T : IInteractableBehaviour
+    protected T DeleteBehaviour(T interactionBehaviour)
     {
         var behaviour = behavioursList.FirstOrDefault(b => b is T);
         if (behaviour != null)
@@ -53,7 +53,7 @@ public class Interactable : MonoBehaviour
         return behaviour;
     }
 
-    protected virtual void GetInteracted_Interactable(object sender, IInteractableBehaviour interactionBehaviour)
+    protected virtual void GetInteracted_Interactable<R>(object sender, R interactionBehaviour) where R : IInteractableBehaviour
     {
         //Debug.Log($"[Base Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("This object is interacted by the player.");

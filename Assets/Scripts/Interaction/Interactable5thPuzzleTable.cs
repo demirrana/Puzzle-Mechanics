@@ -31,7 +31,7 @@ public class Interactable5thPuzzleTable : Interactable5thPuzzle
         return fullSlots[0];
     }
 
-    protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour interactionBehaviour)
+    protected override void GetInteracted_Interactable<IInteractableBehaviour5thPuzzle>(object sender, IInteractableBehaviour5thPuzzle interactionBehaviour)
     {
         //Debug.Log($"[Child Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("GetInteracted_Interactable of Interactable5thPuzzleTable is called.");
