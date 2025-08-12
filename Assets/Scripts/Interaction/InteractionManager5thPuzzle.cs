@@ -80,7 +80,7 @@ public class InteractionManager5thPuzzle : InteractionManager
     }
 
     //5 rays are cast along the height of the player to detect more than one objects near if there are any
-    protected void DetectAnyColliderApproached()
+    protected List<Collider> GetCollidersApproached()
     {
         Vector3 rayOriginBottom = transform.position;
         Vector3 rayOriginTop = transform.position + new Vector3(0f, playerHeight, 0f);
@@ -108,6 +108,13 @@ public class InteractionManager5thPuzzle : InteractionManager
                 }
             }
         }
+
+        return hitColliders;
+    }
+
+    protected void DetectAnyColliderApproached()
+    {
+        List<Collider> hitColliders = GetCollidersApproached();
 
         switch (hitColliders.Count)
         {
