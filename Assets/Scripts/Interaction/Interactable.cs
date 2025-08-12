@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public event EventHandler<IInteractionBehaviour> OnGotInteracted;
+    public event EventHandler<IInteractableBehaviour> OnGotInteracted;
 
-    protected List<IInteractionBehaviour> behavioursList = new();
+    protected List<IInteractableBehaviour> behavioursList = new();
 
     protected virtual void Start()
     {
@@ -17,7 +17,7 @@ public class Interactable : MonoBehaviour
         OnGotInteracted += GetInteracted_Interactable;
     }
 
-    public void GetInteracted(IInteractionBehaviour interactionBeaviour)
+    public void GetInteracted(IInteractableBehaviour interactionBeaviour)
     {
         //Debug.Log("GetInteracted from Interactable class is called.");
         OnGotInteracted?.Invoke(this, interactionBeaviour);
@@ -29,22 +29,22 @@ public class Interactable : MonoBehaviour
         return true;
     }
 
-    public KeyCode GetInteractionKey(IInteractionBehaviour interactionBehaviour)
+    public KeyCode GetInteractionKey(IInteractableBehaviour interactionBehaviour)
     {
         return interactionBehaviour.InteractionKeyCode;
     }
 
-    public List<IInteractionBehaviour> GetInteractionBehaviours()
+    public List<IInteractableBehaviour> GetInteractionBehaviours()
     {
         return behavioursList;
     }
 
-    protected void AddBehaviour(IInteractionBehaviour interactionBehaviour)
+    protected void AddBehaviour(IInteractableBehaviour interactionBehaviour)
     {
         behavioursList.Add(interactionBehaviour);
     }
 
-    protected IInteractionBehaviour DeleteBehaviour<T>(IInteractionBehaviour interactionBehaviour) where T : IInteractionBehaviour
+    protected IInteractableBehaviour DeleteBehaviour<T>(IInteractableBehaviour interactionBehaviour) where T : IInteractableBehaviour
     {
         var behaviour = behavioursList.FirstOrDefault(b => b is T);
         if (behaviour != null)
@@ -53,13 +53,13 @@ public class Interactable : MonoBehaviour
         return behaviour;
     }
 
-    protected virtual void GetInteracted_Interactable(object sender, IInteractionBehaviour interactionBehaviour)
+    protected virtual void GetInteracted_Interactable(object sender, IInteractableBehaviour interactionBehaviour)
     {
         //Debug.Log($"[Base Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("This object is interacted by the player.");
     }
 
-    public virtual void UpdatePosition(Vector3 newPosition)
+    protected void UpdatePosition(Vector3 newPosition)
     {
         gameObject.transform.position = newPosition;
     }

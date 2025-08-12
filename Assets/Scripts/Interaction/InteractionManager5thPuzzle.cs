@@ -147,7 +147,7 @@ public class InteractionManager5thPuzzle : InteractionManager
 
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
     {
-        foreach (IInteractionBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
+        foreach (IInteractableBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
         {
             DetectBehaviourApplied(interactable, interactionBehaviour);
         }

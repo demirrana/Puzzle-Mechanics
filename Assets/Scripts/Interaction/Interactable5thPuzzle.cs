@@ -30,7 +30,7 @@ public class Interactable5thPuzzle : Interactable
         OnInteractableStateChanged += Interactable5thPuzzle_OnInteractableStateChanged;
     }
 
-    protected override void GetInteracted_Interactable(object sender, IInteractionBehaviour interactionBehaviour)
+    protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour interactionBehaviour)
     {
         //Debug.Log($"[Child Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("GetInteracted_Interactable of Interactable5thPuzzle is called.");

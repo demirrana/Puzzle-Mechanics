@@ -1,6 +1,17 @@
 using UnityEngine;
 
-public class InteractableBehaviourCollectFromFloor : IInteractableBehaviour<Interactable5thPuzzle>
+public interface IInteractableBehaviour
+{
+    KeyCode InteractionKeyCode { get; }
+    void Interact(Interactable interactable) { }
+}
+
+public interface IInteractableBehaviour<T> : IInteractableBehaviour where T : Interactable
+{
+    void Interact(T interactable) { }
+}
+
+public class InteractableBehaviourTable : IInteractableBehaviour<Interactable5thPuzzle>
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 

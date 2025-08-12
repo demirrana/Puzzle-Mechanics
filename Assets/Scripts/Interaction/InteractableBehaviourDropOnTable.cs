@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class InteractableBehaviourDropOnTable : IInteractionBehaviour<Interactable5thPuzzle>
+public class InteractableBehaviourDropOnTable : IInteractableBehaviour<Interactable5thPuzzle>
 {
     public KeyCode InteractionKeyCode => KeyCode.E;
 
-    void IInteractionBehaviour.Interact(Interactable interactable)
+    void IInteractableBehaviour.Interact(Interactable interactable)
     {
         Interact(interactable as Interactable5thPuzzle);
     }

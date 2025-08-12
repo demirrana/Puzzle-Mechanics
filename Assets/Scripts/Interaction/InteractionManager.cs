@@ -14,9 +14,9 @@ public class InteractionManager : MonoBehaviour
     public class InteractionBehaviourEventArgs : EventArgs
     {
         public Interactable InteractedObject { get; }
-        public IInteractionBehaviour InteractionBehaviour { get; }
+        public IInteractableBehaviour InteractionBehaviour { get; }
 
-        public InteractionBehaviourEventArgs(Interactable interactable, IInteractionBehaviour interactionBehaviour)
+        public InteractionBehaviourEventArgs(Interactable interactable, IInteractableBehaviour interactionBehaviour)
         {
             InteractedObject = interactable;
             InteractionBehaviour = interactionBehaviour;
@@ -67,14 +67,14 @@ public class InteractionManager : MonoBehaviour
 
     protected void DetectBehavioursApplied(Interactable interactable)
     {
-        foreach (IInteractionBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
+        foreach (IInteractableBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
         {
             DetectBehaviourApplied(interactable, interactionBehaviour);
         }
     }
 
     //Invokes the key pressing process by checking that behaviour's specific key
-    protected void DetectBehaviourApplied(Interactable interactable, IInteractionBehaviour interactionBehaviour)
+    protected void DetectBehaviourApplied(Interactable interactable, IInteractableBehaviour interactionBehaviour)
     {
         if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
         {
