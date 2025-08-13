@@ -18,18 +18,20 @@ public class InteractionPanel : MonoBehaviour
 
     private void Start()
     {
-        InteractionManager.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
-        InteractionManager.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
-        InteractionManager.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
+        InteractionManager5thPuzzle.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
+        InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
+        InteractionManager5thPuzzle.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
     }
 
-    private void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
+    //Interactable<T> may be required for more manager classes handling
+    private void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
         //Debug.Log("Interactable approached");
         Show();
     }
 
-    private void InteractableInteracted_PlayerInteractionManager(object sender, InteractionManager.InteractionBehaviourEventArgs e)
+    //Interactable<T> may be required for more manager classes handling
+    private void InteractableInteracted_PlayerInteractionManager(object sender, InteractionManager<IInteractableBehaviour5thPuzzle>.InteractionBehaviourEventArgs e)
     {
         //Debug.Log("Interactable interacted");
         Hide();

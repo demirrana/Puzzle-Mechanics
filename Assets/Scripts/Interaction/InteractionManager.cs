@@ -4,19 +4,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class InteractionManager : MonoBehaviour
+public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehaviour
 {
 
-    public event EventHandler<Interactable> OnInteractionConditionsMet;
+    public event EventHandler<Interactable<T>> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
 
     public class InteractionBehaviourEventArgs : EventArgs
     {
-        public Interactable InteractedObject { get; }
-        public IInteractableBehaviour InteractionBehaviour { get; }
+        public Interactable<T> InteractedObject { get; }
+        public T InteractionBehaviour { get; }
 
-        public InteractionBehaviourEventArgs(Interactable interactable, IInteractableBehaviour interactionBehaviour)
+        public InteractionBehaviourEventArgs(Interactable<T> interactable, T interactionBehaviour)
         {
             InteractedObject = interactable;
             InteractionBehaviour = interactionBehaviour;
@@ -28,7 +28,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] protected int rayCount = 5;
     [SerializeField] private Transform handTransform;
 
-    protected Interactable interactableInHand = null;
+    protected Interactable<T> interactableInHand = null;
     private bool interactedOnceKeyIsPressed = true;
 
     protected virtual void Start()
@@ -43,7 +43,7 @@ public class InteractionManager : MonoBehaviour
         Debug.Log("Base class called DetectWhenInteractionConditionsMet");
     }
 
-    protected virtual void InteractionManager_InteractionConditionsMet(object sender, Interactable interactable)
+    protected virtual void InteractionManager_InteractionConditionsMet(object sender, Interactable<T> interactable)
     {
         DetectBehavioursApplied(interactable);
     }
@@ -65,16 +65,16 @@ public class InteractionManager : MonoBehaviour
         e.InteractedObject.GetInteracted(e.InteractionBehaviour);
     }
 
-    protected void DetectBehavioursApplied(Interactable interactable)
+    protected void DetectBehavioursApplied(Interactable<T> interactable)
     {
-        foreach (IInteractableBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
+        foreach (T interactionBehaviour in interactable.GetInteractionBehaviours())
         {
             DetectBehaviourApplied(interactable, interactionBehaviour);
         }
     }
 
     //Invokes the key pressing process by checking that behaviour's specific key
-    protected void DetectBehaviourApplied(Interactable interactable, IInteractableBehaviour interactionBehaviour)
+    protected void DetectBehaviourApplied(Interactable<T> interactable, T interactionBehaviour)
     {
         if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
         {
@@ -129,7 +129,7 @@ public class InteractionManager : MonoBehaviour
         return false;
     }
 
-    protected void RaiseInteractionConditionsMet(object sender, Interactable interactable)
+    protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable)
     {
         OnInteractionConditionsMet?.Invoke(sender, interactable);
     }

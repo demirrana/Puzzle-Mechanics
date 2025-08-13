@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractionManager5thPuzzle : InteractionManager
+public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehaviour5thPuzzle>
 {
     public static InteractionManager5thPuzzle Instance { get; private set; }
 
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
-    public event EventHandler<Interactable> OnInteractableApproached;
+    public event EventHandler<Interactable<IInteractableBehaviour5thPuzzle>> OnInteractableApproached;
 
     private enum GameState
     {
@@ -96,13 +96,13 @@ public class InteractionManager5thPuzzle : InteractionManager
 
     protected void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
     {
-        List<Interactable> interactableObjects = GetNearInteractablesList(colliderList);
+        List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects = GetNearInteractablesList(colliderList);
         DetectInteractableApproached(interactableObjects);
     }
 
-    protected virtual List<Interactable> GetNearInteractablesList(List<Collider> colliderList)
+    protected virtual List<Interactable<IInteractableBehaviour5thPuzzle>> GetNearInteractablesList(List<Collider> colliderList)
     {
-        List<Interactable> interactableObjects = new();
+        List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects = new();
 
         foreach (Collider collider in colliderList)
         {
@@ -111,7 +111,7 @@ public class InteractionManager5thPuzzle : InteractionManager
                 GameObject hitObject = collider.gameObject;
 
                 //Making sure the object is an interactable one
-                if (hitObject.TryGetComponent<Interactable>(out var interactableObject))
+                if (hitObject.TryGetComponent<Interactable<IInteractableBehaviour5thPuzzle>>(out var interactableObject))
                 {
                     interactableObjects.Add(interactableObject);
                 }
@@ -122,7 +122,7 @@ public class InteractionManager5thPuzzle : InteractionManager
     }
 
     //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    protected virtual void DetectInteractableApproached(List<Interactable> interactableObjects)
+    protected virtual void DetectInteractableApproached(List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects)
     {
         switch (interactableObjects.Count)
         {
@@ -140,14 +140,14 @@ public class InteractionManager5thPuzzle : InteractionManager
         }
     }
 
-    protected void RaiseInteractableApproached(object sender, Interactable interactable)
+    protected void RaiseInteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
         OnInteractableApproached?.Invoke(sender, interactable);
     }
 
-    protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable interactable)
+    protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
-        foreach (IInteractableBehaviour interactionBehaviour in interactable.GetInteractionBehaviours())
+        foreach (IInteractableBehaviour5thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
         {
             DetectBehaviourApplied(interactable, interactionBehaviour);
         }
