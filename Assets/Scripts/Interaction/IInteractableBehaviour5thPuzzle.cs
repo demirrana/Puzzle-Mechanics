@@ -8,6 +8,11 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
     public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
     {
         Debug.Log("IInteractableBehaviour5thPuzzle has called Interact.");
+        if (interactable == null)
+        {
+            Debug.LogWarning("Wrong type of interactable is found!");
+            return;
+        }
     }
 
     public virtual List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -32,14 +37,10 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -67,12 +68,8 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Collect from table");
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.ExittingTableView);
     }
@@ -102,14 +99,10 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Drop on floor");
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.OnFloor);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -132,14 +125,10 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Drop on table");
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -162,14 +151,11 @@ public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Drop on table");
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -194,14 +180,10 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -218,14 +200,10 @@ public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzz
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -242,14 +220,10 @@ public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -266,14 +240,10 @@ public class InteractableBehaviourEmptySlot : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        if (interactable == null)
-        {
-            Debug.LogWarning("Wrong type of interactable is found!");
-            return;
-        }
         Debug.Log("Collect from floor interact method is called.");
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
+        base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
