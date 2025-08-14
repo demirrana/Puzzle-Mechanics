@@ -48,7 +48,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourDropOnFloor());
-        newBehaviours.Add(new InteractableBehaviourDragOnTable());
+        newBehaviours.Add(new InteractableBehaviourDragOnTableFromHand());
         return newBehaviours;
     }
 
@@ -79,7 +79,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourDropOnFloor());
-        newBehaviours.Add(new InteractableBehaviourDragOnTable());
+        newBehaviours.Add(new InteractableBehaviourDragOnTableFromHand());
         return newBehaviours;
     }
 
@@ -137,7 +137,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
-        newBehaviours.Add(new InteractableBehaviourDragOnTable());
+        newBehaviours.Add(new InteractableBehaviourDragOnTableFromSlot());
         return newBehaviours;
     }
 
