@@ -61,11 +61,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (AreHandsFull())
         {
             //Debug.Log("Hands are full");
-            RaiseInteractionConditionsMet(this, interactableInHand); //dropping object
+            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor())); //dropping object
 
             if (IsNear(Interactable5thPuzzleTable.Instance.transform) && Interactable5thPuzzleTable.Instance.HasEmptySlots())
             {
-                RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance);
+                RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance, Interactable5thPuzzleTable.Instance.GetRequestedBehaviourFromList(new InteractableBehaviourOpenTableView()));
             }
         }
         else
@@ -82,14 +82,14 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             Debug.Log("Hands are full.");
             //object should be dragged around
             DetectEmptySlotsOnTable();
-            RaiseInteractionConditionsMet(this, interactableInHand); //exitting table view
+            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
         }
         else
         {
             Debug.Log("Hands are empty.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
         }
-        RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance); //closing table view
+        RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance, Interactable5thPuzzleTable.Instance.GetRequestedBehaviourFromList(new InteractableBehaviourCloseTableView())); //closing table view
     }
 
     protected void DetectAnyColliderApproached()
@@ -170,7 +170,8 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
-            RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance.GetPointedEmptySlot());
+            Interactable5thPuzzleTableSlot slot = Interactable5thPuzzleTable.Instance.GetPointedEmptySlot();
+            RaiseInteractionConditionsMet(this, slot, slot.GetRequestedBehaviourFromList(new InteractableBehaviourFullSlot()));
         }
     }
 
@@ -179,8 +180,8 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (!Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
             Interactable5thPuzzleTableSlot pointedFullSlot = Interactable5thPuzzleTable.Instance.GetPointedFullSlot();
-            RaiseInteractionConditionsMet(this, pointedFullSlot);
-            RaiseInteractionConditionsMet(this, pointedFullSlot.GetInteractableOnSlot());
+            RaiseInteractionConditionsMet(this, pointedFullSlot, pointedFullSlot.GetRequestedBehaviourFromList(new InteractableBehaviourEmptySlot()));
+            //RaiseInteractionConditionsMet(this, pointedFullSlot.GetInteractableOnSlot());
         }
     }
 

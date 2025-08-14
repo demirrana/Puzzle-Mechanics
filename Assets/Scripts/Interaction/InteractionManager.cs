@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehaviour
 {
 
-    public event EventHandler<Interactable<T>> OnInteractionConditionsMet;
+    public event EventHandler<InteractionBehaviourEventArgs> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
     public event EventHandler<Interactable<T>> OnInteractableInHandChanged;
@@ -60,9 +60,9 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         Debug.Log("Base class called DetectWhenInteractionConditionsMet");
     }
 
-    protected virtual void InteractionManager_InteractionConditionsMet(object sender, Interactable<T> interactable)
+    protected virtual void InteractionManager_InteractionConditionsMet(object sender, InteractionBehaviourEventArgs e)
     {
-        DetectBehavioursApplied(interactable);
+        DetectBehaviourApplied(e.InteractedObject, e.InteractionBehaviour);
     }
 
     protected virtual void InteractionManager_InteractionKeyPressed(object sender, InteractionBehaviourEventArgs e)
@@ -87,6 +87,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         interactableInHand = interactable;
     }
 
+    //Might be used when more than one behaviour can be applied to an object simultaneously
     protected void DetectBehavioursApplied(Interactable<T> interactable)
     {
         foreach (T interactionBehaviour in interactable.GetInteractionBehaviours())
@@ -151,9 +152,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         return false;
     }
 
-    protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable)
+    protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable, T behaviour)
     {
-        OnInteractionConditionsMet?.Invoke(sender, interactable);
+        if (behaviour == null)
+            return;
+        OnInteractionConditionsMet?.Invoke(sender, new InteractionBehaviourEventArgs(interactable, behaviour));
     }
 
     protected bool AreHandsFull()
