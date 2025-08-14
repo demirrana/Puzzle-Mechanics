@@ -38,6 +38,16 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractableInteracted += InteractionManager_InteractableInteracted;
     }
 
+    public Vector3 GetHandPosition()
+    {
+        return handTransform.position;
+    }
+
+    public Transform GetHandTransform()
+    {
+        return handTransform;
+    }
+
     protected virtual void DetectInteractionConditionsMet()
     {
         Debug.Log("Base class called DetectWhenInteractionConditionsMet");
@@ -132,11 +142,6 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable)
     {
         OnInteractionConditionsMet?.Invoke(sender, interactable);
-    }
-
-    protected Transform GetHandTransform()
-    {
-        return handTransform;
     }
 
     protected bool AreHandsFull()
