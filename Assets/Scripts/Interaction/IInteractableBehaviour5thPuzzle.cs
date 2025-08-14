@@ -30,7 +30,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -65,7 +65,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -100,7 +100,7 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -130,7 +130,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -160,7 +160,7 @@ public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -192,7 +192,7 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -216,7 +216,7 @@ public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzz
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -240,7 +240,7 @@ public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
@@ -264,7 +264,7 @@ public class InteractableBehaviourEmptySlot : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
         if (interactable == null)
         {
