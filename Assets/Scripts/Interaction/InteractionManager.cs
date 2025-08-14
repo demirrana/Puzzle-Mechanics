@@ -10,6 +10,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     public event EventHandler<Interactable<T>> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
+    public event EventHandler<Interactable<T>> OnInteractableInHandChanged;
 
     public class InteractionBehaviourEventArgs : EventArgs
     {
@@ -36,6 +37,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractionConditionsMet += InteractionManager_InteractionConditionsMet;
         OnInteractionKeyPressed += InteractionManager_InteractionKeyPressed;
         OnInteractableInteracted += InteractionManager_InteractableInteracted;
+        OnInteractableInHandChanged += InteractionManager_InteractableInHandChanged;
     }
 
     public Vector3 GetHandPosition()
@@ -46,6 +48,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     public Transform GetHandTransform()
     {
         return handTransform;
+    }
+
+    public void RaiseInteractableInHandChanged(Interactable<T> interactable) //Behaviours raise this event
+    {
+        OnInteractableInHandChanged?.Invoke(this, interactable);
     }
 
     protected virtual void DetectInteractionConditionsMet()
@@ -73,6 +80,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected virtual void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
     {
         e.InteractedObject.GetInteracted(e.InteractionBehaviour);
+    }
+
+    protected virtual void InteractionManager_InteractableInHandChanged(object sender, Interactable<T> interactable)
+    {
+        interactableInHand = interactable;
     }
 
     protected void DetectBehavioursApplied(Interactable<T> interactable)
@@ -147,6 +159,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected bool AreHandsFull()
     {
         return interactableInHand != null;
+    }
+
+    protected void UpdateObjectInHand(Interactable<T> interactableObject)
+    {
+        interactableInHand = interactableObject;
     }
 
     //Creates a distinction between (key required for that interaction is pressed) and (interaction taking place)
