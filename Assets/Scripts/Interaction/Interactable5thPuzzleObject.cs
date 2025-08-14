@@ -34,7 +34,7 @@ public class Interactable5thPuzzleObject : Interactable5thPuzzle
     {
         //Debug.Log($"[Child Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("GetInteracted_Interactable of Interactable5thPuzzle is called.");
-        interactionBehaviour.Interact(this);
+        interactionBehaviour.Interact<IInteractableBehaviour5thPuzzle>(this);
         Debug.Log("Behaviour keycode: " + interactionBehaviour.InteractionKeyCode.ToString());
     }
 
