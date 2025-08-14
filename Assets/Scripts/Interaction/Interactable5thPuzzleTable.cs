@@ -6,8 +6,8 @@ public class Interactable5thPuzzleTable : Interactable5thPuzzle
 {
     public static Interactable5thPuzzleTable Instance { get; private set; }
 
-    private List<Interactable5thPuzzleTableSlot> emptySlots; //these are gonna be changed to Interactable5thPuzzleTableSlot
-    private List<Interactable5thPuzzleTableSlot> fullSlots;
+    private List<Interactable5thPuzzleTableSlot> emptySlots = new(); //these are gonna be changed to Interactable5thPuzzleTableSlot
+    private List<Interactable5thPuzzleTableSlot> fullSlots = new();
 
     private void Awake()
     {
