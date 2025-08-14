@@ -41,6 +41,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
         //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -103,6 +104,7 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.OnFloor);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(null);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -129,6 +131,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(null);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
