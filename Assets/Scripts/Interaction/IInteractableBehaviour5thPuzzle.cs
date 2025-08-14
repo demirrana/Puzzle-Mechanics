@@ -14,6 +14,16 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
     {
         return null;
     }
+
+    public virtual Vector3 GetTargetPosition()
+    {
+        return Vector3.zero;
+    }
+
+    public virtual Transform GetNewParent()
+    {
+        return InteractionManager5thPuzzle.Instance.GetObjectsHolderTransform();
+    }
 }
 
 public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuzzle
@@ -35,11 +45,19 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
-
         newBehaviours.Add(new InteractableBehaviourDropOnFloor());
         newBehaviours.Add(new InteractableBehaviourDragOnTable());
-
         return newBehaviours;
+    }
+
+    public override Vector3 GetTargetPosition()
+    {
+        return InteractionManager5thPuzzle.Instance.GetHandPosition();
+    }
+
+    public override Transform GetNewParent()
+    {
+        return InteractionManager5thPuzzle.Instance.GetHandTransform();
     }
 }
 
@@ -66,6 +84,16 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
         newBehaviours.Add(new InteractableBehaviourDragOnTable());
         return newBehaviours;
     }
+
+    public override Vector3 GetTargetPosition()
+    {
+        return InteractionManager5thPuzzle.Instance.GetHandPosition();
+    }
+
+    public override Transform GetNewParent()
+    {
+        return InteractionManager5thPuzzle.Instance.GetHandTransform();
+    }
 }
 
 public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
@@ -89,6 +117,12 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
         List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
         newBehaviours.Add(new InteractableBehaviourPickUpFromFloor());
         return newBehaviours;
+    }
+
+    public override Vector3 GetTargetPosition()
+    {
+        Vector3 handPosition = InteractionManager5thPuzzle.Instance.GetHandPosition();
+        return new Vector3(handPosition.x, 0f, handPosition.z + 1f); //will be changed to find the nearest uncolliding position
     }
 }
 
@@ -114,6 +148,12 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
         newBehaviours.Add(new InteractableBehaviourDragOnTable());
         return newBehaviours;
     }
+
+    //Might be changed since GetPointedEmptySlot is called twice in two different scopes
+    public override Vector3 GetTargetPosition()
+    {
+        return Interactable5thPuzzleTable.Instance.GetPointedEmptySlot().transform.position;
+    }
 }
 
 public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
@@ -138,6 +178,13 @@ public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
         newBehaviours.Add(new InteractableBehaviourPickUpFromTableToHand());
         newBehaviours.Add(new InteractableBehaviourPutOnTableSlot());
         return newBehaviours;
+    }
+
+    //After this, object should be following the position of the mouse
+    public override Vector3 GetTargetPosition()
+    {
+        CameraManager cameraManager = CameraManager.Instance;
+        return cameraManager.GetActiveCamera().transform.position - Vector3.up;
     }
 }
 
