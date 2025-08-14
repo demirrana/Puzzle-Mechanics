@@ -53,7 +53,7 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
         return behaviour;
     }
 
-    protected virtual void GetInteracted_Interactable<R>(object sender, R interactionBehaviour) where R : IInteractableBehaviour
+    protected virtual void GetInteracted_Interactable(object sender, T interactionBehaviour)
     {
         //Debug.Log($"[Base Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("This object is interacted by the player.");

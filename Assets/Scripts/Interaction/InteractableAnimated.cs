@@ -14,7 +14,7 @@ public class InteractableAnimated : Interactable<IInteractableBehaviour>
         animator = GetComponent<Animator>();
     }
 
-    override protected void GetInteracted_Interactable<IInteractableBehaviour>(object sender, IInteractableBehaviour e)
+    override protected void GetInteracted_Interactable(object sender, IInteractableBehaviour e)
     {
         PlayerScriptsManager.Instance.DisableInteractionScript();
         Debug.Log("This object is interacted by the player and the interaction script is disabled.");
