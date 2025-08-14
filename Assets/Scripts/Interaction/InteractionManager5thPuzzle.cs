@@ -10,6 +10,8 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable<IInteractableBehaviour5thPuzzle>> OnInteractableApproached;
 
+    [SerializeField] private Transform puzzle5ObjectsHolder;
+
     private enum GameState
     {
         WorldView,
@@ -33,6 +35,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     private void Update()
     {
         DetectInteractionConditionsMet();
+    }
+
+    public Transform GetObjectsHolderTransform()
+    {
+        return puzzle5ObjectsHolder;
     }
 
     protected override void DetectInteractionConditionsMet()

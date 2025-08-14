@@ -550,7 +550,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 179816520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2d91b6083bd8a48963535e013c6f1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 41fb399bd8d2e884ca21430698d125af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &267234225
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 815927341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2d91b6083bd8a48963535e013c6f1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 41fb399bd8d2e884ca21430698d125af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &821576952
@@ -3136,7 +3136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786758772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2d91b6083bd8a48963535e013c6f1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 41fb399bd8d2e884ca21430698d125af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1860901266
@@ -3495,6 +3495,7 @@ MonoBehaviour:
   playerHeight: 1.67
   rayCount: 5
   handTransform: {fileID: 1040594790}
+  puzzle5ObjectsHolder: {fileID: 2098341151}
 --- !u!1 &1997342647
 GameObject:
   m_ObjectHideFlags: 0
