@@ -32,38 +32,20 @@ public class Interactable5thPuzzleObject : Interactable5thPuzzle
 
     protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour5thPuzzle interactionBehaviour)
     {
-        //Debug.Log($"[Child Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
-        Debug.Log("GetInteracted_Interactable of Interactable5thPuzzle is called.");
+        //Debug.Log("GetInteracted_Interactable of Interactable5thPuzzle is called.");
         interactionBehaviour.Interact<IInteractableBehaviour5thPuzzle>(this);
-        Debug.Log("Behaviour keycode: " + interactionBehaviour.InteractionKeyCode.ToString());
+        //Debug.Log("Behaviour keycode: " + interactionBehaviour.InteractionKeyCode.ToString());
+        Vector3 newTargetPosition = interactionBehaviour.GetTargetPosition();
+        Transform newParentTransform = interactionBehaviour.GetNewParent();
+        UpdateState(newTargetPosition, newParentTransform);
+        UpdateBehavioursAfter<IInteractableBehaviour5thPuzzle>(interactionBehaviour);
+
     }
 
-    public void UpdateState(Interactable5thPuzzleState newState)
+    public void UpdateState(Vector3 newPosition, Transform newParent)
     {
-        currentState = newState;
-        Debug.Log("State is updated to " + currentState.ToString());
-        OnInteractableStateChanged?.Invoke(this, newState);
+        transform.position = newPosition;
+        transform.parent = newParent;
+        //OnInteractableStateChanged?.Invoke(this, newState);
     }
-
-    /*
-    private void Interactable5thPuzzle_OnInteractableStateChanged(object sender, Interactable5thPuzzleState newState)
-    {
-        Debug.Log("StateChanged event is triggered.");
-        switch (newState)
-        {
-            case Interactable5thPuzzleState.InHand:
-                UpdatePosition(InteractionManager.Instance.transform.position + InteractionManager.Instance.transform.up);
-                gameObject.transform.SetParent(InteractionManager.Instance.transform);
-                break;
-            case Interactable5thPuzzleState.OnFloor:
-                UpdatePosition(InteractionManager.Instance.transform.position + InteractionManager.Instance.transform.forward);
-                gameObject.transform.SetParent(PuzzleSceneObjectsManager.Instance.transform);
-                break;
-            case Interactable5thPuzzleState.OnTable:
-                break;
-            default:
-                break;
-        }
-    }
-    */
 }
