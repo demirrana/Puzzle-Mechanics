@@ -32,6 +32,8 @@ public class Interactable5thPuzzleObject : Interactable5thPuzzle
 
     protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour5thPuzzle interactionBehaviour)
     {
+        Debug.Log("Before update behaviours:");
+        LogBehaviours();
         //Debug.Log("GetInteracted_Interactable of Interactable5thPuzzle is called.");
         interactionBehaviour.Interact<IInteractableBehaviour5thPuzzle>(this);
         //Debug.Log("Behaviour keycode: " + interactionBehaviour.InteractionKeyCode.ToString());
@@ -39,7 +41,8 @@ public class Interactable5thPuzzleObject : Interactable5thPuzzle
         Transform newParentTransform = interactionBehaviour.GetNewParent();
         UpdateState(newTargetPosition, newParentTransform);
         UpdateBehavioursAfter<IInteractableBehaviour5thPuzzle>(interactionBehaviour);
-
+        Debug.Log("Updated behaviours:");
+        LogBehaviours();
     }
 
     public void UpdateState(Vector3 newPosition, Transform newParent)

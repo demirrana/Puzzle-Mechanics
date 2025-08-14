@@ -46,10 +46,12 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (currentState == GameState.WorldView)
         {
+            //Debug.Log("Game View is active");
             DetectInteractionConditionsMet_WorldView();
         }
         else
         {
+            //Debug.Log("Table View is active");
             DetectInteractionConditionsMet_TableView();
         }
     }
@@ -58,6 +60,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (AreHandsFull())
         {
+            //Debug.Log("Hands are full");
             RaiseInteractionConditionsMet(this, interactableInHand); //dropping object
 
             if (IsNear(Interactable5thPuzzleTable.Instance.transform) && Interactable5thPuzzleTable.Instance.HasEmptySlots())
@@ -67,6 +70,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         }
         else
         {
+            //Debug.Log("Hands are empty.");
             DetectAnyColliderApproached();
         }
     }
@@ -75,12 +79,14 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (AreHandsFull())
         {
+            Debug.Log("Hands are full.");
             //object should be dragged around
             DetectEmptySlotsOnTable();
             RaiseInteractionConditionsMet(this, interactableInHand); //exitting table view
         }
         else
         {
+            Debug.Log("Hands are empty.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
         }
         RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance); //closing table view
@@ -140,7 +146,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
                 break;
             //TO BE CHANGED IN THE FUTURE
             default:
-                Debug.Log("There are more than 1 interactables");
+                Debug.Log("There are more than 1 interactables: " + interactableObjects[0].name + " and " + interactableObjects[1].name);
                 //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
                 OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
                 break;

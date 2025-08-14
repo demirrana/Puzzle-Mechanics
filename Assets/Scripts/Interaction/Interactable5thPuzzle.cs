@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interactable5thPuzzle : Interactable<IInteractableBehaviour5thPuzzle>
@@ -7,5 +8,13 @@ public class Interactable5thPuzzle : Interactable<IInteractableBehaviour5thPuzzl
     protected void UpdateBehavioursAfter<T>(T behaviour) where T : IInteractableBehaviour5thPuzzle
     {
         behavioursList = behaviour.GetNewBehaviours();
+    }
+
+    protected void LogBehaviours()
+    {
+        foreach (IInteractableBehaviour5thPuzzle b in behavioursList)
+        {
+            Debug.Log(b.ToSafeString());
+        }
     }
 }
