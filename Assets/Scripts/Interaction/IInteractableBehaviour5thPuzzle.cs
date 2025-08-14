@@ -37,10 +37,8 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Collect from floor interact method is called.");
-        //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("PickUpFromFloor interact method is called.");
         InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(interactable);
     }
 
@@ -69,8 +67,8 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Collect from table");
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("PickUpFromTableToHand's interact method is called.");
 
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.ExittingTableView);
     }
@@ -100,10 +98,8 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Drop on floor");
-
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.OnFloor);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("Drop on floor's interact method is called");
         InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(null);
     }
 
@@ -127,10 +123,8 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Drop on table");
-
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("PutOnTableSlot's interact method is called.");
         InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(null);
     }
 
@@ -207,10 +201,8 @@ public class InteractableBehaviourOpenTableView : IInteractableBehaviour5thPuzzl
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Collect from floor interact method is called.");
-        //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("OpenTableView interact method is called.");
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -227,10 +219,8 @@ public class InteractableBehaviourCloseTableView : IInteractableBehaviour5thPuzz
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Collect from floor interact method is called.");
-        //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("CloseTableView interact method is called.");
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -247,10 +237,8 @@ public class InteractableBehaviourFullSlot : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Collect from floor interact method is called.");
-        //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("FullSlot interact method is called.");
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -267,10 +255,8 @@ public class InteractableBehaviourEmptySlot : IInteractableBehaviour5thPuzzle
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Collect from floor interact method is called.");
-        //interactable.UpdatePosition(PlayerInteractionManager.Instance.gameObject.transform);
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.InHand);
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("EmptySlot interact method is called.");
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
