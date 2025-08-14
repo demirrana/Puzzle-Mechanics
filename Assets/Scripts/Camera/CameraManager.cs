@@ -25,22 +25,15 @@ public class CameraManager : MonoBehaviour
     {
         SetInstance();
 
+        InitializeCameraMap();
+
         activeCameraName = CameraName.PlayerCamera; //Can be changed based on the game's first look
         activeCameraIndex = 0;
         activeCamera = PlayerCamera.Instance;
         SetActiveCamera(activeCameraName);
     }
 
-    private void Start()
-    {
-        cameraMap = new Dictionary<CameraName, CameraBase>
-        {
-            { CameraName.PlayerCamera, PlayerCamera.Instance },
-            { CameraName.GameplayCamera, GameplayCamera.Instance },
-        };   
-    }
-
-    void Update()
+    private void Update()
     {
         //To be deleted
         if (Input.GetKeyDown(KeyCode.C))
@@ -59,7 +52,9 @@ public class CameraManager : MonoBehaviour
 
         //activeCameraIndex = cameraMap. 
         activeCameraName = cameraName;
-        activeCamera = cameraMap.ElementAt(activeCameraIndex).Value;
+        Debug.Log("active camera name: " + activeCameraName);
+        Debug.Log("cameraMap 0th element: " + cameraMap.ElementAt(0).ToString());
+        //activeCamera = cameraMap.ElementAt(activeCameraIndex).Value;
     }
 
     private void SwitchToNextCamera()
@@ -80,6 +75,7 @@ public class CameraManager : MonoBehaviour
         {
             if (cameraName == virtualCamera.GetComponent<CameraBase>().GetCameraName())
             {
+                Debug.Log("Camera found and not null");
                 return virtualCamera;
             }
         }
@@ -95,6 +91,15 @@ public class CameraManager : MonoBehaviour
     public CameraBase GetActiveCamera() //might be CinemachineVirtualCameraBase instead of CameraBase
     {
         return activeCamera;
+    }
+
+    private void InitializeCameraMap()
+    {
+        cameraMap = new Dictionary<CameraName, CameraBase>
+        {
+            { CameraName.PlayerCamera, PlayerCamera.Instance },
+            { CameraName.GameplayCamera, GameplayCamera.Instance },
+        };   
     }
 
     private void SetInstance()
