@@ -145,17 +145,41 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
     }
 }
 
-public class InteractableBehaviourDragOnTable : IInteractableBehaviour5thPuzzle
+public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
     public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
     {
-        Debug.Log("Drop on table");
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("DragOnTableFromHand's interact method is called.");
+    }
 
-        //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.LoadingTableView);
+    public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
+    {
+        List<IInteractableBehaviour5thPuzzle> newBehaviours = new();
+        newBehaviours.Add(new InteractableBehaviourPickUpFromTableToHand());
+        newBehaviours.Add(new InteractableBehaviourPutOnTableSlot());
+        return newBehaviours;
+    }
+
+    //After this, object should be following the position of the mouse
+    public override Vector3 GetTargetPosition()
+    {
+        CameraManager cameraManager = CameraManager.Instance;
+        return cameraManager.GetActiveCamera().transform.position - Vector3.up;
+    }
+}
+
+public class InteractableBehaviourDragOnTableFromSlot : IInteractableBehaviour5thPuzzle
+{
+    public override KeyCode InteractionKeyCode => KeyCode.E;
+
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
+        Debug.Log("DragOnTableFromSlot interact method is called.");
+        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(interactable);
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
