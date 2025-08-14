@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
 {
-    public CameraManager Instance { get; private set; }
+    public static CameraManager Instance { get; private set; }
 
     [SerializeField] private List<CinemachineVirtualCameraBase> cameraList;
 
@@ -90,6 +90,11 @@ public class CameraManager : MonoBehaviour
     public CameraName GetActiveCameraName()
     {
         return activeCameraName;
+    }
+
+    public CameraBase GetActiveCamera() //might be CinemachineVirtualCameraBase instead of CameraBase
+    {
+        return activeCamera;
     }
 
     private void SetInstance()
