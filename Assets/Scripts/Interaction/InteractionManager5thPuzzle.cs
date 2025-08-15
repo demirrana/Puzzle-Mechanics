@@ -76,6 +76,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             //Debug.Log("Hands are empty.");
             DetectAnyColliderApproached();
+            //could be simplified
+            if (IsNear(Interactable5thPuzzleTable.Instance.transform) && !Interactable5thPuzzleTable.Instance.HasEmptySlots())
+            {
+                Interactable5thPuzzleTable.Instance.DetectOpenTableView();
+            }
         }
     }
 
@@ -92,6 +97,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             Debug.Log("Hands are empty.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
+            Interactable5thPuzzleTable.Instance.DetectCloseTableView();
         }
     }
 

@@ -31,6 +31,28 @@ public class Interactable5thPuzzleTable : MonoBehaviour
         OnTableViewDeactivated?.Invoke(this, null);
     }
 
+    public void DetectOpenTableView() //for when table opening can't be controlled through object behaviours since no object is in hand
+    {
+        if (IsTableViewOpenKeyPressed())
+            RaiseTableViewActivated();
+    }
+
+    public void DetectCloseTableView() //for when table closing can't be controlled through object behaviours since no object is in hand
+    {
+        if (IsTableViewCloseKeyPressed())
+            RaiseTableViewDeactivated();
+    }
+
+    private bool IsTableViewOpenKeyPressed()
+    {
+        return Input.GetKeyDown(KeyCode.E);
+    }
+
+    private bool IsTableViewCloseKeyPressed()
+    {
+        return Input.GetKeyDown(KeyCode.F);
+    }
+
     public bool HasEmptySlots()
     {
         return emptySlots.Count > 0;
