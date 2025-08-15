@@ -207,8 +207,10 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    //interaction panel is displayed on the empty slot that is pointed by the mouse
     private void DetectEmptySlotsOnTable()
     {
+        if (AreHandsFull() && puzzle5Table.HasEmptySlots()) //hands may be empty if game view is active in the loop
         {
             SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedEmptySlot());
             InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
