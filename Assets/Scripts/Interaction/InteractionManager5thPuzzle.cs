@@ -68,8 +68,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             //Debug.Log("Hands are full");
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor())); //dropping object
 
+            //Debug.Log("Table is near: " + IsNear(Interactable5thPuzzleTable.Instance.transform));
+            //Debug.Log("Table has empty slots: " + Interactable5thPuzzleTable.Instance.HasEmptySlots());
             if (IsNear(Interactable5thPuzzleTable.Instance.transform) && Interactable5thPuzzleTable.Instance.HasEmptySlots())
             {
+                //Debug.Log("Get requested behaviour from list: " + interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()).ToString());
             }
         }
         else
@@ -88,15 +91,15 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (AreHandsFull())
         {
-            Debug.Log("Hands are full.");
             //object should be dragged around
             DetectEmptySlotsOnTable();
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPutOnTableSlot())); //putting object on slot
+            //Debug.Log("Hands are full in the table view.");
         }
         else
         {
-            Debug.Log("Hands are empty.");
+            //Debug.Log("Hands are empty in table view.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromSlot())); //putting object on slot
             Interactable5thPuzzleTable.Instance.DetectCloseTableView();
@@ -183,6 +186,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             Interactable5thPuzzleTableSlot slot = Interactable5thPuzzleTable.Instance.GetPointedEmptySlot();
         }
+        //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);
     }
 
     private void DetectFullSlotsOnTable()
@@ -190,6 +194,8 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (!Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
             Interactable5thPuzzleTableSlot pointedFullSlot = Interactable5thPuzzleTable.Instance.GetPointedFullSlot();
+            //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
+            //Debug.Log("there are full slots and the pointed one is named: " + pointedFullSlot.name);
         }
     }
 

@@ -8,6 +8,7 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
     public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzleObject interactable)
     {
         Debug.Log("IInteractableBehaviour5thPuzzle has called Interact.");
+        //Debug.Log("IInteractableBehaviour5thPuzzle has called Interact.");
         if (interactable == null)
         {
             Debug.LogWarning("Wrong type of interactable is found!");

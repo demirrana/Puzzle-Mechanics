@@ -51,6 +51,34 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             RaiseTableViewDeactivated();
     }
 
+        Debug.Log("Slot is empty now: " + slot.name);
+        Debug.Log("Empty Slots:");
+        foreach (Interactable5thPuzzleTableSlot s in emptySlots)
+        {
+            Debug.Log(s.name);
+        }
+        Debug.Log("Slot is full now: " + slot.name);
+        Debug.Log("Full Slots:");
+        foreach (Interactable5thPuzzleTableSlot s in fullSlots)
+        {
+            Debug.Log(s.name);
+        }
+
+    //for debugging (to be deleted)
+    public void LogEmptyAndFullSlots()
+    {
+        Debug.Log("Empty Slots:");
+        foreach (Interactable5thPuzzleTableSlot s in emptySlots)
+        {
+            Debug.Log(s.name);
+        }
+        Debug.Log("Full Slots:");
+        foreach (Interactable5thPuzzleTableSlot s in fullSlots)
+        {
+            Debug.Log(s.name);
+        }
+    }
+
     private bool IsTableViewOpenKeyPressed()
     {
         return Input.GetKeyDown(KeyCode.E);
