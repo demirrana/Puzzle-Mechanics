@@ -88,7 +88,7 @@ public class CameraManager : MonoBehaviour
         return activeCameraName;
     }
 
-    public CameraBase GetActiveCamera() //might be CinemachineVirtualCameraBase instead of CameraBase
+    public CameraBase GetActiveCameraBase() //might be CinemachineVirtualCameraBase instead of CameraBase
     {
         return activeCamera;
     }
@@ -99,7 +99,7 @@ public class CameraManager : MonoBehaviour
         {
             { CameraName.PlayerCamera, PlayerCamera.Instance },
             { CameraName.GameplayCamera, GameplayCamera.Instance },
-        };   
+        };
     }
 
     private void SetInstance()
