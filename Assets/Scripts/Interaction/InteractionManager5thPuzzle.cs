@@ -92,6 +92,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             //object should be dragged around
             DetectEmptySlotsOnTable();
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
+            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPutOnTableSlot())); //putting object on slot
         }
         else
         {
