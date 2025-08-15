@@ -107,6 +107,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             //object should be dragged around
             DetectEmptySlotsOnTable();
+            MoveInteractableWithMouse(); //object is dragged on table
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPutOnTableSlot())); //putting object on slot
             //Debug.Log("Hands are full in the table view.");
@@ -230,6 +231,21 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         pointedSlotBeforeKeyPress = slot;
     }
 
+    public Vector3 GetMousePositionInWorld()
+    {
+        float distanceFromCamera = 1.7f; //TO BE CHANGED according to the real table and camera
+        Vector3 mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = distanceFromCamera;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        return worldPos;
+    }
+
+    private void MoveInteractableWithMouse()
+    {
+        float lerpSpeed = 10f;
+        Vector3 worldPos = GetMousePositionInWorld();
+        interactableInHand.transform.position = Vector3.Lerp(interactableInHand.transform.position, worldPos, Time.deltaTime * lerpSpeed);
+    }
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
