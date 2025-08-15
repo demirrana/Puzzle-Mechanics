@@ -96,7 +96,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             //Debug.Log("Hands are empty.");
             DetectAnyColliderApproached();
             //could be simplified
+            if (IsNear(puzzle5Table.transform) && puzzle5Table.HasFullSlots())
             {
+                puzzle5Table.DetectOpenTableView();
                 InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
             }
         }
@@ -118,6 +120,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             //Debug.Log("Hands are empty in table view.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
             RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromSlot())); //putting object on slot
+            puzzle5Table.DetectCloseTableView();
         }
     }
 
