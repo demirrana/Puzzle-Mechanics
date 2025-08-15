@@ -5,7 +5,7 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
 {
     public virtual KeyCode InteractionKeyCode => KeyCode.E;
 
-    public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzle interactable)
+    public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzleObject interactable)
     {
         Debug.Log("IInteractableBehaviour5thPuzzle has called Interact.");
         if (interactable == null)
@@ -35,7 +35,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("PickUpFromFloor interact method is called.");
@@ -65,7 +65,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
 
-    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("PickUpFromTableToHand's interact method is called.");
@@ -96,7 +96,7 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
 
-    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("Drop on floor's interact method is called");
@@ -121,7 +121,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("PutOnTableSlot's interact method is called.");
@@ -146,7 +146,7 @@ public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5t
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("DragOnTableFromHand's interact method is called.");
@@ -172,7 +172,7 @@ public class InteractableBehaviourDragOnTableFromSlot : IInteractableBehaviour5t
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
-    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzle interactable)
+    public override void Interact<IInteractableBehaviour5thPuzzle>(Interactable5thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("DragOnTableFromSlot interact method is called.");
