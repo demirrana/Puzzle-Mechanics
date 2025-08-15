@@ -19,6 +19,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     }
 
     private GameState currentState = GameState.WorldView;
+    private Interactable5thPuzzleTableSlot pointedSlotBeforeKeyPress = null;
 
     private void Awake()
     {
@@ -45,6 +46,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     public void ChangeGameState()
     {
         currentState = currentState == GameState.WorldView ? GameState.TableView : GameState.WorldView;
+    }
+
+    public Interactable5thPuzzleTableSlot GetPointedSlotBeforeKeyPress()
+    {
+        return pointedSlotBeforeKeyPress;
     }
 
     protected override void DetectInteractionConditionsMet()
@@ -197,6 +203,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
             //Debug.Log("there are full slots and the pointed one is named: " + pointedFullSlot.name);
         }
+    }
+
+    private void SetPointedSlotBeforeKeyPress(Interactable5thPuzzleTableSlot slot)
+    {
+        pointedSlotBeforeKeyPress = slot;
     }
 
     private void SetInstance()
