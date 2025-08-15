@@ -31,6 +31,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         base.Start();
         OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager;
         OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
+        OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager5thPuzzle;
     }
 
     private void Update()
@@ -79,6 +80,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             if (IsNear(Interactable5thPuzzleTable.Instance.transform) && Interactable5thPuzzleTable.Instance.HasEmptySlots())
             {
                 //Debug.Log("Get requested behaviour from list: " + interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()).ToString());
+                InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
+            if (!IsNear(puzzle5Table.transform))
+            {
+                InteractionPanelIndividual.RaiseInteractionPanelDeactivated(puzzle5Table);
+            }
             }
         }
         else
@@ -89,6 +95,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             if (IsNear(Interactable5thPuzzleTable.Instance.transform) && !Interactable5thPuzzleTable.Instance.HasEmptySlots())
             {
                 Interactable5thPuzzleTable.Instance.DetectOpenTableView();
+                InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
             }
         }
     }
@@ -163,6 +170,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
                 break;
             case 1:
                 OnInteractableApproached?.Invoke(this, interactableObjects[0]);
+                InteractionPanelIndividual.RaiseInteractionPanelActivated(this, interactableObjects[0].transform);
                 break;
             //TO BE CHANGED IN THE FUTURE
             default:
@@ -186,11 +194,23 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    //used to deactivate individual interaction panel
+    private void NoInteractableNear_PlayerInteractionManager5thPuzzle(object sender, EventArgs e)
+    {
+        bool tableNear = IsNear(puzzle5Table.transform);
+        bool tableHasFullSlots = puzzle5Table.HasFullSlots();
+        if (!tableNear || (tableNear && !tableHasFullSlots))
+        {
+            InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
+        }
+    }
+
     private void DetectEmptySlotsOnTable()
     {
         if (Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
             Interactable5thPuzzleTableSlot slot = Interactable5thPuzzleTable.Instance.GetPointedEmptySlot();
+            InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
         }
         //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);
     }
@@ -201,6 +221,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             Interactable5thPuzzleTableSlot pointedFullSlot = Interactable5thPuzzleTable.Instance.GetPointedFullSlot();
             //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
+            InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
             //Debug.Log("there are full slots and the pointed one is named: " + pointedFullSlot.name);
         }
     }
