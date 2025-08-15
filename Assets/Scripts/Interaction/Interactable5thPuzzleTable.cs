@@ -18,8 +18,15 @@ public class Interactable5thPuzzleTable : MonoBehaviour
         SetInstance();
     }
 
+    private void Start()
+    {
         OnTableViewActivated += ToggleTableView;
         OnTableViewDeactivated += ToggleTableView;
+        foreach (Interactable5thPuzzleTableSlot slot in GetComponentsInChildren<Interactable5thPuzzleTableSlot>())
+        {
+            emptySlots.Add(slot);
+        }
+    }
 
     public void RaiseTableViewActivated()
     {
