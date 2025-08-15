@@ -76,9 +76,12 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (AreHandsFull())
         {
             Debug.Log("Hands are full in game view.");
+            if (IsNear(puzzle5Table.transform) && puzzle5Table.HasEmptySlots())
             {
                 //Debug.Log("Get requested behaviour from list: " + interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()).ToString());
+                RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()));
                 InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
+            }
             if (!IsNear(puzzle5Table.transform))
             {
                 InteractionPanelIndividual.RaiseInteractionPanelDeactivated(puzzle5Table);
