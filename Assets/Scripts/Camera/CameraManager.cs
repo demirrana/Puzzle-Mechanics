@@ -52,12 +52,12 @@ public class CameraManager : MonoBehaviour
 
         //activeCameraIndex = cameraMap. 
         activeCameraName = cameraName;
-        Debug.Log("active camera name: " + activeCameraName);
-        Debug.Log("cameraMap 0th element: " + cameraMap.ElementAt(0).ToString());
+        //Debug.Log("active camera name: " + activeCameraName);
+        //Debug.Log("cameraMap 0th element: " + cameraMap.ElementAt(0).ToString());
         //activeCamera = cameraMap.ElementAt(activeCameraIndex).Value;
     }
 
-    private void SwitchToNextCamera()
+    public void SwitchToNextCamera()
     {
         if (activeCameraIndex == cameraMap.Count - 1)
         {
@@ -75,7 +75,7 @@ public class CameraManager : MonoBehaviour
         {
             if (cameraName == virtualCamera.GetComponent<CameraBase>().GetCameraName())
             {
-                Debug.Log("Camera found and not null");
+                //Debug.Log("Camera found and not null");
                 return virtualCamera;
             }
         }

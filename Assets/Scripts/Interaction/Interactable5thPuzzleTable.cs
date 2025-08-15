@@ -32,11 +32,13 @@ public class Interactable5thPuzzleTable : Interactable5thPuzzle
     }
 
     protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour5thPuzzle interactionBehaviour)
+    private void ToggleTableView(object sender, EventArgs e)
     {
         //Debug.Log($"[Child Handler] invoked on {name}, target type: {GetType().Name} (InstanceID {GetInstanceID()})");
         Debug.Log("GetInteracted_Interactable of Interactable5thPuzzleTable is called.");
         interactionBehaviour.Interact<IInteractableBehaviour5thPuzzle>(this);
         Debug.Log("Behaviour keycode: " + interactionBehaviour.InteractionKeyCode.ToString());
+        CameraManager.Instance.SwitchToNextCamera();
     }
 
     private float GetSlotDistanceToMouse(Interactable5thPuzzleTableSlot slot)
