@@ -169,8 +169,7 @@ public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5t
     //After this, object should be following the position of the mouse
     public override Vector3 GetTargetPosition()
     {
-        CameraManager cameraManager = CameraManager.Instance;
-        return cameraManager.GetActiveCamera().transform.position - Vector3.up;
+        return InteractionManager5thPuzzle.Instance.GetMousePositionInWorld();
     }
 }
 
@@ -200,7 +199,6 @@ public class InteractableBehaviourDragOnTableFromSlot : IInteractableBehaviour5t
     //After this, object should be following the position of the mouse
     public override Vector3 GetTargetPosition()
     {
-        CameraManager cameraManager = CameraManager.Instance;
-        return cameraManager.GetActiveCamera().transform.position - Vector3.up;
+        return InteractionManager5thPuzzle.Instance.GetMousePositionInWorld();
     }
 }
