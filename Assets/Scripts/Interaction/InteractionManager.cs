@@ -40,6 +40,13 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractableInHandChanged += InteractionManager_InteractableInHandChanged;
     }
 
+    //To be moved to a more related class!!!!!!!
+    public void ChangeMouseVisibility()
+    {
+        UnityEngine.Cursor.visible = !UnityEngine.Cursor.visible;
+        UnityEngine.Cursor.lockState = UnityEngine.Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+
     public Vector3 GetHandPosition()
     {
         return handTransform.position;

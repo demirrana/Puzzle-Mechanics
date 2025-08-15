@@ -42,6 +42,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         return puzzle5ObjectsHolder;
     }
 
+    public void ChangeGameState()
+    {
+        currentState = currentState == GameState.WorldView ? GameState.TableView : GameState.WorldView;
+    }
+
     protected override void DetectInteractionConditionsMet()
     {
         if (currentState == GameState.WorldView)

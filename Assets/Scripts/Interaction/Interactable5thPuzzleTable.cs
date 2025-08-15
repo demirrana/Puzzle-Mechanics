@@ -35,6 +35,8 @@ public class Interactable5thPuzzleTable : MonoBehaviour
     private void ToggleTableView(object sender, EventArgs e)
     {
         CameraManager.Instance.SwitchToNextCamera();
+        InteractionManager5thPuzzle.Instance.ChangeGameState();
+        InteractionManager5thPuzzle.Instance.ChangeMouseVisibility();
     }
 
     private float GetSlotDistanceToMouse(Interactable5thPuzzleTableSlot slot)
