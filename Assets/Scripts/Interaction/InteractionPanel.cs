@@ -18,7 +18,8 @@ public class InteractionPanel : MonoBehaviour
 
     private void Start()
     {
-        InteractionManager5thPuzzle.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
+        InteractionManager5thPuzzle.Instance.OnInteractionConditionsMet += InteractionConditionsMet_InteractionManager;
+        //InteractionManager5thPuzzle.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
     }
@@ -41,6 +42,24 @@ public class InteractionPanel : MonoBehaviour
     {
         //Debug.Log("No Interactable approached");
         Hide();
+    }
+
+    private void InteractionConditionsMet_InteractionManager(object sender, InteractionManager5thPuzzle.InteractionBehaviourEventArgs e)
+    {
+        bool isDragOnTableFromHand = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDragOnTableFromHand);
+        bool isDropOnFloor = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDropOnFloor);
+        bool isPutOnTableSlot = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourPutOnTableSlot);
+        bool isPickUpFromSlot = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDragOnTableFromSlot);
+        bool isPickUpFromTableToHand = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourPickUpFromTableToHand);
+
+        if (isDragOnTableFromHand || isDropOnFloor || isPutOnTableSlot || isPickUpFromSlot || isPickUpFromTableToHand)
+        {
+            Show();
+        }
+        else
+        {
+            Hide();
+        }
     }
 
     private void Hide()
