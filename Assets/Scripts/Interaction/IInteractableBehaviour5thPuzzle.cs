@@ -125,7 +125,10 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("PutOnTableSlot's interact method is called.");
-        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(null);
+        slot.SetInteractableInSlot(interactable); //slot is now full
+        Interactable5thPuzzleTable.Instance.TransferSlotToFullSlots(slot); //slot is added to fullSlots
+        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(null); //hand is empty now
+        //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //to be deleted
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
@@ -178,7 +181,10 @@ public class InteractableBehaviourDragOnTableFromSlot : IInteractableBehaviour5t
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("DragOnTableFromSlot interact method is called.");
-        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(interactable);
+        slot.SetInteractableInSlot(null); //slot is empty now
+        Interactable5thPuzzleTable.Instance.TransferSlotToEmptySlots(slot); //slot is added to emptySlots
+        InteractionManager5thPuzzle.Instance.RaiseInteractableInHandChanged(interactable); //object is in hand
+        //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //to be deleted
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
