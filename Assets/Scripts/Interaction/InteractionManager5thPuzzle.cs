@@ -31,8 +31,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     protected override void Start()
     {
         base.Start();
-        puzzle5Table = Interactable5thPuzzleTable.Instance;
-        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        InitializeInstances();
         OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager;
         OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
         OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager5thPuzzle;
@@ -246,6 +245,13 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         Vector3 worldPos = GetMousePositionInWorld();
         interactableInHand.transform.position = Vector3.Lerp(interactableInHand.transform.position, worldPos, Time.deltaTime * lerpSpeed);
     }
+
+    private void InitializeInstances()
+    { 
+        puzzle5Table = Interactable5thPuzzleTable.Instance;
+        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
