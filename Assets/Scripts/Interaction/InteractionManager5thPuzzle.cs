@@ -76,7 +76,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (AreHandsFull())
         {
             //Debug.Log("Hands are full");
-            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor())); //dropping object
 
             //Debug.Log("Table is near: " + IsNear(Interactable5thPuzzleTable.Instance.transform));
             //Debug.Log("Table has empty slots: " + Interactable5thPuzzleTable.Instance.HasEmptySlots());
@@ -87,6 +86,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             {
                 InteractionPanelIndividual.RaiseInteractionPanelDeactivated(puzzle5Table);
             }
+            if (interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor()) != null) //behaviour list may have been changed after switching to table view
+            {
+                RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor())); //dropping object
             }
         }
         else
