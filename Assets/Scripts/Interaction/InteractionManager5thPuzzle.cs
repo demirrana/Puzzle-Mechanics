@@ -65,7 +65,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
             if (IsNear(Interactable5thPuzzleTable.Instance.transform) && Interactable5thPuzzleTable.Instance.HasEmptySlots())
             {
-                RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance, Interactable5thPuzzleTable.Instance.GetRequestedBehaviourFromList(new InteractableBehaviourOpenTableView()));
             }
         }
         else
@@ -89,7 +88,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             Debug.Log("Hands are empty.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
         }
-        RaiseInteractionConditionsMet(this, Interactable5thPuzzleTable.Instance, Interactable5thPuzzleTable.Instance.GetRequestedBehaviourFromList(new InteractableBehaviourCloseTableView())); //closing table view
     }
 
     protected void DetectAnyColliderApproached()
@@ -171,7 +169,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
             Interactable5thPuzzleTableSlot slot = Interactable5thPuzzleTable.Instance.GetPointedEmptySlot();
-            RaiseInteractionConditionsMet(this, slot, slot.GetRequestedBehaviourFromList(new InteractableBehaviourFullSlot()));
         }
     }
 
@@ -180,8 +177,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (!Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
             Interactable5thPuzzleTableSlot pointedFullSlot = Interactable5thPuzzleTable.Instance.GetPointedFullSlot();
-            RaiseInteractionConditionsMet(this, pointedFullSlot, pointedFullSlot.GetRequestedBehaviourFromList(new InteractableBehaviourEmptySlot()));
-            //RaiseInteractionConditionsMet(this, pointedFullSlot.GetInteractableOnSlot());
         }
     }
 

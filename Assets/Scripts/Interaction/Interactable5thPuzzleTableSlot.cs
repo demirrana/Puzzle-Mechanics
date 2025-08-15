@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Interactable5thPuzzleTableSlot : Interactable5thPuzzle
+public class Interactable5thPuzzleTableSlot : MonoBehaviour
 {
     [SerializeField] private Transform slotTransform;
 
@@ -8,7 +8,6 @@ public class Interactable5thPuzzleTableSlot : Interactable5thPuzzle
 
     private void Awake()
     {
-        //behavioursList.Add(new GetFull());
     }
 
     public Interactable5thPuzzleObject GetInteractableOnSlot()
