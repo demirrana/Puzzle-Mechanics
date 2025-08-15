@@ -47,6 +47,7 @@ public class Interactable5thPuzzleObject : Interactable5thPuzzle
 
     public void UpdateState(Vector3 newPosition, Transform newParent)
     {
+        transform.parent = null; //makes parent null before updating position
         transform.position = newPosition;
         transform.parent = newParent;
         //OnInteractableStateChanged?.Invoke(this, newState);
