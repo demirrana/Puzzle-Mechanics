@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Interactable5thPuzzleTable : MonoBehaviour
 {
@@ -67,14 +68,30 @@ public class Interactable5thPuzzleTable : MonoBehaviour
 
     public Interactable5thPuzzleTableSlot GetPointedEmptySlot() //ray from mouse's position in the direction of camera 
     {
-        emptySlots = emptySlots.OrderBy(d => GetSlotDistanceToMouse(d)).ToList();
-        return emptySlots[0];
+        return GetPointedSlot(emptySlots);
     }
 
     public Interactable5thPuzzleTableSlot GetPointedFullSlot() //ray from mouse's position in the direction of camera 
     {
-        fullSlots = fullSlots.OrderBy(d => GetSlotDistanceToMouse(d)).ToList();
-        return fullSlots[0];
+        return GetPointedSlot(fullSlots);
+    }
+
+    //Gets each slot's projected position onto the active camera and gives the closest one to the mouse.
+    private Interactable5thPuzzleTableSlot GetPointedSlot(List<Interactable5thPuzzleTableSlot> slotList)
+    {
+        Vector3 mousePosition = Input.mousePosition;
+
+        return slotList
+        .Select(slot => new
+        {
+            Slot = slot,
+            ScreenPos = Camera.main.WorldToScreenPoint(slot.transform.position)
+        })
+        .Where(x => x.ScreenPos.z >= 0) // Ignore behind-camera objects
+        .OrderBy(x => Vector2.Distance(
+            new Vector2(x.ScreenPos.x, x.ScreenPos.y),
+            new Vector2(mousePosition.x, mousePosition.y)))
+        .FirstOrDefault()?.Slot;
     }
 
     private void ToggleTableView(object sender, EventArgs e)
@@ -82,11 +99,6 @@ public class Interactable5thPuzzleTable : MonoBehaviour
         CameraManager.Instance.SwitchToNextCamera();
         InteractionManager5thPuzzle.Instance.ChangeGameState();
         MouseManager.Instance.ChangeMouseVisibility();
-    }
-
-    private float GetSlotDistanceToMouse(Interactable5thPuzzleTableSlot slot)
-    {
-        return Vector3.Distance(slot.transform.position, Input.mousePosition);
     }
 
     private void SetInstance()
