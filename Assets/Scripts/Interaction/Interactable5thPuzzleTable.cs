@@ -81,7 +81,7 @@ public class Interactable5thPuzzleTable : MonoBehaviour
     {
         CameraManager.Instance.SwitchToNextCamera();
         InteractionManager5thPuzzle.Instance.ChangeGameState();
-        InteractionManager5thPuzzle.Instance.ChangeMouseVisibility();
+        MouseManager.Instance.ChangeMouseVisibility();
     }
 
     private float GetSlotDistanceToMouse(Interactable5thPuzzleTableSlot slot)
