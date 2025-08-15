@@ -51,18 +51,29 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             RaiseTableViewDeactivated();
     }
 
+    public void TransferSlotToEmptySlots(Interactable5thPuzzleTableSlot slot)
+    {
         Debug.Log("Slot is empty now: " + slot.name);
+        emptySlots.Add(slot);
+        fullSlots.Remove(slot);
         Debug.Log("Empty Slots:");
         foreach (Interactable5thPuzzleTableSlot s in emptySlots)
         {
             Debug.Log(s.name);
         }
+    }
+
+    public void TransferSlotToFullSlots(Interactable5thPuzzleTableSlot slot)
+    {
         Debug.Log("Slot is full now: " + slot.name);
+        fullSlots.Add(slot);
+        emptySlots.Remove(slot);
         Debug.Log("Full Slots:");
         foreach (Interactable5thPuzzleTableSlot s in fullSlots)
         {
             Debug.Log(s.name);
         }
+    }
 
     //for debugging (to be deleted)
     public void LogEmptyAndFullSlots()
@@ -92,6 +103,11 @@ public class Interactable5thPuzzleTable : MonoBehaviour
     public bool HasEmptySlots()
     {
         return emptySlots.Count > 0;
+    }
+
+    public bool HasFullSlots()
+    {
+        return fullSlots.Count > 0;
     }
 
     public Interactable5thPuzzleTableSlot GetPointedEmptySlot() //ray from mouse's position in the direction of camera 
