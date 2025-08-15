@@ -7,12 +7,28 @@ public class Interactable5thPuzzleTable : MonoBehaviour
 {
     public static Interactable5thPuzzleTable Instance { get; private set; }
 
+    public event EventHandler OnTableViewActivated;
+    public event EventHandler OnTableViewDeactivated;
+
     private List<Interactable5thPuzzleTableSlot> emptySlots = new(); //these are gonna be changed to Interactable5thPuzzleTableSlot
     private List<Interactable5thPuzzleTableSlot> fullSlots = new();
 
     private void Awake()
     {
         SetInstance();
+    }
+
+        OnTableViewActivated += ToggleTableView;
+        OnTableViewDeactivated += ToggleTableView;
+
+    public void RaiseTableViewActivated()
+    {
+        OnTableViewActivated?.Invoke(this, null);
+    }
+
+    public void RaiseTableViewDeactivated()
+    {
+        OnTableViewDeactivated?.Invoke(this, null);
     }
 
     public bool HasEmptySlots()

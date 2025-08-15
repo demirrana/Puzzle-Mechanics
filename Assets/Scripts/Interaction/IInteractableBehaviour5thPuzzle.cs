@@ -69,7 +69,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("PickUpFromTableToHand's interact method is called.");
-
+        Interactable5thPuzzleTable.Instance.RaiseTableViewDeactivated(); //game view is activated
         //interactable.UpdateState(Interactable5thPuzzle.Interactable5thPuzzleState.ExittingTableView);
     }
 
@@ -150,6 +150,8 @@ public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5t
     {
         base.Interact<IInteractableBehaviour5thPuzzle>(interactable);
         Debug.Log("DragOnTableFromHand's interact method is called.");
+        
+        Interactable5thPuzzleTable.Instance.RaiseTableViewActivated(); //table view activated
     }
 
     public override List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
