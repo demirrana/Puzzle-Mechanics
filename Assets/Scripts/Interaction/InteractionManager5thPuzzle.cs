@@ -98,6 +98,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             Debug.Log("Hands are empty.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
+            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromSlot())); //putting object on slot
             Interactable5thPuzzleTable.Instance.DetectCloseTableView();
         }
     }
