@@ -119,7 +119,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         {
             //Debug.Log("Hands are empty in table view.");
             DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
-            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromSlot())); //putting object on slot
             puzzle5Table.DetectCloseTableView();
         }
     }
@@ -220,13 +219,18 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);
     }
 
+    //Displays the interaction key on the slot that is pointed and full. Also raises the event for the object on slot to be picked up.
     private void DetectFullSlotsOnTable()
     {
+        if (puzzle5Table.HasFullSlots())
         {
             //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
             SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedFullSlot());
             InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
+            Interactable5thPuzzleObject interactableOnSlot = pointedSlotBeforeKeyPress.GetInteractableOnSlot();
             //Debug.Log("there are full slots and the pointed one is named: " + pointedFullSlot.name);
+            RaiseInteractionConditionsMet(this, interactableOnSlot, interactableOnSlot.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromSlot())); //putting object on slot
+            //Displaying interaction key on the slot tilted appropriately to the table camera
         }
     }
 
