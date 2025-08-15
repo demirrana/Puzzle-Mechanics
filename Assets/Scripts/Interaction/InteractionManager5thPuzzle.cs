@@ -214,7 +214,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (Interactable5thPuzzleTable.Instance.HasEmptySlots())
         {
-            Interactable5thPuzzleTableSlot slot = Interactable5thPuzzleTable.Instance.GetPointedEmptySlot();
+            SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedEmptySlot());
             InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
         }
         //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);
@@ -223,8 +223,8 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     private void DetectFullSlotsOnTable()
     {
         {
-            Interactable5thPuzzleTableSlot pointedFullSlot = Interactable5thPuzzleTable.Instance.GetPointedFullSlot();
             //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
+            SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedFullSlot());
             InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
             //Debug.Log("there are full slots and the pointed one is named: " + pointedFullSlot.name);
         }
