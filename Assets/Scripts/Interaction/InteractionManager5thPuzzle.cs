@@ -171,8 +171,8 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             case 0:
                 break;
             case 1:
-                OnInteractableApproached?.Invoke(this, interactableObjects[0]);
                 InteractionPanelIndividual.RaiseInteractionPanelActivated(this, interactableObjects[0].transform);
+                OnInteractableApproached?.Invoke(this, interactableObjects[0]);
                 break;
             //TO BE CHANGED IN THE FUTURE
             default:
