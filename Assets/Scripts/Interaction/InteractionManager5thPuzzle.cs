@@ -22,6 +22,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     private Interactable5thPuzzleTableSlot pointedSlotBeforeKeyPress = null;
     private InteractionPanelIndividual InteractionPanelIndividual;
     private Interactable5thPuzzleTable puzzle5Table;
+    private float dropRadius = 0.5f;
 
     private void Awake()
     {
@@ -55,6 +56,31 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     public Interactable5thPuzzleTableSlot GetPointedSlotBeforeKeyPress()
     {
         return pointedSlotBeforeKeyPress;
+    }
+
+    public float GetDropRadius()
+    {
+        return dropRadius;
+    }
+
+    public Vector3 GetNearestPosCollidingWithNothing(float dropRadius)
+    {
+        float objectRadius = 0.2f;
+        int pointCount = 6;
+        float angleStep = 360f / pointCount;
+        LayerMask layerMask = default;
+
+        for (int i = 0; i < pointCount; i++)
+        {
+            float angle = i * angleStep * Mathf.Deg2Rad;
+            float x = transform.position.x + Mathf.Cos(angle) * dropRadius;
+            float z = transform.position.z + Mathf.Sin(angle) * dropRadius;
+            Vector3 point = new(x, transform.position.y, z);
+            if (Physics.OverlapSphere(point, objectRadius, layerMask).Length == 0)
+                return point;
+        }
+
+        return GetNearestPosCollidingWithNothing(2 * dropRadius);
     }
 
     protected override void DetectInteractionConditionsMet()

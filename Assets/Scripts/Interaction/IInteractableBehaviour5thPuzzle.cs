@@ -112,8 +112,8 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 
     public override Vector3 GetTargetPosition()
     {
-        Vector3 handPosition = InteractionManager5thPuzzle.Instance.GetHandPosition();
-        return new Vector3(handPosition.x, 0f, handPosition.z + 1f); //will be changed to find the nearest uncolliding position
+        float dropRadius = InteractionManager5thPuzzle.Instance.GetDropRadius();
+        return InteractionManager5thPuzzle.Instance.GetNearestPosCollidingWithNothing(dropRadius);
     }
 }
 
