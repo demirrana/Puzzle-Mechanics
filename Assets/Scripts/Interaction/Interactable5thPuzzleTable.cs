@@ -14,6 +14,9 @@ public class Interactable5thPuzzleTable : MonoBehaviour
     private List<Interactable5thPuzzleTableSlot> emptySlots = new(); //these are gonna be changed to Interactable5thPuzzleTableSlot
     private List<Interactable5thPuzzleTableSlot> fullSlots = new();
 
+    private readonly KeyCode OpenTableViewKey = KeyCode.E;
+    private readonly KeyCode CloseTableViewKey = KeyCode.F;
+
     private void Awake()
     {
         SetInstance();
@@ -88,6 +91,16 @@ public class Interactable5thPuzzleTable : MonoBehaviour
         {
             Debug.Log(s.name);
         }
+    }
+
+    public KeyCode GetKeyForOpenTableView()
+    {
+        return OpenTableViewKey;
+    }
+
+    public KeyCode GetKeyForCloseTableView()
+    {
+        return CloseTableViewKey;
     }
 
     private bool IsTableViewOpenKeyPressed()

@@ -7,7 +7,19 @@ public class InteractionPanelIndividual : InteractionPanelBase
 {
     public static InteractionPanelIndividual Instance { get; private set; }
 
-    public event EventHandler<Transform> OnInteractionPanelActivated;
+    public class TransformKeyCodeEventArgs : EventArgs
+    {
+        public Transform PanelTargetTransform;
+        public KeyCode InteractionKeyCode;
+
+        public TransformKeyCodeEventArgs(Transform transform, KeyCode keyCode)
+        {
+            PanelTargetTransform = transform;
+            InteractionKeyCode = keyCode;
+        }
+    }
+
+    public event EventHandler<TransformKeyCodeEventArgs> OnInteractionPanelActivated;
     public event EventHandler OnInteractionPanelDeactivated;
 
     //[SerializeField] private RectTransform uiElement;
@@ -34,9 +46,9 @@ public class InteractionPanelIndividual : InteractionPanelBase
         }
     }
 
-    public void RaiseInteractionPanelActivated(object sender, Transform targetTransform)
+    public void RaiseInteractionPanelActivated(object sender, Transform targetTransform, KeyCode behaviourKeyCode)
     {
-        OnInteractionPanelActivated?.Invoke(sender, targetTransform);
+        OnInteractionPanelActivated?.Invoke(sender, new TransformKeyCodeEventArgs(targetTransform, behaviourKeyCode));
     }
 
     public void RaiseInteractionPanelDeactivated(object sender)
@@ -44,9 +56,10 @@ public class InteractionPanelIndividual : InteractionPanelBase
         OnInteractionPanelDeactivated?.Invoke(sender, null);
     }
 
-    private void InteractionPanelActivated(object sender, Transform targetTransform)
+    private void InteractionPanelActivated(object sender, TransformKeyCodeEventArgs e)
     {
-        UpdatePosition(targetTransform);
+        UpdateInteractionKeyText(e.InteractionKeyCode.ToString());
+        UpdatePosition(e.PanelTargetTransform);
         Show();
     }
 

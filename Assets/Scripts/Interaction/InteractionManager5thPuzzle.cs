@@ -171,14 +171,16 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectNearTableForPuttingObject()
     {
-        RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()));
-        InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
+        InteractableBehaviourDragOnTableFromHand dragOnTableFromHand = new();
+        RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(dragOnTableFromHand));
+        ActivateInteractionPanel(this, puzzle5Table.transform, dragOnTableFromHand.InteractionKeyCode);
     }
 
     private void DetectNearTableWithObjectsOnIt()
     {
+        KeyCode openTableViewKey = puzzle5Table.GetKeyForOpenTableView();
         puzzle5Table.DetectOpenTableView();
-        InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
+        ActivateInteractionPanel(this, puzzle5Table.transform, openTableViewKey);
     }
 
     protected void DetectAnyColliderApproached()
@@ -231,7 +233,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
             case 0:
                 break;
             case 1:
-                InteractionPanelIndividual.RaiseInteractionPanelActivated(this, interactableObjects[0].transform);
+                Interactable<IInteractableBehaviour5thPuzzle> interactable = interactableObjects[0];
+                InteractableBehaviourPickUpFromFloor pickUpFromFloor = new();
+                ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
                 OnInteractableApproached?.Invoke(this, interactableObjects[0]);
                 break;
             //TO BE CHANGED IN THE FUTURE
@@ -273,10 +277,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         if (AreHandsFull() && puzzle5Table.HasEmptySlots()) //hands may be empty if game view is active in the loop
         {
             SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedEmptySlot());
-            InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
+            Transform pointedSlotTransform = pointedSlotBeforeKeyPress.transform;
+            InteractableBehaviourPutOnTableSlot putOnSlot = new();
+            ActivateInteractionPanel(this, pointedSlotTransform, putOnSlot.InteractionKeyCode);
             //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);
-            //Displaying interaction key on the slot tilted appropriately to the table camera
-            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPutOnTableSlot())); //putting object on slot
+            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(putOnSlot)); //putting object on slot
         }
     }
 
@@ -285,19 +290,26 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (puzzle5Table.HasFullSlots())
         {
-            //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
             SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedFullSlot());
-            InteractionPanelIndividual.RaiseInteractionPanelActivated(this, pointedSlotBeforeKeyPress.transform);
+            Transform pointedSlotTransform = pointedSlotBeforeKeyPress.transform;
+            InteractableBehaviourDragOnTableFromSlot pickUpFromSlot = new();
+            //Interactable5thPuzzleTable.Instance.LogEmptyAndFullSlots(); //for debugging
+            ActivateInteractionPanel(this, pointedSlotTransform, pickUpFromSlot.InteractionKeyCode);
+            
             Interactable5thPuzzleObject interactableOnSlot = pointedSlotBeforeKeyPress.GetInteractableOnSlot();
             //Debug.Log("there are full slots and the pointed one is named: " + pointedFullSlot.name);
-            RaiseInteractionConditionsMet(this, interactableOnSlot, interactableOnSlot.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromSlot())); //putting object on slot
-            //Displaying interaction key on the slot tilted appropriately to the table camera
+            RaiseInteractionConditionsMet(this, interactableOnSlot, interactableOnSlot.GetRequestedBehaviourFromList(pickUpFromSlot)); //putting object on slot
         }
     }
 
     private void SetPointedSlotBeforeKeyPress(Interactable5thPuzzleTableSlot slot)
     {
         pointedSlotBeforeKeyPress = slot;
+    }
+
+    private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
     }
 
     public Vector3 GetMousePositionInWorld()

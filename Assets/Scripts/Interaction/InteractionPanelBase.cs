@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,11 @@ public class InteractionPanelBase : MonoBehaviour
     protected virtual void Awake()
     {
         Hide();
+    }
+
+    protected virtual void UpdateInteractionKeyText(String newText)
+    {
+        interactionKeyText.text = newText;
     }
 
     protected void Hide()
