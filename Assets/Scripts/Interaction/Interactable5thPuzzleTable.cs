@@ -143,6 +143,8 @@ public class Interactable5thPuzzleTable : MonoBehaviour
         CameraManager.Instance.SwitchToNextCamera();
         InteractionManager5thPuzzle.Instance.ChangeGameState();
         MouseManager.Instance.ChangeMouseVisibility();
+        if (PlayerMovementManager.Instance.enabled) PlayerScriptsManager.Instance.DisableMovementScript();
+        else PlayerScriptsManager.Instance.EnableMovementScript();
     }
 
     private void SetInstance()
