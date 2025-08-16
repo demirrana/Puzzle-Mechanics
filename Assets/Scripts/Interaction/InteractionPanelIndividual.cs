@@ -62,18 +62,6 @@ public class InteractionPanelIndividual : InteractionPanelBase
         //uiElement.position = targetTransform.position + Vector3.up;
     }
 
-    private void Hide()
-    {
-        interactionPanelBackground.enabled = false;
-        interactionKeyText.enabled = false;
-    }
-
-    private void Show()
-    {
-        interactionPanelBackground.enabled = true;
-        interactionKeyText.enabled = true;
-    }
-
     private bool IsDisplayed()
     {
         return interactionPanelBackground.enabled;

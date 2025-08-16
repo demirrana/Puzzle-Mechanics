@@ -62,18 +62,6 @@ public class InteractionPanel : InteractionPanelBase
         }
     }
 
-    private void Hide()
-    {
-        interactionPanelBackground.enabled = false;
-        interactionKeyText.enabled = false;
-    }
-
-    private void Show()
-    {
-        interactionPanelBackground.enabled = true;
-        interactionKeyText.enabled = true;
-    }
-
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
