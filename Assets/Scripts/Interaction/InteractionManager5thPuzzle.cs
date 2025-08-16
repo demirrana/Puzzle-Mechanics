@@ -73,34 +73,18 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     protected void DetectInteractionConditionsMet_WorldView()
     {
+        bool isTableNear = IsNear(puzzle5Table.transform);
+        bool hasTableEmptySlots = puzzle5Table.HasEmptySlots();
+        bool hasTableFullSlots = puzzle5Table.HasFullSlots();
+        bool isDropOnFloorPossible = interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor()) != null;
+
         if (AreHandsFull())
         {
-            Debug.Log("Hands are full in game view.");
-            if (IsNear(puzzle5Table.transform) && puzzle5Table.HasEmptySlots())
-            {
-                //Debug.Log("Get requested behaviour from list: " + interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()).ToString());
-                RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()));
-                InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
-            }
-            if (!IsNear(puzzle5Table.transform))
-            {
-                InteractionPanelIndividual.RaiseInteractionPanelDeactivated(puzzle5Table);
-            }
-            if (interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor()) != null) //behaviour list may have been changed after switching to table view
-            {
-                RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor())); //dropping object
-            }
+            DetectConditionsMet_WorldViewHandsFull(isTableNear, hasTableEmptySlots, isDropOnFloorPossible);
         }
         else
         {
-            Debug.Log("Hands are empty in game view.");
-            DetectAnyColliderApproached();
-            //could be simplified
-            if (IsNear(puzzle5Table.transform) && puzzle5Table.HasFullSlots())
-            {
-                puzzle5Table.DetectOpenTableView();
-                InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
-            }
+            DetectConditionsMet_WorldViewHandsEmpty(isTableNear, hasTableFullSlots);
         }
     }
 
@@ -108,17 +92,67 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         if (AreHandsFull())
         {
-            Debug.Log("Hands are full in the table view.");
-            MoveInteractableWithMouse(); //object is dragged on table
-            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
-            DetectEmptySlotsOnTable(); //finds slots to put the object on and raises that event
+            DetectConditionsMet_TableViewHandsFull();
         }
         else
         {
-            Debug.Log("Hands are empty in table view.");
-            DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
-            puzzle5Table.DetectCloseTableView();
+            DetectConditionsMet_TableViewHandsEmpty();
         }
+    }
+
+    protected void DetectConditionsMet_WorldViewHandsFull(bool isTableNear, bool hasTableEmptySlots, bool isDropOnFloorPossible)
+    {
+        Debug.Log("Hands are full in game view.");
+        if (isTableNear && hasTableEmptySlots)
+        {
+            //Debug.Log("Get requested behaviour from list: " + interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()).ToString());
+            DetectNearTableForPuttingObject();
+        }
+        if (!isTableNear)
+        {
+            InteractionPanelIndividual.RaiseInteractionPanelDeactivated(puzzle5Table);
+        }
+        if (isDropOnFloorPossible) //behaviour list may have been changed after switching to table view
+        {
+            RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor())); //dropping object
+        }
+    }
+
+    protected void DetectConditionsMet_WorldViewHandsEmpty(bool isTableNear, bool hasTableFullSlots)
+    {
+        Debug.Log("Hands are empty in game view.");
+        DetectAnyColliderApproached();
+        if (isTableNear && hasTableFullSlots)
+        {
+            DetectNearTableWithObjectsOnIt();
+        }
+    }
+
+    protected void DetectConditionsMet_TableViewHandsFull()
+    {
+        Debug.Log("Hands are full in the table view.");
+        MoveInteractableWithMouse(); //object is dragged on table
+        RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
+        DetectEmptySlotsOnTable(); //finds slots to put the object on and raises that event
+    }
+
+    protected void DetectConditionsMet_TableViewHandsEmpty()
+    {
+        Debug.Log("Hands are empty in table view.");
+        DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
+        puzzle5Table.DetectCloseTableView();
+    }
+
+    private void DetectNearTableForPuttingObject()
+    {
+        RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDragOnTableFromHand()));
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
+    }
+
+    private void DetectNearTableWithObjectsOnIt()
+    {
+        puzzle5Table.DetectOpenTableView();
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(this, puzzle5Table.transform);
     }
 
     protected void DetectAnyColliderApproached()
