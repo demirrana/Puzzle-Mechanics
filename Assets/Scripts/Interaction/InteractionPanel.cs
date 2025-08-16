@@ -3,17 +3,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionPanel : MonoBehaviour
+public class InteractionPanel : InteractionPanelBase
 {
     public static InteractionPanel Instance { get; private set; }
 
-    [SerializeField] private Image interactionPanelBackground;
-    [SerializeField] private TextMeshProUGUI interactionKeyText;
+    //[SerializeField] private Image interactionPanelBackground;
+    //[SerializeField] private TextMeshProUGUI interactionKeyText;
 
-    private void Awake()
+    protected override void Awake()
     {
         SetInstance();
-        Hide();
+        base.Awake();
     }
 
     private void Start()

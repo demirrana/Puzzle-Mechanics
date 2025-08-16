@@ -3,21 +3,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionPanelIndividual : MonoBehaviour
+public class InteractionPanelIndividual : InteractionPanelBase
 {
     public static InteractionPanelIndividual Instance { get; private set; }
 
     public event EventHandler<Transform> OnInteractionPanelActivated;
     public event EventHandler OnInteractionPanelDeactivated;
 
-    [SerializeField] private RectTransform uiElement;
-    [SerializeField] private Image interactionPanelBackground;
-    [SerializeField] private TextMeshProUGUI interactionKeyText;
+    //[SerializeField] private RectTransform uiElement;
+    //[SerializeField] private Image interactionPanelBackground;
+    //[SerializeField] private TextMeshProUGUI interactionKeyText;
 
-    private void Awake()
+    protected override void Awake()
     {
         SetInstance();
-        Hide();
+        base.Awake();
     }
 
     private void Start()
