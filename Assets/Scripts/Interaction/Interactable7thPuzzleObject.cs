@@ -9,3 +9,10 @@ public class Interactable7thPuzzleObject : Interactable7thPuzzle
         initialBehavioursList.Add(new InteractableBehaviourBeChosen());
         behavioursList = initialBehavioursList;
     }
+
+    protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour7thPuzzle interactionBehaviour)
+    {
+        interactionBehaviour.Interact<IInteractableBehaviour7thPuzzle>(this);
+        UpdateBehavioursAfter(interactionBehaviour);
+    }
+}
