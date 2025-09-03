@@ -52,6 +52,19 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
         return default;
     }
 
+    public bool HasBehaviour(T behaviour)
+    {
+        foreach (T behaviourInList in behavioursList)
+        {
+            if (behaviourInList.GetType() == behaviour.GetType())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     protected void AddBehaviour(T interactionBehaviour)
     {
         behavioursList.Add(interactionBehaviour);
