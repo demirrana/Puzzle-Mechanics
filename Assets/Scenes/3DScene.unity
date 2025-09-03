@@ -14086,8 +14086,8 @@ MonoBehaviour:
   playerHeight: 1.67
   rayCount: 5
   handTransform: {fileID: 1040594790}
-  choosingCircle1: {fileID: 0}
-  choosingCircle2: {fileID: 0}
+  choosingCircle1: {fileID: 23859131}
+  choosingCircle2: {fileID: 447083526}
 --- !u!1 &1957844719
 GameObject:
   m_ObjectHideFlags: 0
