@@ -99,7 +99,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     //Invokes the key pressing process by checking that behaviour's specific key
     protected void DetectBehaviourApplied(Interactable<T> interactable, T interactionBehaviour)
     {
-        if (IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
+        if (interactable.HasBehaviour(interactionBehaviour) && IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
         {
             InteractionBehaviourEventArgs e = new(interactable, interactionBehaviour);
             OnInteractionKeyPressed?.Invoke(this, e);
