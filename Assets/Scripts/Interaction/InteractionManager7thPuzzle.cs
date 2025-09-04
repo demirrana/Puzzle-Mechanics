@@ -11,6 +11,8 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable7thPuzzleObject> OnInteractableApproached;
+    public event EventHandler<KeyCode> OnBothInteractablesAreChosen;
+    public event EventHandler OnAnyInteractableIsDeselected;
 
     [SerializeField] private ParticleSystem choosingCircle1;
     [SerializeField] private ParticleSystem choosingCircle2;
