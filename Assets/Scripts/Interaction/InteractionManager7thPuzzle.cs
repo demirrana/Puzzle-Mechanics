@@ -30,6 +30,13 @@ using UnityEngine;
         OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager7thPuzzle;
     }
 
+    private void Update()
+    {
+        //if (approachedInteractable != null)
+        //approachedInteractable.LogBehaviours();
+        DetectInteractionConditionsMet();
+        //LogChosenOnes();
+    }
 
     public void ChooseInteractable(Interactable7thPuzzleObject interactable)
     {
