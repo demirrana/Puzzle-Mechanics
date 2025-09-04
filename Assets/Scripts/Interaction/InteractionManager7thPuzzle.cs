@@ -102,6 +102,11 @@ using UnityEngine;
         InteractionPanelIndividual.RaiseInteractionPanelDeactivated(this);
     }
 
+    private void SetApproachedInteractable(Interactable7thPuzzleObject interactable)
+    {
+        approachedInteractable = interactable;
+    }
+
     private void InitializeInstances()
     {
         interactable1stChosen = interactableInHand as Interactable7thPuzzleObject;
