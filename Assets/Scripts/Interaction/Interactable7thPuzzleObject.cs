@@ -3,10 +3,15 @@ using UnityEngine;
 
 public class Interactable7thPuzzleObject : Interactable7thPuzzle
 {
+    private void Awake()
+    {
+        behavioursList.Add(new InteractableBehaviourBeChosen());
+
         foreach (IInteractableBehaviour b in behavioursList)
         {
             //Debug.Log(b.ToString());
         }
+    }
 
     public void LogBehaviours()
     {
