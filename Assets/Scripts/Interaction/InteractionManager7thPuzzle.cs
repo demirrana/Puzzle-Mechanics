@@ -82,6 +82,8 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
 
         interactable2ndChosen = null;
+
+        OnAnyInteractableIsDeselected?.Invoke(this, EventArgs.Empty);
     }
 
     public void PlayChoosingVFX(Vector3 targetPosition)
