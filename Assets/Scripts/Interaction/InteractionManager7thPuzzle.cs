@@ -91,6 +91,17 @@ using UnityEngine;
         }
     }
 
+
+    private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
+    }
+
+    private void DeactivateInteractionPanel()
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelDeactivated(this);
+    }
+
     private void InitializeInstances()
     {
         interactable1stChosen = interactableInHand as Interactable7thPuzzleObject;
