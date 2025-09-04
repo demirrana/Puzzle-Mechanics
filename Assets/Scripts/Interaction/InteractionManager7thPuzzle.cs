@@ -114,6 +114,30 @@ using UnityEngine;
         ManageStoppingChoosingVFX_NoInteractableNear();
     }
 
+    private void ManageStoppingChoosingVFX_NoInteractableNear()
+    {
+        bool isOnly1stInteractableChosen = interactable1stChosen != null && interactable2ndChosen == null;
+        bool isOnly2ndInteractableChosen = interactable1stChosen == null && interactable2ndChosen != null;
+        bool noInteractableIsChosen = interactable1stChosen == null && interactable2ndChosen == null;
+
+        if (isOnly1stInteractableChosen)
+        {
+            //Debug.Log("NoInteractableNear and only 1st is chosen");
+            StopVFXForDistantInteractable(interactable1stChosen);
+        }
+        else if (isOnly2ndInteractableChosen)
+        {
+            //Debug.Log("NoInteractableNear and only 2nd is chosen");
+            StopVFXForDistantInteractable(interactable2ndChosen);
+        }
+        else if (noInteractableIsChosen) //no interactable is chosen, all vfx are stopped
+        {
+            //Debug.Log("NoInteractableNear and only none is chosen");
+            StopChoosingVFX(choosingCircle1);
+            StopChoosingVFX(choosingCircle2);
+        }
+    }
+
 
     protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
     {
