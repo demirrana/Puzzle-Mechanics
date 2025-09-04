@@ -140,6 +140,15 @@ using UnityEngine;
         DetectSwapping();
     }
 
+    private void DetectChoosingInteractable(Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable)
+    {
+        if (approachedInteractable != null)
+        {
+            //Debug.Log("There is an approached one and behaviour is checked.");
+            DetectBehaviourApplied(approachedInteractable, new InteractableBehaviourBeChosen());
+        }
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
