@@ -149,6 +149,21 @@ using UnityEngine;
         }
     }
 
+    private void DetectDeselectingInteractable(Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable)
+    {
+        if (approachedInteractable != null)
+        {
+            if (approachedInteractable == interactable1stChosen)
+            {
+                DetectBehaviourApplied(interactable1stChosen, new InteractableBehaviourBeDeselected());
+            }
+            else if (approachedInteractable == interactable2ndChosen)
+            {
+                DetectBehaviourApplied(interactable2ndChosen, new InteractableBehaviourBeDeselected());
+            }
+        }
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
