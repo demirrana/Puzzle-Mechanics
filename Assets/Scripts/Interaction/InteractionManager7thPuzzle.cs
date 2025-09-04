@@ -187,6 +187,11 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private bool IsSwapKeyPressed()
+    {
+        return Input.GetKeyDown(swapKey);
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
