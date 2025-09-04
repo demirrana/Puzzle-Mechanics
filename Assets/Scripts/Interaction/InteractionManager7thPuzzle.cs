@@ -53,6 +53,34 @@ using UnityEngine;
         interactable2ndChosen = null;
     }
 
+    public void PlayChoosingVFX(Vector3 targetPosition)
+    {
+        if (choosingCircle1.isPlaying && choosingCircle2.isPlaying) //already playing
+            return;
+
+        Vector3 vfxPosition = new(targetPosition.x, 0.2f, targetPosition.z);
+
+        if (choosingCircle1.isPlaying)
+        {
+            //Debug.Log("circle 1 is already playing");
+            choosingCircle2.transform.position = vfxPosition;
+            choosingCircle2.Play();
+        }
+        else
+        {
+            //Debug.Log("circle 2 is already playing");
+            choosingCircle1.transform.position = vfxPosition;
+            choosingCircle1.Play();
+        }
+    }
+
+    public void StopChoosingVFX(ParticleSystem vfx)
+    {
+        //Debug.Log("StopChoosingVFX is called for " + vfx.ToString());
+        if (vfx.isPlaying)
+            vfx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
