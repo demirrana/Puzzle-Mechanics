@@ -11,6 +11,7 @@ using UnityEngine;
     [SerializeField] private ParticleSystem choosingCircle1;
     [SerializeField] private ParticleSystem choosingCircle2;
 
+    private InteractionPanelIndividual InteractionPanelIndividual;
     private void Awake()
     {
         SetInstance();
