@@ -30,6 +30,29 @@ using UnityEngine;
         OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager7thPuzzle;
     }
 
+
+    public void ChooseInteractable(Interactable7thPuzzleObject interactable)
+    {
+        if (interactable1stChosen == null)
+        {
+            interactable1stChosen = interactable;
+        }
+        else
+        {
+            interactable2ndChosen = interactable;
+        }
+    }
+
+    public void DeselectInteractable(Interactable7thPuzzleObject interactable)
+    {
+        if (interactable1stChosen == interactable)
+        {
+            interactable1stChosen = interactable2ndChosen;
+        }
+
+        interactable2ndChosen = null;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
