@@ -28,6 +28,8 @@ public class InteractableBehaviourBeChosen : IInteractableBehaviour7thPuzzle
     public override void Interact<IInteractableBehaviour7thPuzzle>(Interactable7thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour7thPuzzle>(interactable);
+        InteractionManager7thPuzzle.Instance.ChooseInteractable(interactable);
+        Debug.Log("BeChosen interact method is called.");
     }
 
     public override List<IInteractableBehaviour7thPuzzle> GetNewBehaviours()
@@ -45,6 +47,8 @@ public class InteractableBehaviourBeDeselected : IInteractableBehaviour7thPuzzle
     public override void Interact<IInteractableBehaviour7thPuzzle>(Interactable7thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour7thPuzzle>(interactable);
+        InteractionManager7thPuzzle.Instance.DeselectInteractable(interactable);
+        Debug.Log("BeDeselected interact method is called.");
     }
 
     public override List<IInteractableBehaviour7thPuzzle> GetNewBehaviours()
