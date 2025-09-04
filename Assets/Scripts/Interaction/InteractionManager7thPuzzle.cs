@@ -92,6 +92,12 @@ using UnityEngine;
     }
 
 
+    protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
+    {
+        List<Interactable7thPuzzleObject> interactableObjects = GetNearInteractablesList(colliderList);
+        DetectInteractableApproached(interactableObjects);
+    }
+
     protected virtual List<Interactable7thPuzzleObject> GetNearInteractablesList(List<Collider> colliderList)
     {
         List<Interactable7thPuzzleObject> interactableObjects = new();
