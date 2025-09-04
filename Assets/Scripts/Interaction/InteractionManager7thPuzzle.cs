@@ -67,6 +67,11 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         {
             interactable2ndChosen = interactable;
         }
+
+        if (interactable2ndChosen != null)
+        {
+            OnBothInteractablesAreChosen?.Invoke(this, swapKey);
+        }
     }
 
     public void DeselectInteractable(Interactable7thPuzzleObject interactable)
