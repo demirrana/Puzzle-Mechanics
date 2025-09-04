@@ -92,6 +92,27 @@ using UnityEngine;
     }
 
 
+    protected virtual List<Interactable7thPuzzleObject> GetNearInteractablesList(List<Collider> colliderList)
+    {
+        List<Interactable7thPuzzleObject> interactableObjects = new();
+
+        foreach (Collider collider in colliderList)
+        {
+            if (collider != null)
+            {
+                GameObject hitObject = collider.gameObject;
+
+                //Making sure the object is an interactable one
+                if (hitObject.TryGetComponent<Interactable7thPuzzleObject>(out var interactableObject))
+                {
+                    interactableObjects.Add(interactableObject);
+                }
+            }
+        }
+
+        return interactableObjects;
+    }
+
     protected virtual void DetectInteractableApproached(List<Interactable7thPuzzleObject> interactableObjects)
     {
         switch (interactableObjects.Count)
