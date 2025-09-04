@@ -20,6 +20,16 @@ using UnityEngine;
     {
         SetInstance();
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        InitializeInstances();
+        OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager7thPuzzle;
+        OnInteractableApproached += InteractableApproached_PlayerInteractionManager7thPuzzle;
+        OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager7thPuzzle;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
