@@ -222,6 +222,19 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         DeselectInteractable(interactable1stChosen);
     }
 
+    private IEnumerator MoveTo(Transform obj1, Transform obj2, Vector3 target1, Vector3 target2, float duration)
+    {
+        Vector3 start1 = obj1.position;
+        Vector3 start2 = obj2.position;
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime / duration;
+            obj1.position = Vector3.Lerp(start1, target1, t);
+            obj2.position = Vector3.Lerp(start2, target2, t);
+            yield return null;
+        }
+    }
 
     protected void DetectAnyColliderApproached()
     {
