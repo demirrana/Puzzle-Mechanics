@@ -91,6 +91,14 @@ using UnityEngine;
         }
     }
 
+    private void InitializeInstances()
+    {
+        interactable1stChosen = interactableInHand as Interactable7thPuzzleObject;
+        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        interactable2ndChosen = null;
+        approachedInteractable = null;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
@@ -99,3 +107,4 @@ using UnityEngine;
         }
         Instance = this;
     }
+}
