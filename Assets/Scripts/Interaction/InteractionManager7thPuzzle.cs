@@ -92,6 +92,14 @@ using UnityEngine;
     }
 
 
+    private void NoInteractableNear_PlayerInteractionManager7thPuzzle(object sender, EventArgs e)
+    {
+        DeactivateInteractionPanel();
+        SetApproachedInteractable(null);
+        ManageStoppingChoosingVFX_NoInteractableNear();
+    }
+
+
     protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
     {
         List<Interactable7thPuzzleObject> interactableObjects = GetNearInteractablesList(colliderList);
