@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehaviour7thPuzzle>
+{
     public static InteractionManager7thPuzzle Instance { get; private set; }
 
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
