@@ -98,6 +98,28 @@ using UnityEngine;
         }
     }
 
+    protected override void DetectInteractionConditionsMet()
+    {
+        DetectAnyColliderApproached();
+
+        if (interactable1stChosen == null) //no interactables are chosen
+        {
+            //Debug.Log("No chosen interactables.");
+            DetectInteraction_NoInteractableChosen(approachedInteractable);
+        }
+        else if (interactable2ndChosen == null) //only one interactable is chosen
+        {
+            //Debug.Log("One chosen interactables.");
+            DetectInteraction_OneInteractableChosen(approachedInteractable);
+        }
+        else //both interactables are already chosen
+        {
+            //Debug.Log("Two chosen interactables.");
+            DetectInteraction_TwoInteractableChosen(approachedInteractable);
+            Detect1stInteractableDeselected();
+        }
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
