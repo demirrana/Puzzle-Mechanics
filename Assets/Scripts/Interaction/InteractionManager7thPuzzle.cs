@@ -125,6 +125,15 @@ using UnityEngine;
         DetectChoosingInteractable(approachedInteractable);
     }
 
+    private void DetectInteraction_OneInteractableChosen(Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable)
+    {
+        bool isApproachedChosen = approachedInteractable == interactable1stChosen || approachedInteractable == interactable2ndChosen;
+        if (approachedInteractable != null && isApproachedChosen)
+            DetectDeselectingInteractable(approachedInteractable);
+        else
+            DetectChoosingInteractable(approachedInteractable);
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
