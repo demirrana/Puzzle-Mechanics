@@ -103,16 +103,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
             vfx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
-    //Makes sure interactable1stInHand is the chosen when there is only 1 chosen interactables since it represents the first chosen interactable
-    private void Detect1stInteractableDeselected()
-    {
-        if (interactable1stChosen == null && interactable2ndChosen != null)
-        {
-            interactable1stChosen = interactable2ndChosen;
-            interactable2ndChosen = null;
-        }
-    }
-
     protected override void DetectInteractionConditionsMet()
     {
         DetectAnyColliderApproached();
@@ -131,7 +121,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         {
             //Debug.Log("Two chosen interactables.");
             DetectInteraction_TwoInteractableChosen(approachedInteractable);
-            Detect1stInteractableDeselected();
         }
     }
 
