@@ -38,6 +38,18 @@ using UnityEngine;
         //LogChosenOnes();
     }
 
+    private void LogChosenOnes()
+    {
+        if (interactable1stChosen == null)
+            Debug.Log("1st is null.");
+        else
+            Debug.Log("1st is " + interactable1stChosen.ToString());
+        if (interactable2ndChosen == null)
+            Debug.Log("2nd is null.");
+        else
+            Debug.Log("2nd is " + interactable2ndChosen.ToString());
+    }
+
     public void ChooseInteractable(Interactable7thPuzzleObject interactable)
     {
         if (interactable1stChosen == null)
