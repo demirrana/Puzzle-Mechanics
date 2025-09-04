@@ -179,6 +179,14 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void DetectSwapping()
+    {
+        if (IsSwapKeyPressed())
+        {
+            StartCoroutine(ApplySwappingBetweenObjects());
+        }
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
