@@ -192,6 +192,36 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         return Input.GetKeyDown(swapKey);
     }
 
+    private IEnumerator ApplySwappingBetweenObjects()
+    {
+        Vector3 movingInY = new(0f, 2f, 0f);
+        float movingDuration = 1.2f;
+
+        Vector3 interactable1Pos = interactable1stChosen.transform.position;
+        Vector3 interactable2Pos = interactable2ndChosen.transform.position;
+        //Quaternion interactable1Rot = interactable1stInHand.transform.rotation;
+        //Quaternion interactable2Rot = interactable2ndInHand.transform.rotation;
+        //moving into the air from floor
+        yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, interactable1Pos + movingInY, interactable2Pos + movingInY, movingDuration);
+
+        interactable1Pos = interactable1stChosen.transform.position;
+        interactable2Pos = interactable2ndChosen.transform.position;
+        interactable1stChosen.transform.position = interactable2Pos; //swapping in the air
+        interactable2ndChosen.transform.position = interactable1Pos;
+        //moving to the ground from the air
+        yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, interactable2Pos - movingInY, interactable1Pos - movingInY, movingDuration);
+
+        interactable1stChosen.ResetBehaviours(); //goes back to the initial behaviour list it had at the beginning
+        interactable2ndChosen.ResetBehaviours();
+
+        //Debug.Log("Swapping took place and vfx are stopped.");
+        StopChoosingVFX(choosingCircle1);
+        StopChoosingVFX(choosingCircle2);
+        
+        DeselectInteractable(interactable2ndChosen); //Panel is hidden (HANDLE LATER to call only hiding panel at the start of method)
+        DeselectInteractable(interactable1stChosen);
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
