@@ -138,6 +138,21 @@ using UnityEngine;
         }
     }
 
+    //Decides to stop which vfx based on the one that is closer to the chosen one. The other one is stopped.
+    private void StopVFXForDistantInteractable(Interactable7thPuzzleObject chosenInteractable)
+    {
+        float distanceToVFX1 = Vector3.Distance(chosenInteractable.transform.position, choosingCircle1.transform.position);
+        float distanceToVFX2 = Vector3.Distance(chosenInteractable.transform.position, choosingCircle2.transform.position);
+
+        if (Mathf.Abs(distanceToVFX1) > Mathf.Abs(distanceToVFX2)) //chosen one's vfx is closer to the chosen, so the other is stopped
+        {
+            StopChoosingVFX(choosingCircle1);
+        }
+        else
+        {
+            StopChoosingVFX(choosingCircle2);
+        }
+    }
 
     protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
     {
