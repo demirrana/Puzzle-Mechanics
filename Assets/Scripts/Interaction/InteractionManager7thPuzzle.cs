@@ -91,6 +91,22 @@ using UnityEngine;
         }
     }
 
+    protected void InteractableApproached_PlayerInteractionManager7thPuzzle(object sender, Interactable7thPuzzleObject interactable)
+    {
+        bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
+        bool areTwoInteractablesChosen = interactable1stChosen != null && interactable2ndChosen != null;
+        if (areTwoInteractablesChosen && !isApproachedChosen) //when 2 are already chosen, approached is used for only deselecting
+        {
+            SetApproachedInteractable(null);
+            return;
+        }
+        
+        SetApproachedInteractable(interactable);
+        //Debug.Log("InteractableApproached and vfx is displayed. The approached interactable is " + interactable.ToString());
+        PlayChoosingVFX(interactable.transform.position);
+        IInteractableBehaviour7thPuzzle interactionBehaviour = interactable.GetInteractionBehaviours()[0]; //there can be only 1 behaviour
+        ActivateInteractionPanel(this, interactable.transform, interactionBehaviour.InteractionKeyCode);
+    }
 
     private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
     {
