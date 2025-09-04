@@ -22,6 +22,8 @@ public class InteractionPanel : InteractionPanelBase
         //InteractionManager5thPuzzle.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
+        InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen += BothInteractablesAreChosen_InteractionPanel;
+        InteractionManager7thPuzzle.Instance.OnAnyInteractableIsDeselected += AnyInteractableIsDeselected_InteractionPanel;
     }
 
     //Interactable<T> may be required for more manager classes handling
@@ -41,6 +43,17 @@ public class InteractionPanel : InteractionPanelBase
     private void NoInteractableNear_PlayerInteractionManager(object sender, EventArgs e)
     {
         //Debug.Log("No Interactable approached");
+        Hide();
+    }
+
+    private void BothInteractablesAreChosen_InteractionPanel(object sender, KeyCode swapKey)
+    {
+        UpdateInteractionKeyText(swapKey.ToString());
+        Show();
+    }
+
+    private void AnyInteractableIsDeselected_InteractionPanel(object sender, EventArgs e)
+    {
         Hide();
     }
 
