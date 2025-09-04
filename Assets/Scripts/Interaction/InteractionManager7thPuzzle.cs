@@ -92,6 +92,21 @@ using UnityEngine;
     }
 
 
+    protected void DetectAnyColliderApproached()
+    {
+        List<Collider> hitColliders = GetCollidersApproached();
+
+        switch (hitColliders.Count)
+        {
+            case 0:
+                OnNoInteractableNear?.Invoke(this, null);
+                break;
+            default:
+                OnObjectCollidersApproached?.Invoke(this, hitColliders);
+                break;
+        }
+    }
+
     private void NoInteractableNear_PlayerInteractionManager7thPuzzle(object sender, EventArgs e)
     {
         DeactivateInteractionPanel();
