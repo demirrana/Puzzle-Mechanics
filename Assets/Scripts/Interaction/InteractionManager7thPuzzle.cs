@@ -134,6 +134,12 @@ using UnityEngine;
             DetectChoosingInteractable(approachedInteractable);
     }
 
+    private void DetectInteraction_TwoInteractableChosen(Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable)
+    {
+        DetectDeselectingInteractable(approachedInteractable);
+        DetectSwapping();
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
