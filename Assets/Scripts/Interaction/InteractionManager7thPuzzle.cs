@@ -12,6 +12,8 @@ using UnityEngine;
     [SerializeField] private ParticleSystem choosingCircle2;
 
     private InteractionPanelIndividual InteractionPanelIndividual;
+    private Interactable7thPuzzleObject interactable1stChosen;
+    private Interactable7thPuzzleObject interactable2ndChosen; //2nd interactable chosen to swap with the one in hand
     private void Awake()
     {
         SetInstance();
