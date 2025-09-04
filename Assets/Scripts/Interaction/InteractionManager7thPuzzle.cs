@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehaviour7thPuzzle>
 {
@@ -18,6 +19,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     private Interactable7thPuzzleObject interactable1stChosen;
     private Interactable7thPuzzleObject interactable2ndChosen; //2nd interactable chosen to swap with the one in hand
     private Interactable7thPuzzleObject approachedInteractable;
+    private KeyCode swapKey;
 
     private void Awake()
     {
@@ -310,6 +312,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
         interactable2ndChosen = null;
         approachedInteractable = null;
+        swapKey = KeyCode.K;
     }
 
     private void SetInstance()
