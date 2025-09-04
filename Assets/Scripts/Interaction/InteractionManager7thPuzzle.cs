@@ -91,6 +91,21 @@ using UnityEngine;
         }
     }
 
+
+    protected virtual void DetectInteractableApproached(List<Interactable7thPuzzleObject> interactableObjects)
+    {
+        switch (interactableObjects.Count)
+        {
+            case 1:
+                Interactable7thPuzzleObject interactable = interactableObjects[0];
+                OnInteractableApproached?.Invoke(this, interactable);
+                break;
+            default: //HANDLE LATER
+                SetApproachedInteractable(null);
+                break;
+        }
+    }
+
     protected void InteractableApproached_PlayerInteractionManager7thPuzzle(object sender, Interactable7thPuzzleObject interactable)
     {
         bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
