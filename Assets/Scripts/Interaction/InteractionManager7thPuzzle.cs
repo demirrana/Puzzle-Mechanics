@@ -120,6 +120,11 @@ using UnityEngine;
         }
     }
 
+    private void DetectInteraction_NoInteractableChosen(Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable)
+    {
+        DetectChoosingInteractable(approachedInteractable);
+    }
+
 
     protected void DetectAnyColliderApproached()
     {
