@@ -42,7 +42,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         //if (approachedInteractable != null)
         //approachedInteractable.LogBehaviours();
         DetectInteractionConditionsMet();
-        //LogChosenOnes();
+        LogChosenOnes();
     }
 
     private void LogChosenOnes()
