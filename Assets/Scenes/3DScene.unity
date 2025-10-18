@@ -13460,6 +13460,7 @@ GameObject:
   - component: {fileID: 1761728737}
   - component: {fileID: 1761728736}
   - component: {fileID: 1761728735}
+  - component: {fileID: 1761728738}
   m_Layer: 0
   m_Name: SampleBook1
   m_TagString: Untagged
@@ -13556,6 +13557,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761728733}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1761728738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761728733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cef8cdf776f9146a23ec49b9a46255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bookData: {fileID: 11400000, guid: a150a1a27c248144daf710027a50c6e2, type: 2}
 --- !u!1 &1786758772
 GameObject:
   m_ObjectHideFlags: 0
