@@ -34,6 +34,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         InitializeObjects();
     }
 
+
+    public Transform GetObjectsHolderTransform()
+    {
+        return puzzle0ObjectsHolder;
+    }
+
     
     private void SetGameState(GameState gameState)
     {
