@@ -40,6 +40,17 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         return puzzle0ObjectsHolder;
     }
 
+
+    private void DetectPlatformView()
+    {
+        //Display UI for the key to be pressed when game switches to platform view
+        if (IsEnterPlatformViewKeyPressed())
+        {
+            //Delete diplay of UI for the key of switching
+            SetGameState(GameState.BookPlatformView);
+        }
+    }
+
     private bool IsEnterPlatformViewKeyPressed()
     {
         return Input.GetKeyDown(EnterPlatformViewKey);
