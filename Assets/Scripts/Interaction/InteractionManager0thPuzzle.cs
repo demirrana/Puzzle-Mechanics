@@ -11,6 +11,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
     private static readonly KeyCode ExitPlatformViewKey = KeyCode.Escape;
 
+    private enum GameState
+    {
+        WorldView,
+        BookPlatformView
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
