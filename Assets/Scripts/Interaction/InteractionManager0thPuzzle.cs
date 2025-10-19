@@ -6,4 +6,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager0thPuzzle Instance { get; private set; }
 
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
+    }
 }
