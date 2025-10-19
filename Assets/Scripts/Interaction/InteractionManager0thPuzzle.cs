@@ -41,6 +41,14 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     }
 
 
+    private void DetectIfBookPlatformNear_HandsEmpty()
+    {
+        if (bookPlatform.HasBooks()) //Any book can be got into hand when at least one book exists on platform
+        {
+            DetectPlatformView();
+        }
+    }
+
     private void DetectPlatformView()
     {
         //Display UI for the key to be pressed when game switches to platform view
