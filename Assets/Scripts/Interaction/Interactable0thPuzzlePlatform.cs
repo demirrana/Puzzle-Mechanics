@@ -7,6 +7,8 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
 
     private List<Interactable0thPuzzleObject> booksOnPlatform;
 
+    private readonly int BookCapacity = 8;
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
