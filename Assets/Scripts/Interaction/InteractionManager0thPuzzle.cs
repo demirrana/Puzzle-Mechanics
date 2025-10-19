@@ -22,6 +22,13 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
+
+
+    private void Awake()
+    {
+        SetInstance();
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
