@@ -34,6 +34,11 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         InitializeObjects();
     }
 
+    
+    private void SetGameState(GameState gameState)
+    {
+        currentState = gameState;
+    }
 
     private void InitializeObjects()
     {
