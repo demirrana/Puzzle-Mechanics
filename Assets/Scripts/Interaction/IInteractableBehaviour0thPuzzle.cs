@@ -32,15 +32,25 @@ public class IInteractableBehaviour0thPuzzle : IInteractableBehaviour
 }
 
 public class InteractableBehaviourPickUpFromShelf : IInteractableBehaviour0thPuzzle
+{
+    public override KeyCode InteractionKeyCode => KeyCode.E;
+
 }
 
 public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
+{
+    public override KeyCode InteractionKeyCode => KeyCode.E;
+
 }
 
 public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thPuzzle
 {
+    public override KeyCode InteractionKeyCode => KeyCode.E;
+
 }
 
 public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviour0thPuzzle
 {
+    public override KeyCode InteractionKeyCode => KeyCode.E;
+
 }
