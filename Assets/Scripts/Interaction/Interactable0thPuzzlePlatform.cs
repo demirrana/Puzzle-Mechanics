@@ -9,6 +9,11 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
 
     private readonly int BookCapacity = 8;
 
+    private void Awake()
+    {
+        SetInstance();
+    }
+
     public bool HasPlace()
     {
         return booksOnPlatform.Count < BookCapacity;
