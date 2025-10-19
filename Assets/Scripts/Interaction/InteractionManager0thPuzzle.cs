@@ -29,6 +29,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         SetInstance();
     }
 
+
+    private void InitializeObjects()
+    {
+        bookPlatform = Interactable0thPuzzlePlatform.Instance;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
