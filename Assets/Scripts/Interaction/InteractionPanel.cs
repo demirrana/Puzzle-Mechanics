@@ -18,12 +18,18 @@ public class InteractionPanel : InteractionPanelBase
 
     private void Start()
     {
-        InteractionManager5thPuzzle.Instance.OnInteractionConditionsMet += InteractionConditionsMet_InteractionManager;
+        InteractionManager0thPuzzle.Instance.OnInteractionConditionsMet += InteractionConditionsMet_InteractionManager0thPuzzle;
+        InteractionManager5thPuzzle.Instance.OnInteractionConditionsMet += InteractionConditionsMet_InteractionManager5thPuzzle;
         //InteractionManager5thPuzzle.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
         InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen += BothInteractablesAreChosen_InteractionPanel;
         InteractionManager7thPuzzle.Instance.OnAnyInteractableIsDeselected += AnyInteractableIsDeselected_InteractionPanel;
+    }
+
+    private void InteractionConditionsMet_InteractionManager0thPuzzle(object sender, InteractionManager0thPuzzle.InteractionBehaviourEventArgs e)
+    {
+        //Handle displaying the key for that behaviour
     }
 
     //Interactable<T> may be required for more manager classes handling
@@ -57,7 +63,7 @@ public class InteractionPanel : InteractionPanelBase
         Hide();
     }
 
-    private void InteractionConditionsMet_InteractionManager(object sender, InteractionManager5thPuzzle.InteractionBehaviourEventArgs e)
+    private void InteractionConditionsMet_InteractionManager5thPuzzle(object sender, InteractionManager5thPuzzle.InteractionBehaviourEventArgs e)
     {
         bool isDragOnTableFromHand = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDragOnTableFromHand);
         bool isDropOnFloor = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDropOnFloor);
