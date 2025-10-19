@@ -40,6 +40,11 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         return puzzle0ObjectsHolder;
     }
 
+    private bool IsEnterPlatformViewKeyPressed()
+    {
+        return Input.GetKeyDown(EnterPlatformViewKey);
+    }
+
     
     private void SetGameState(GameState gameState)
     {
