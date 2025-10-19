@@ -15,4 +15,13 @@ public class Interactable0thPuzzleObject : Interactable0thPuzzle
         return bookPlaceOnShelf;
     }
 
+    protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour0thPuzzle interactionBehaviour)
+    {
+        interactionBehaviour.Interact<IInteractableBehaviour0thPuzzle>(this);
+        Vector3 newTargetPosition = interactionBehaviour.GetTargetPosition(this);
+        Transform newParentTransform = interactionBehaviour.GetNewParent();
+        UpdateState(newTargetPosition, newParentTransform);
+        UpdateBehavioursAfter<IInteractableBehaviour0thPuzzle>(interactionBehaviour);
+    }
+
 }
