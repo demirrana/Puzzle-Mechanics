@@ -17,6 +17,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         BookPlatformView
     }
 
+    public List<Interactable0thPuzzleObject> allBooks;
+    public List<Interactable0thPuzzleObject> representativeBooks;
+
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
     private void SetInstance()
