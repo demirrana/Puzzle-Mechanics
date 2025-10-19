@@ -6,6 +6,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager0thPuzzle Instance { get; private set; }
 
+    [SerializeField] private Transform puzzle0ObjectsHolder;
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
