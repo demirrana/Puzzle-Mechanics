@@ -19,6 +19,11 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         return booksOnPlatform.Count < BookCapacity;
     }
 
+    public bool HasBooks()
+    {
+        return booksOnPlatform.Count > 0;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
