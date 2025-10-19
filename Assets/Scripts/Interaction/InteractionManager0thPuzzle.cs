@@ -45,6 +45,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         return Input.GetKeyDown(EnterPlatformViewKey);
     }
 
+    private bool IsExitPlatformViewKeyPressed()
+    {
+        return Input.GetKeyDown(ExitPlatformViewKey);
+    }
     
     private void SetGameState(GameState gameState)
     {
