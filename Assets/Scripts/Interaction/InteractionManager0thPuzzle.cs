@@ -29,6 +29,11 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         SetInstance();
     }
 
+    private void Start()
+    {
+        InitializeObjects();
+    }
+
 
     private void InitializeObjects()
     {
