@@ -8,6 +8,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     [SerializeField] private Transform puzzle0ObjectsHolder;
 
+    private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
+    private static readonly KeyCode ExitPlatformViewKey = KeyCode.Escape;
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
