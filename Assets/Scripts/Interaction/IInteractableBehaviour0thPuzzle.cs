@@ -79,4 +79,13 @@ public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviou
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
+
+    public override List<IInteractableBehaviour0thPuzzle> GetNewBehaviours()
+    {
+        List<IInteractableBehaviour0thPuzzle> newBehaviours = new();
+        newBehaviours.Add(new InteractableBehaviourPutOnShelf());
+        newBehaviours.Add(new InteractableBehaviourPutOnBookPlatform());
+        return newBehaviours;
+    }
+
 }
