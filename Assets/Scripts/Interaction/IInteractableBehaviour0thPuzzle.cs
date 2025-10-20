@@ -110,6 +110,19 @@ public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thP
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
+    public override void Interact<IInteractableBehaviour0thPuzzle>(Interactable0thPuzzleObject interactable)
+    {
+        base.Interact<IInteractableBehaviour0thPuzzle>(interactable);
+        Debug.Log("PutOnBookPlatform interact method is called.");
+
+        interactable.SetParent(null);
+        Interactable0thPuzzlePlatform.Instance.AddBookAndUpdate(interactable);
+
+        Transform newParentTransform = GetNewParent();
+        interactable.SetParent(newParentTransform);
+
+        InteractionManager0thPuzzle.Instance.RaiseInteractableInHandChanged(null);
+    }
 
     public override List<IInteractableBehaviour0thPuzzle> GetNewBehaviours()
     {
