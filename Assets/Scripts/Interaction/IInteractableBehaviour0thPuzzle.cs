@@ -115,4 +115,8 @@ public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviou
         return InteractionManager0thPuzzle.Instance.GetHandPosition();
     }
 
+    public override Transform GetNewParent()
+    {
+        return InteractionManager0thPuzzle.Instance.GetHandTransform();
+    }
 }
