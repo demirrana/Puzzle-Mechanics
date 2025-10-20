@@ -15,7 +15,9 @@ public class Interactable0thPuzzleObject : Interactable0thPuzzle
         return bookPlaceOnShelfTransform.position;
     }
 
+    public Transform GetBookPlaceOnShelfTransform()
     {
+        return bookPlaceOnShelfTransform;
     }
 
     {
