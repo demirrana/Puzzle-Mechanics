@@ -66,6 +66,19 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+
+    private void DetectIfBookPlaceNear_HandsFull()
+    {
+        if (interactableInHand is Interactable0thPuzzleObject bookInHand)
+        {
+            if (IsNear(bookInHand.GetBookPlaceOnShelfTransform()))
+            {
+                InteractableBehaviourPutOnShelf putOnShelfBehaviour = new();
+                RaiseInteractionConditionsMet(this, bookInHand, putOnShelfBehaviour);
+            }
+        }
+    }
+
     private void DetectIfBookPlatformNear_HandsFull()
     {
         if (bookPlatform.HasPlace()) //A book can be placed on platform with other books
