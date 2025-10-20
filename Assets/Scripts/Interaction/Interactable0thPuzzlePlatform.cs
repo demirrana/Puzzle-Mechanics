@@ -18,6 +18,20 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         SetInstance();
     }
 
+    public Vector3 GetNextBookPos()
+    {
+        if (booksOnPlatform.Count == 0)
+        {
+            return topCenterPointTransform.position;
+        }
+        else
+        {
+            Vector3 newPosition = topCenterPointTransform.position;
+            newPosition.y = yValueToPutNextBook;
+            return newPosition;
+        }
+    }
+
     public bool HasPlace()
     {
         return booksOnPlatform.Count < BookCapacity;
