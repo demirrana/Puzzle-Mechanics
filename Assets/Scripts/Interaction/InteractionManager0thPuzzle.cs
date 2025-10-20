@@ -35,6 +35,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         InitializeObjects();
     }
 
+    private void Update()
+    {
+        DetectInteractionConditionsMet();
+    }
 
     public Transform GetObjectsHolderTransform()
     {
