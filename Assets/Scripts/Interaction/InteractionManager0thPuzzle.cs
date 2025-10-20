@@ -56,6 +56,11 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
             DetectIfBookPlaceNear_HandsFull();
             DetectIfBookPlatformNear_HandsFull();
         }
+        else
+        {
+            DetectIfBooksNear_HandsEmpty();
+            DetectIfBookPlatformNear_HandsEmpty();
+        }
     private void DetectIfBookPlatformNear_HandsFull()
     {
         if (bookPlatform.HasPlace()) //A book can be placed on platform with other books
