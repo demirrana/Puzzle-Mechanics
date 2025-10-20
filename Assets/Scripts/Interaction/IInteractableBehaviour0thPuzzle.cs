@@ -83,6 +83,10 @@ public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thP
     }
 
     public override Vector3 GetTargetPosition(Interactable0thPuzzleObject interactable)
+    {
+        return InteractionManager0thPuzzle.Instance.GetPosToPutBookOnPlatform(interactable);
+    }
+
 }
 
 public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviour0thPuzzle
