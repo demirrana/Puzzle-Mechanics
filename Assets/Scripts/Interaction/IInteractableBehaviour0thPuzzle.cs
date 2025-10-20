@@ -146,6 +146,19 @@ public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviou
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
+    public override void Interact<IInteractableBehaviour0thPuzzle>(Interactable0thPuzzleObject interactable)
+    {
+        base.Interact<IInteractableBehaviour0thPuzzle>(interactable);
+        Debug.Log("PickUpFromBookPlatform interact method is called.");
+
+        interactable.SetParent(null);
+        Interactable0thPuzzlePlatform.Instance.RemoveBookAndUpdate(interactable);
+
+        Transform newParentTransform = GetNewParent();
+        interactable.SetParent(newParentTransform);
+
+        InteractionManager0thPuzzle.Instance.RaiseInteractableInHandChanged(interactable);
+    }
 
     public override List<IInteractableBehaviour0thPuzzle> GetNewBehaviours()
     {
