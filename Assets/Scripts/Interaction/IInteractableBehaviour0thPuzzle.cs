@@ -49,6 +49,10 @@ public class InteractableBehaviourPickUpFromShelf : IInteractableBehaviour0thPuz
         return InteractionManager0thPuzzle.Instance.GetHandPosition();
     }
 
+    public override Transform GetNewParent()
+    {
+        return InteractionManager0thPuzzle.Instance.GetHandTransform();
+    }
 }
 
 public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
