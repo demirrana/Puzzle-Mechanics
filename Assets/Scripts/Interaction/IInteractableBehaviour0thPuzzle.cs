@@ -35,6 +35,20 @@ public class InteractableBehaviourPickUpFromShelf : IInteractableBehaviour0thPuz
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
+    public override void Interact<IInteractableBehaviour0thPuzzle>(Interactable0thPuzzleObject interactable)
+    {
+        base.Interact<IInteractableBehaviour0thPuzzle>(interactable);
+        Debug.Log("PickUpFromShelf interact method is called.");
+
+        interactable.SetParent(null);
+        Vector3 targetPosition = GetTargetPosition(interactable);
+        interactable.SetPosition(targetPosition);
+
+        Transform newParentTransform = GetNewParent();
+        interactable.SetParent(newParentTransform);
+
+        InteractionManager0thPuzzle.Instance.RaiseInteractableInHandChanged(interactable);
+    }
 
     public override List<IInteractableBehaviour0thPuzzle> GetNewBehaviours()
     {
