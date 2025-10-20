@@ -72,6 +72,10 @@ public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
         return interactable.GetBookPlaceOnShelf();
     }
 
+    public override Transform GetNewParent()
+    {
+        return InteractionManager0thPuzzle.Instance.GetObjectsHolderTransform();
+    }
 }
 
 public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thPuzzle
