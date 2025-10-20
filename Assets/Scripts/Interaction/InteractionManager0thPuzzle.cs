@@ -103,6 +103,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void DetectIfBooksNear_HandsEmpty()
+    {
+
+    }
 
     private void DetectIfBookPlatformNear_HandsEmpty()
     {
