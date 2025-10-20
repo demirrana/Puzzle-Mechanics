@@ -73,6 +73,20 @@ public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
+    public override void Interact<IInteractableBehaviour0thPuzzle>(Interactable0thPuzzleObject interactable)
+    {
+        base.Interact<IInteractableBehaviour0thPuzzle>(interactable);
+        Debug.Log("PutOnShelf interact method is called.");
+
+        interactable.SetParent(null);
+        Vector3 targetPosition = GetTargetPosition(interactable);
+        interactable.SetPosition(targetPosition);
+
+        Transform newParentTransform = GetNewParent();
+        interactable.SetParent(newParentTransform);
+
+        InteractionManager0thPuzzle.Instance.RaiseInteractableInHandChanged(null);
+    }
 
     public override List<IInteractableBehaviour0thPuzzle> GetNewBehaviours()
     {
