@@ -63,6 +63,11 @@ public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
         return newBehaviours;
     }
 
+    public override Vector3 GetTargetPosition(Interactable0thPuzzleObject interactable)
+    {
+        return interactable.GetBookPlaceOnShelf();
+    }
+
 }
 
 public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thPuzzle
