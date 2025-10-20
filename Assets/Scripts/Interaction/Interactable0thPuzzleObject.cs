@@ -3,7 +3,7 @@ using UnityEngine;
 public class Interactable0thPuzzleObject : Interactable0thPuzzle
 {
     public SOBookData bookData;
-    [SerializeField] private Vector3 bookPlaceOnShelf;
+    [SerializeField] private Transform bookPlaceOnShelfTransform;
 
     private void Awake()
     {
@@ -12,7 +12,7 @@ public class Interactable0thPuzzleObject : Interactable0thPuzzle
 
     public Vector3 GetBookPlaceOnShelf()
     {
-        return bookPlaceOnShelf;
+        return bookPlaceOnShelfTransform.position;
     }
 
     protected override void GetInteracted_Interactable(object sender, IInteractableBehaviour0thPuzzle interactionBehaviour)
