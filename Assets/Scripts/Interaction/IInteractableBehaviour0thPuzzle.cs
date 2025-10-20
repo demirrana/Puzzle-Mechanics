@@ -50,6 +50,14 @@ public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
 
+
+    public override List<IInteractableBehaviour0thPuzzle> GetNewBehaviours()
+    {
+        List<IInteractableBehaviour0thPuzzle> newBehaviours = new();
+        newBehaviours.Add(new InteractableBehaviourPickUpFromShelf());
+        return newBehaviours;
+    }
+
 }
 
 public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thPuzzle
