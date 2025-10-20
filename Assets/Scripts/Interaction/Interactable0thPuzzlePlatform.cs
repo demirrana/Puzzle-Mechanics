@@ -78,6 +78,11 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         }
     }
 
+    private void UpdateAfterAdd_yValueForNextBook()
+    {
+        yValueToPutNextBook += BookThickness;
+    }
+    
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
