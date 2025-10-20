@@ -9,6 +9,7 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
 
     private List<Interactable0thPuzzleObject> booksOnPlatform;
     private float yValueToPutNextBook = 0f;
+    private static readonly float BookThickness = 0.03f;
 
     private readonly int BookCapacity = 8;
 
