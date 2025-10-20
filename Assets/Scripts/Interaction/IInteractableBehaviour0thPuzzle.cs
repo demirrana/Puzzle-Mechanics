@@ -95,6 +95,10 @@ public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thP
         return InteractionManager0thPuzzle.Instance.GetPosToPutBookOnPlatform(interactable);
     }
 
+    public override Transform GetNewParent()
+    {
+        return InteractionManager0thPuzzle.Instance.GetPlatformTransform();
+    }
 }
 
 public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviour0thPuzzle
