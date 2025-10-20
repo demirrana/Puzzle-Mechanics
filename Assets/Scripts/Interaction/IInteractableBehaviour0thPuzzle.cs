@@ -44,6 +44,11 @@ public class InteractableBehaviourPickUpFromShelf : IInteractableBehaviour0thPuz
         return newBehaviours;
     }
 
+    public override Vector3 GetTargetPosition(Interactable0thPuzzleObject interactable)
+    {
+        return InteractionManager0thPuzzle.Instance.GetHandPosition();
+    }
+
 }
 
 public class InteractableBehaviourPutOnShelf : IInteractableBehaviour0thPuzzle
