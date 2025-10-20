@@ -20,6 +20,12 @@ public class Interactable0thPuzzleObject : Interactable0thPuzzle
         return bookPlaceOnShelfTransform;
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public void SetPosition(Vector3 newPosition)
     {
         transform.position = newPosition;
     }
@@ -34,3 +40,4 @@ public class Interactable0thPuzzleObject : Interactable0thPuzzle
         interactionBehaviour.Interact<IInteractableBehaviour0thPuzzle>(this);
         UpdateBehavioursAfter<IInteractableBehaviour0thPuzzle>(interactionBehaviour);
     }
+}
