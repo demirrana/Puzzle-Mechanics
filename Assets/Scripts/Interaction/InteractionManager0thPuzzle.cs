@@ -29,8 +29,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         SetInstance();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         InitializeObjects();
     }
 
