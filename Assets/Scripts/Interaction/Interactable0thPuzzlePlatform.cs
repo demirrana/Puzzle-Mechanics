@@ -5,6 +5,8 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
 {
     public static Interactable0thPuzzlePlatform Instance { get; private set; }
 
+    [SerializeField] private Transform topCenterPointTransform; //should be set to that point + (book thickness / 2)
+
     private List<Interactable0thPuzzleObject> booksOnPlatform;
 
     private readonly int BookCapacity = 8;
