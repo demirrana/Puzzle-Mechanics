@@ -52,6 +52,11 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         booksOnPlatform.Add(newBook);
     }
 
+    private void RemoveBook(Interactable0thPuzzleObject book)
+    {
+        booksOnPlatform.Remove(book);
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
