@@ -57,6 +57,14 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         booksOnPlatform.Remove(book);
     }
 
+    private void UpdateAddedBookPosition()
+    {
+        Interactable0thPuzzleObject addedBook = booksOnPlatform[-1];
+        Vector3 addedBookPosition = addedBook.GetPosition();
+        addedBookPosition.y = yValueToPutNextBook;
+        addedBook.SetPosition(addedBookPosition);
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
