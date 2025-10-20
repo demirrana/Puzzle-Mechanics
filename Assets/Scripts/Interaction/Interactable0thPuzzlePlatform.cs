@@ -42,6 +42,11 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         return booksOnPlatform.Count > 0;
     }
 
+    public bool HasTheBook(Interactable0thPuzzleObject book)
+    {
+        return booksOnPlatform.Contains(book);
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
