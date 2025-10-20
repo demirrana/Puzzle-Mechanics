@@ -51,6 +51,17 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         return bookPlatform.GetNextBookPos();
     }
 
+    protected override void DetectInteractionConditionsMet()
+    {
+        if (currentState == GameState.WorldView)
+        {
+            DetectInteractionConditionsMet_WorldView();
+        }
+        else if (currentState == GameState.BookPlatformView)
+        {
+            DetectInteractionConditionsMet_BookPlatformView();
+        }
+    }
 
     private void DetectInteractionConditionsMet_WorldView()
     {
