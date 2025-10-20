@@ -77,6 +77,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void DetectInteractionConditionsMet_BookPlatformView()
+    {
+        
+    }
 
     private void DetectIfBookPlaceNear_HandsFull()
     {
