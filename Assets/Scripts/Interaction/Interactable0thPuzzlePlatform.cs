@@ -47,6 +47,13 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         return booksOnPlatform.Contains(book);
     }
 
+    public void AddBookAndUpdate(Interactable0thPuzzleObject newBook)
+    {
+        AddBook(newBook);
+        UpdateAddedBookPosition();
+        UpdateAfterAdd_yValueForNextBook();
+    }
+
     private void AddBook(Interactable0thPuzzleObject newBook)
     {
         booksOnPlatform.Add(newBook);
