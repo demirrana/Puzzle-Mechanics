@@ -102,4 +102,9 @@ public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviou
         return newBehaviours;
     }
 
+    public override Vector3 GetTargetPosition(Interactable0thPuzzleObject interactable)
+    {
+        return InteractionManager0thPuzzle.Instance.GetHandPosition();
+    }
+
 }
