@@ -65,6 +65,19 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         addedBook.SetPosition(addedBookPosition);
     }
 
+    private void ShiftBooksDownAfterRemoval(int removedBookOrderOnPlatform)
+    {
+        int currentBookOrder = removedBookOrderOnPlatform;
+        List<Interactable0thPuzzleObject> booksFloatingAfterRemoval = booksOnPlatform.GetRange(removedBookOrderOnPlatform - 1, booksOnPlatform.Count);
+        foreach (Interactable0thPuzzleObject book in booksFloatingAfterRemoval)
+        {
+            Vector3 newBookPosition = book.GetPosition();
+            float yBookValue = currentBookOrder * BookThickness;
+            newBookPosition.y = yBookValue;
+            book.SetPosition(newBookPosition);
+        }
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
