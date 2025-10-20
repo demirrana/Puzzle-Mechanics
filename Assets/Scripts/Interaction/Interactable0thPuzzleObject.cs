@@ -32,3 +32,9 @@ public class Interactable0thPuzzleObject : Interactable0thPuzzle
         //OnInteractableStateChanged?.Invoke(this, newState);
     }
 }
+
+    public void SetParent(Transform parentTransform)
+    {
+        transform.parent = parentTransform;
+    }
+
