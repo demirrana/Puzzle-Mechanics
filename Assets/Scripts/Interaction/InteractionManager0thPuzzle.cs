@@ -46,6 +46,11 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         return bookPlatform.transform;
     }
 
+    public Vector3 GetPosToPutBookOnPlatform(Interactable0thPuzzleObject book)
+    {
+        return bookPlatform.GetNextBookPos();
+    }
+
     private void DetectIfBookPlatformNear_HandsFull()
     {
         if (bookPlatform.HasPlace()) //A book can be placed on platform with other books
