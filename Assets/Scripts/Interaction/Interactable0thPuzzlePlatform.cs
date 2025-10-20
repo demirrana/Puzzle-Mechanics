@@ -54,6 +54,14 @@ public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
         UpdateAfterAdd_yValueForNextBook();
     }
 
+    public void RemoveBookAndUpdate(Interactable0thPuzzleObject book)
+    {
+        int removedBookOrder = booksOnPlatform.IndexOf(book) + 1;
+        RemoveBook(book);
+        ShiftBooksDownAfterRemoval(removedBookOrder);
+        UpdateAfterRemove_yValueForNextBook();
+    }
+
     private void AddBook(Interactable0thPuzzleObject newBook)
     {
         booksOnPlatform.Add(newBook);
