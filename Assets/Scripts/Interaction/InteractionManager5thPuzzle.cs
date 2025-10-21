@@ -6,10 +6,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager5thPuzzle Instance { get; private set; }
 
-    public event EventHandler<List<Collider>> OnObjectCollidersApproached;
-    public event EventHandler OnNoInteractableNear;
-    public event EventHandler<Interactable<IInteractableBehaviour5thPuzzle>> OnInteractableApproached;
-
     [SerializeField] private Transform puzzle5ObjectsHolder;
 
     private enum GameState
@@ -33,9 +29,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         base.Start();
         InitializeInstances();
-        OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager;
-        OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
-        OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager5thPuzzle;
+        OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
     }
 
     private void Update()
@@ -183,77 +179,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         ActivateInteractionPanel(this, puzzle5Table.transform, openTableViewKey);
     }
 
-    protected void DetectAnyColliderApproached()
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
-        List<Collider> hitColliders = GetCollidersApproached();
+        InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER
+        ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
 
-        switch (hitColliders.Count)
-        {
-            case 0:
-                OnNoInteractableNear?.Invoke(this, null);
-                break;
-            default:
-                OnObjectCollidersApproached?.Invoke(this, hitColliders);
-                break;
-        }
-    }
-
-    protected void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
-    {
-        List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects = GetNearInteractablesList(colliderList);
-        DetectInteractableApproached(interactableObjects);
-    }
-
-    protected virtual List<Interactable<IInteractableBehaviour5thPuzzle>> GetNearInteractablesList(List<Collider> colliderList)
-    {
-        List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects = new();
-
-        foreach (Collider collider in colliderList)
-        {
-            if (collider != null)
-            {
-                GameObject hitObject = collider.gameObject;
-
-                //Making sure the object is an interactable one
-                if (hitObject.TryGetComponent<Interactable<IInteractableBehaviour5thPuzzle>>(out var interactableObject))
-                {
-                    interactableObjects.Add(interactableObject);
-                }
-            }
-        }
-
-        return interactableObjects;
-    }
-
-    //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    protected virtual void DetectInteractableApproached(List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects)
-    {
-        switch (interactableObjects.Count)
-        {
-            case 0:
-                break;
-            case 1:
-                Interactable<IInteractableBehaviour5thPuzzle> interactable = interactableObjects[0];
-                InteractableBehaviourPickUpFromFloor pickUpFromFloor = new();
-                ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
-                OnInteractableApproached?.Invoke(this, interactableObjects[0]);
-                break;
-            //TO BE CHANGED IN THE FUTURE
-            default:
-                Debug.Log("There are more than 1 interactables: " + interactableObjects[0].name + " and " + interactableObjects[1].name);
-                //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
-                OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
-                break;
-        }
-    }
-
-    protected void RaiseInteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
-    {
-        OnInteractableApproached?.Invoke(sender, interactable);
-    }
-
-    protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
-    {
         foreach (IInteractableBehaviour5thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
         {
             DetectBehaviourApplied(interactable, interactionBehaviour);
@@ -261,7 +191,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     }
 
     //used to deactivate individual interaction panel
-    private void NoInteractableNear_PlayerInteractionManager5thPuzzle(object sender, EventArgs e)
+    protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
         bool tableNear = IsNear(puzzle5Table.transform);
         bool tableHasFullSlots = puzzle5Table.HasFullSlots();

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
+public class Interactable0thPuzzlePlatform : MonoBehaviour
 {
     public static Interactable0thPuzzlePlatform Instance { get; private set; }
 
     [SerializeField] private Transform topCenterPointTransform; //should be set to that point + (book thickness / 2)
 
-    private List<Interactable0thPuzzleObject> booksOnPlatform;
+    private List<Interactable0thPuzzleObject> booksOnPlatform = new();
     private float yValueToPutNextBook = 0f;
     private static readonly float BookThickness = 0.03f;
 
