@@ -6,7 +6,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager5thPuzzle Instance { get; private set; }
 
-    public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable<IInteractableBehaviour5thPuzzle>> OnInteractableApproached;
 
     [SerializeField] private Transform puzzle5ObjectsHolder;
@@ -189,7 +188,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         switch (hitColliders.Count)
         {
             case 0:
-                OnNoInteractableNear?.Invoke(this, null);
+                RaiseNoInteractableNear(this);
                 break;
             default:
                 RaiseObjectCollidersApproached(this, hitColliders);
