@@ -185,30 +185,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         DetectInteractableApproached(interactableObjects);
     }
 
-    //Gets the Interactable object near and invokes the event OnInteractableApproached with it
-    protected virtual void DetectInteractableApproached(List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects)
-    {
-        switch (interactableObjects.Count)
-        {
-            case 0:
-                break;
-            case 1:
-                Interactable<IInteractableBehaviour5thPuzzle> interactable = interactableObjects[0];
-                InteractableBehaviourPickUpFromFloor pickUpFromFloor = new();
-                ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
-                RaiseInteractableApproached(this, interactableObjects[0]);
-                break;
-            //TO BE CHANGED IN THE FUTURE
-            default:
-                Debug.Log("There are more than 1 interactables: " + interactableObjects[0].name + " and " + interactableObjects[1].name);
-                //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
-                RaiseInteractableApproached(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
-                break;
-        }
-    }
-
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
+        InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER
+        ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
+
         foreach (IInteractableBehaviour5thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
         {
             DetectBehaviourApplied(interactable, interactionBehaviour);

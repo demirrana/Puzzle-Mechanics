@@ -140,6 +140,19 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         return interactableObjects;
     }
 
+    protected virtual void DetectInteractableApproached(List<Interactable<T>> interactableObjects)
+    {
+        switch (interactableObjects.Count)
+        {
+            case 0:
+                break;
+            default: //CHOOSE THE OBJECT CLOSER TO MOUSE LATER
+                Interactable<T> interactable = interactableObjects[0];
+                RaiseInteractableApproached(this, interactable);
+                break;
+        }
+    }
+
     //Might be used when more than one behaviour can be applied to an object simultaneously
     protected void DetectBehavioursApplied(Interactable<T> interactable)
     {

@@ -286,20 +286,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         DetectInteractableApproached(interactableObjects);
     }
 
-    protected virtual void DetectInteractableApproached(List<Interactable<IInteractableBehaviour7thPuzzle>> interactableObjects)
-    {
-        switch (interactableObjects.Count)
-        {
-            case 1:
-                Interactable<IInteractableBehaviour7thPuzzle> interactable = interactableObjects[0];
-                RaiseInteractableApproached(this, interactable);
-                break;
-            default: //HANDLE LATER
-                SetApproachedInteractable(null);
-                break;
-        }
-    }
-
     protected void InteractableApproached_PlayerInteractionManager7thPuzzle(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
         bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
