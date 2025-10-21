@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable0thPuzzlePlatform : Interactable0thPuzzle
+public class Interactable0thPuzzlePlatform : MonoBehaviour
 {
     public static Interactable0thPuzzlePlatform Instance { get; private set; }
 
