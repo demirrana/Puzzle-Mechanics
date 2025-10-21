@@ -10,7 +10,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
-    public event EventHandler<Interactable7thPuzzleObject> OnInteractableApproached;
+    public event EventHandler<Interactable<IInteractableBehaviour7thPuzzle>> OnInteractableApproached;
     public event EventHandler<KeyCode> OnBothInteractablesAreChosen;
     public event EventHandler OnAnyInteractableIsDeselected;
 
@@ -20,7 +20,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     private InteractionPanelIndividual InteractionPanelIndividual;
     private Interactable7thPuzzleObject interactable1stChosen;
     private Interactable7thPuzzleObject interactable2ndChosen; //2nd interactable chosen to swap with the one in hand
-    private Interactable7thPuzzleObject approachedInteractable;
+    private Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable;
     private KeyCode swapKey;
 
     private void Awake()
@@ -300,16 +300,16 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 
     protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
     {
-        //List<Interactable7thPuzzleObject> interactableObjects = GetNearInteractablesList(colliderList);
-        //DetectInteractableApproached(interactableObjects);
+        List<Interactable<IInteractableBehaviour7thPuzzle>> interactableObjects = GetNearInteractablesList(colliderList);
+        DetectInteractableApproached(interactableObjects);
     }
 
-    protected virtual void DetectInteractableApproached(List<Interactable7thPuzzleObject> interactableObjects)
+    protected virtual void DetectInteractableApproached(List<Interactable<IInteractableBehaviour7thPuzzle>> interactableObjects)
     {
         switch (interactableObjects.Count)
         {
             case 1:
-                Interactable7thPuzzleObject interactable = interactableObjects[0];
+                Interactable<IInteractableBehaviour7thPuzzle> interactable = interactableObjects[0];
                 OnInteractableApproached?.Invoke(this, interactable);
                 break;
             default: //HANDLE LATER
@@ -318,7 +318,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    protected void InteractableApproached_PlayerInteractionManager7thPuzzle(object sender, Interactable7thPuzzleObject interactable)
+    protected void InteractableApproached_PlayerInteractionManager7thPuzzle(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
         bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
         bool areTwoInteractablesChosen = interactable1stChosen != null && interactable2ndChosen != null;
@@ -345,7 +345,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         InteractionPanelIndividual.RaiseInteractionPanelDeactivated(this);
     }
 
-    private void SetApproachedInteractable(Interactable7thPuzzleObject interactable)
+    private void SetApproachedInteractable(Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
         approachedInteractable = interactable;
     }
