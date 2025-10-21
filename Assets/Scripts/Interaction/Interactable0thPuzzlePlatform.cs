@@ -7,7 +7,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     [SerializeField] private Transform topCenterPointTransform; //should be set to that point + (book thickness / 2)
 
-    private List<Interactable0thPuzzleObject> booksOnPlatform;
+    private List<Interactable0thPuzzleObject> booksOnPlatform = new();
     private float yValueToPutNextBook = 0f;
     private static readonly float BookThickness = 0.03f;
 
