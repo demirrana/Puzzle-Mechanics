@@ -179,21 +179,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         ActivateInteractionPanel(this, puzzle5Table.transform, openTableViewKey);
     }
 
-    protected void DetectAnyColliderApproached()
-    {
-        List<Collider> hitColliders = GetCollidersApproached();
-
-        switch (hitColliders.Count)
-        {
-            case 0:
-                RaiseNoInteractableNear(this);
-                break;
-            default:
-                RaiseObjectCollidersApproached(this, hitColliders);
-                break;
-        }
-    }
-
     protected void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
     {
         List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects = GetNearInteractablesList(colliderList);

@@ -72,6 +72,21 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractableApproached?.Invoke(sender, interactable);
     }
 
+    protected void DetectAnyColliderApproached()
+    {
+        List<Collider> hitColliders = GetCollidersApproached();
+
+        switch (hitColliders.Count)
+        {
+            case 0:
+                RaiseNoInteractableNear(this);
+                break;
+            default:
+                RaiseObjectCollidersApproached(this, hitColliders);
+                break;
+        }
+    }
+
     protected virtual void DetectInteractionConditionsMet()
     {
         Debug.Log("Base class called DetectWhenInteractionConditionsMet");
