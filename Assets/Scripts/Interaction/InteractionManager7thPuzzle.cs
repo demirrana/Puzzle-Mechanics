@@ -8,7 +8,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager7thPuzzle Instance { get; private set; }
 
-    public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable<IInteractableBehaviour7thPuzzle>> OnInteractableApproached;
     public event EventHandler<KeyCode> OnBothInteractablesAreChosen;
@@ -246,7 +245,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
                 OnNoInteractableNear?.Invoke(this, null);
                 break;
             default:
-                OnObjectCollidersApproached?.Invoke(this, hitColliders);
+                RaiseObjectCollidersApproached(this, hitColliders);
                 break;
         }
     }

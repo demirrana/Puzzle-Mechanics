@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehaviour
 {
+    public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
@@ -52,6 +53,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     public void RaiseInteractableInHandChanged(Interactable<T> interactable) //Behaviours raise this event
     {
         OnInteractableInHandChanged?.Invoke(this, interactable);
+    }
+
+    protected void RaiseObjectCollidersApproached(object sender, List<Collider> hitColliders)
+    {
+        OnObjectCollidersApproached?.Invoke(sender, hitColliders);
     }
 
     protected virtual void DetectInteractionConditionsMet()
