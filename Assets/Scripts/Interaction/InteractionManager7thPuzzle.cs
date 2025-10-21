@@ -300,29 +300,8 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 
     protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
     {
-        List<Interactable7thPuzzleObject> interactableObjects = GetNearInteractablesList(colliderList);
-        DetectInteractableApproached(interactableObjects);
-    }
-
-    protected virtual List<Interactable7thPuzzleObject> GetNearInteractablesList(List<Collider> colliderList)
-    {
-        List<Interactable7thPuzzleObject> interactableObjects = new();
-
-        foreach (Collider collider in colliderList)
-        {
-            if (collider != null)
-            {
-                GameObject hitObject = collider.gameObject;
-
-                //Making sure the object is an interactable one
-                if (hitObject.TryGetComponent<Interactable7thPuzzleObject>(out var interactableObject))
-                {
-                    interactableObjects.Add(interactableObject);
-                }
-            }
-        }
-
-        return interactableObjects;
+        //List<Interactable7thPuzzleObject> interactableObjects = GetNearInteractablesList(colliderList);
+        //DetectInteractableApproached(interactableObjects);
     }
 
     protected virtual void DetectInteractableApproached(List<Interactable7thPuzzleObject> interactableObjects)

@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 
 public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehaviour
 {
-
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
@@ -85,6 +84,27 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected virtual void InteractionManager_InteractableInHandChanged(object sender, Interactable<T> interactable)
     {
         interactableInHand = interactable;
+    }
+
+    protected virtual List<Interactable<T>> GetNearInteractablesList(List<Collider> colliderList)
+    {
+        List<Interactable<T>> interactableObjects = new();
+
+        foreach (Collider collider in colliderList)
+        {
+            if (collider != null)
+            {
+                GameObject hitObject = collider.gameObject;
+
+                //Making sure the object is an interactable one
+                if (hitObject.TryGetComponent<Interactable<T>>(out var interactableObject))
+                {
+                    interactableObjects.Add(interactableObject);
+                }
+            }
+        }
+
+        return interactableObjects;
     }
 
     //Might be used when more than one behaviour can be applied to an object simultaneously
