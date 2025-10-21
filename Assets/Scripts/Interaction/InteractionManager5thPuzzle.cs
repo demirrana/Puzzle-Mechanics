@@ -179,7 +179,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         ActivateInteractionPanel(this, puzzle5Table.transform, openTableViewKey);
     }
 
-    protected void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
         InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER
         ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
@@ -191,7 +191,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     }
 
     //used to deactivate individual interaction panel
-    protected void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
+    protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
         bool tableNear = IsNear(puzzle5Table.transform);
         bool tableHasFullSlots = puzzle5Table.HasFullSlots();

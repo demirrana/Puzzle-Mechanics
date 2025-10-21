@@ -233,7 +233,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    protected void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
+    protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
         DeactivateInteractionPanel();
         SetApproachedInteractable(null);
@@ -280,7 +280,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    protected void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
         bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
         bool areTwoInteractablesChosen = interactable1stChosen != null && interactable2ndChosen != null;
