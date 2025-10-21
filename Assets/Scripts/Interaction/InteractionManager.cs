@@ -8,6 +8,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 {
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
+    public event EventHandler<Interactable<T>> OnInteractableApproached;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionConditionsMet;
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
@@ -64,6 +65,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected void RaiseNoInteractableNear(object sender)
     {
         OnNoInteractableNear?.Invoke(sender, null);
+    }
+
+    protected void RaiseInteractableApproached(object sender, Interactable<T> interactable)
+    {
+        OnInteractableApproached?.Invoke(sender, interactable);
     }
 
     protected virtual void DetectInteractionConditionsMet()

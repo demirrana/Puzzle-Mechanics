@@ -6,8 +6,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager5thPuzzle Instance { get; private set; }
 
-    public event EventHandler<Interactable<IInteractableBehaviour5thPuzzle>> OnInteractableApproached;
-
     [SerializeField] private Transform puzzle5ObjectsHolder;
 
     private enum GameState
@@ -213,20 +211,15 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
                 Interactable<IInteractableBehaviour5thPuzzle> interactable = interactableObjects[0];
                 InteractableBehaviourPickUpFromFloor pickUpFromFloor = new();
                 ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
-                OnInteractableApproached?.Invoke(this, interactableObjects[0]);
+                RaiseInteractableApproached(this, interactableObjects[0]);
                 break;
             //TO BE CHANGED IN THE FUTURE
             default:
                 Debug.Log("There are more than 1 interactables: " + interactableObjects[0].name + " and " + interactableObjects[1].name);
                 //TO BE CHANGED: When there are more than 1 interactables, the camera angle should decide which one to interact with
-                OnInteractableApproached?.Invoke(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
+                RaiseInteractableApproached(this, interactableObjects[1]); //For now, the one after first interactable can be interacted 
                 break;
         }
-    }
-
-    protected void RaiseInteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
-    {
-        OnInteractableApproached?.Invoke(sender, interactable);
     }
 
     protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)

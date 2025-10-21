@@ -8,7 +8,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager7thPuzzle Instance { get; private set; }
 
-    public event EventHandler<Interactable<IInteractableBehaviour7thPuzzle>> OnInteractableApproached;
     public event EventHandler<KeyCode> OnBothInteractablesAreChosen;
     public event EventHandler OnAnyInteractableIsDeselected;
 
@@ -308,7 +307,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         {
             case 1:
                 Interactable<IInteractableBehaviour7thPuzzle> interactable = interactableObjects[0];
-                OnInteractableApproached?.Invoke(this, interactable);
+                RaiseInteractableApproached(this, interactable);
                 break;
             default: //HANDLE LATER
                 SetApproachedInteractable(null);
