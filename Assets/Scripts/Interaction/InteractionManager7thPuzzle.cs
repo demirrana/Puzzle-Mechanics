@@ -29,9 +29,9 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     {
         base.Start();
         InitializeInstances();
-        OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager7thPuzzle;
-        OnInteractableApproached += InteractableApproached_PlayerInteractionManager7thPuzzle;
-        OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager7thPuzzle;
+        OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
     }
 
     private void Update()
@@ -233,7 +233,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    private void NoInteractableNear_PlayerInteractionManager7thPuzzle(object sender, EventArgs e)
+    protected void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
         DeactivateInteractionPanel();
         SetApproachedInteractable(null);
@@ -286,7 +286,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         DetectInteractableApproached(interactableObjects);
     }
 
-    protected void InteractableApproached_PlayerInteractionManager7thPuzzle(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
+    protected void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
         bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
         bool areTwoInteractablesChosen = interactable1stChosen != null && interactable2ndChosen != null;

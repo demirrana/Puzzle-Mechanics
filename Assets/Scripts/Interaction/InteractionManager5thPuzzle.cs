@@ -29,9 +29,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         base.Start();
         InitializeInstances();
-        OnObjectCollidersApproached += ObjectCollidersApproached_PlayerInteractionManager;
-        OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
-        OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager5thPuzzle;
+        OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
     }
 
     private void Update()
@@ -185,7 +185,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         DetectInteractableApproached(interactableObjects);
     }
 
-    protected void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
+    protected void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
         InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER
         ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
@@ -197,7 +197,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     }
 
     //used to deactivate individual interaction panel
-    private void NoInteractableNear_PlayerInteractionManager5thPuzzle(object sender, EventArgs e)
+    protected void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
         bool tableNear = IsNear(puzzle5Table.transform);
         bool tableHasFullSlots = puzzle5Table.HasFullSlots();
