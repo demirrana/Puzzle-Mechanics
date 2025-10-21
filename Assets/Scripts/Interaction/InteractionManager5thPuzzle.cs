@@ -179,12 +179,6 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         ActivateInteractionPanel(this, puzzle5Table.transform, openTableViewKey);
     }
 
-    protected void ObjectCollidersApproached_PlayerInteractionManager(object sender, List<Collider> colliderList)
-    {
-        List<Interactable<IInteractableBehaviour5thPuzzle>> interactableObjects = GetNearInteractablesList(colliderList);
-        DetectInteractableApproached(interactableObjects);
-    }
-
     protected void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
     {
         InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER

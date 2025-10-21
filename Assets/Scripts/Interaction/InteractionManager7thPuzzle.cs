@@ -280,12 +280,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    protected void ObjectCollidersApproached_PlayerInteractionManager7thPuzzle(object sender, List<Collider> colliderList)
-    {
-        List<Interactable<IInteractableBehaviour7thPuzzle>> interactableObjects = GetNearInteractablesList(colliderList);
-        DetectInteractableApproached(interactableObjects);
-    }
-
     protected void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
         bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);

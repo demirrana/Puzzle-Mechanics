@@ -92,6 +92,12 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         Debug.Log("Base class called DetectWhenInteractionConditionsMet");
     }
 
+    protected virtual void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
+    {
+        List<Interactable<T>> interactableObjects = GetNearInteractablesList(colliderList);
+        DetectInteractableApproached(interactableObjects);
+    }
+
     protected virtual void InteractionManager_InteractionConditionsMet(object sender, InteractionBehaviourEventArgs e)
     {
         DetectBehaviourApplied(e.InteractedObject, e.InteractionBehaviour);
