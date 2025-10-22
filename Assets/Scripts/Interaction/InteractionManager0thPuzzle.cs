@@ -8,8 +8,6 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     [SerializeField] private Transform puzzle0ObjectsHolder;
 
-    private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
-    private static readonly KeyCode ExitPlatformViewKey = KeyCode.Escape;
 
     private enum GameState
     {
@@ -130,7 +128,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void DetectPlatformView()
     {
         //Display UI for the key to be pressed when game switches to platform view
-        if (IsEnterPlatformViewKeyPressed())
+        if (bookPlatform.IsEnterPlatformViewKeyPressed())
         {
             //Delete diplay of UI for the key of switching
             SetGameState(GameState.BookPlatformView);
@@ -154,14 +152,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    private bool IsEnterPlatformViewKeyPressed()
     {
-        return Input.GetKeyDown(EnterPlatformViewKey);
     }
 
-    private bool IsExitPlatformViewKeyPressed()
     {
-        return Input.GetKeyDown(ExitPlatformViewKey);
     }
     
     private void SetGameState(GameState gameState)

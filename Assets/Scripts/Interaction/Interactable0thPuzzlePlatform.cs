@@ -14,6 +14,9 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     private float yValueToPutNextBook;
     private static readonly float BookThickness = 0.03f;
 
+    private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
+    private static readonly KeyCode ExitPlatformViewKey = KeyCode.Q; //TO BE CHANGED TO ESCAPE
+
     private readonly int BookCapacity = 8;
 
     private void Awake()
@@ -78,6 +81,16 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     private void RemoveBook(Interactable0thPuzzleObject book)
     {
         booksOnPlatform.Remove(book);
+    }
+
+    public bool IsEnterPlatformViewKeyPressed()
+    {
+        return Input.GetKeyDown(EnterPlatformViewKey);
+    }
+
+    public bool IsExitPlatformViewKeyPressed()
+    {
+        return Input.GetKeyDown(ExitPlatformViewKey);
     }
 
     private void UpdateAddedBookPosition()
