@@ -116,6 +116,10 @@ public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thP
         Debug.Log("PutOnBookPlatform interact method is called.");
 
         interactable.SetParent(null);
+        
+        Vector3 targetPosition = GetTargetPosition(interactable);
+        interactable.SetPosition(targetPosition);
+
         Interactable0thPuzzlePlatform.Instance.AddBookAndUpdate(interactable);
 
         Transform newParentTransform = GetNewParent();

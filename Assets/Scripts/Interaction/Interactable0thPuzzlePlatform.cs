@@ -58,7 +58,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     public void AddBookAndUpdate(Interactable0thPuzzleObject newBook)
     {
         AddBook(newBook);
-        UpdateAddedBookPosition();
+        //UpdateAddedBookPosition(); this is handled by behaviour 
         UpdateAfterAdd_yValueForNextBook();
     }
 
