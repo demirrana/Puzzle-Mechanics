@@ -36,6 +36,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
         OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
         OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
+        OnWorldViewActivated += InteractionManager0thPuzzle_ActiveViewChanged;
+        OnPlatformViewActivated += InteractionManager0thPuzzle_ActiveViewChanged;
     }
 
     private void Update()
@@ -152,6 +154,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
                 }
             }
         }
+    }
+
+
+    private void InteractionManager0thPuzzle_ActiveViewChanged(object sender, EventArgs e)
+    {
+        ToggleViewAndUpdate();
     }
 
     private void ToggleViewAndUpdate()
