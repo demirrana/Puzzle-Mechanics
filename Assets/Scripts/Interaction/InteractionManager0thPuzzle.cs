@@ -165,6 +165,16 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     }
 
 
+    protected override void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
+    {
+        if (e.InteractionBehaviour is InteractableBehaviourPickUpFromBookPlatform)
+        {
+            OnWorldViewActivated?.Invoke(this, null);
+        }
+        
+        base.InteractionManager_InteractableInteracted(sender, e);
+    }
+
     private void InteractionManager0thPuzzle_ActiveViewChanged(object sender, EventArgs e)
     {
         ToggleViewAndUpdate();
