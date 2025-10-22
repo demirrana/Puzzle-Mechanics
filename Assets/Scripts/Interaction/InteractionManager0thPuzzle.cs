@@ -38,6 +38,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
         OnWorldViewActivated += InteractionManager0thPuzzle_ActiveViewChanged;
         OnPlatformViewActivated += InteractionManager0thPuzzle_ActiveViewChanged;
+        CameraManager.Instance.SetCameraViewToPuzzle0();
     }
 
     private void Update()

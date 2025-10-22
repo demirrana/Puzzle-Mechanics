@@ -93,6 +93,12 @@ public class CameraManager : MonoBehaviour
         return activeCamera;
     }
 
+    public void SetCameraViewToPuzzle0()
+    {
+        GameplayCamera.Instance.transform.position = new(7.35f, 1.74f, -15.73f);
+        GameplayCamera.Instance.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+    }
+
     private void InitializeCameraMap()
     {
         cameraMap = new Dictionary<CameraName, CameraBase>
