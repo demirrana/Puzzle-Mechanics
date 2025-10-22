@@ -166,6 +166,16 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         ToggleViewAndUpdate();
     }
 
+    private void DetectPickUpPointedBook()
+    {
+        Interactable0thPuzzleObject pointedBook = bookPlatform.GetPointedBook();
+        if (pointedBook != null)
+        {
+            InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform = new();
+            DetectBehaviourApplied(pointedBook, pickUpFromPlatform); //BURDAYIM (bu metodu kullanarak normal viewe dönme yapmam lazım)
+        }
+    }
+
     private void ToggleViewAndUpdate()
     {
         CameraManager.Instance.SwitchToNextCamera();
