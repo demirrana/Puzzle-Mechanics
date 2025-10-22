@@ -110,9 +110,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    private void DetectIfBooksNear_HandsEmpty()
+    private void DetectIfBooksNear_HandsEmpty() //Handled by event OnInteractableApproached
     {
-
+        DetectAnyColliderApproached();
     }
 
     private void DetectIfBookPlatformNear_HandsEmpty()
@@ -130,6 +130,23 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         {
             //Delete diplay of UI for the key of switching
             SetGameState(GameState.BookPlatformView);
+        }
+    }
+
+
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour0thPuzzle> interactable)
+    {
+        if (interactable is Interactable0thPuzzleObject)
+        {
+            Interactable0thPuzzleObject book = interactable as Interactable0thPuzzleObject;
+            foreach (IInteractableBehaviour0thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
+            {
+                if (!bookPlatform.HasTheBook(book))
+                {
+                    InteractableBehaviourPickUpFromShelf pickUpFromShelf = new();
+                    DetectBehaviourApplied(interactable, pickUpFromShelf);
+                }
+            }
         }
     }
 
