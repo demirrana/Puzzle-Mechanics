@@ -94,6 +94,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         {
             OnWorldViewActivated?.Invoke(this, null);
         }
+        else
+        {
+            DetectPickUpPointedBook();
+        }
     }
 
     private void DetectIfBookPlaceNear_HandsFull()
