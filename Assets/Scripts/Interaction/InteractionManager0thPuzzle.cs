@@ -90,6 +90,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void DetectInteractionConditionsMet_BookPlatformView()
     {
         
+        if (bookPlatform.IsExitPlatformViewKeyPressed())
+        {
+            OnWorldViewActivated?.Invoke(this, null);
+        }
     }
 
     private void DetectIfBookPlaceNear_HandsFull()
