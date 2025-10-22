@@ -117,9 +117,13 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectIfBookPlatformNear_HandsEmpty()
     {
-        if (bookPlatform.HasBooks()) //Any book can be got into hand when at least one book exists on platform
+        //Debug.Log("Take book from platform check");
+        if (IsNear(bookPlatform.transform))
         {
-            DetectPlatformView();
+            if (bookPlatform.HasBooks()) //Any book can be got into hand when at least one book exists on platform
+            {
+                DetectPlatformView();
+            }
         }
     }
 
