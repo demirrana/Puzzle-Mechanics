@@ -157,7 +157,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     {
     }
 
+    private void ChangeGameState()
     {
+        currentState = currentState == GameState.WorldView ? GameState.BookPlatformView : GameState.WorldView;
     }
     
     private void SetGameState(GameState gameState)
