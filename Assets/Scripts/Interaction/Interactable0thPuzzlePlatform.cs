@@ -11,7 +11,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     [SerializeField] private Transform topCenterPointTransform; //should be set to that point + (book thickness / 2)
 
     private List<Interactable<IInteractableBehaviour0thPuzzle>> booksOnPlatform = new();
-    private float yValueToPutNextBook = 0f;
+    private float yValueToPutNextBook;
     private static readonly float BookThickness = 0.03f;
 
     private readonly int BookCapacity = 8;
@@ -19,6 +19,11 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     private void Awake()
     {
         SetInstance();
+    }
+
+    private void Start()
+    {
+        InitializeValues();
     }
 
     public Vector3 GetNextBookPos()
@@ -105,10 +110,15 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     {
         yValueToPutNextBook += BookThickness;
     }
-    
+
     private void UpdateAfterRemove_yValueForNextBook()
     {
         yValueToPutNextBook -= BookThickness;
+    }
+    
+    private void InitializeValues()
+    {
+        yValueToPutNextBook = topCenterPointTransform.position.y;
     }
 
     private void SetInstance()
