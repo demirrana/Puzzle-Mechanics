@@ -85,7 +85,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         Interactable0thPuzzleObject addedBook = booksOnPlatform[^1] as Interactable0thPuzzleObject;
         if (addedBook != null)
         {  
-            Vector3 addedBookPosition = addedBook.GetPosition();
+            Vector3 addedBookPosition = topCenterPointTransform.position;
             addedBookPosition.y = yValueToPutNextBook;
             addedBook.SetPosition(addedBookPosition);
         }
