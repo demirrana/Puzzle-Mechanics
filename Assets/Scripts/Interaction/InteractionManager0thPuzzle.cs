@@ -7,6 +7,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     public static InteractionManager0thPuzzle Instance { get; private set; }
 
     [SerializeField] private Transform puzzle0ObjectsHolder;
+    public event EventHandler OnWorldViewActivated;
+    public event EventHandler OnPlatformViewActivated;
 
 
     private enum GameState
