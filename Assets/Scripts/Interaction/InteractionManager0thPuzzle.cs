@@ -134,8 +134,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         //Display UI for the key to be pressed when game switches to platform view
         if (bookPlatform.IsEnterPlatformViewKeyPressed())
         {
-            //Delete diplay of UI for the key of switching
-            SetGameState(GameState.BookPlatformView);
+            OnPlatformViewActivated?.Invoke(this, null);
         }
     }
 
