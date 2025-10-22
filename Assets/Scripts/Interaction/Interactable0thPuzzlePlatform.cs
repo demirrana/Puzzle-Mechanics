@@ -10,7 +10,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     [SerializeField] private Transform topCenterPointTransform; //should be set to that point + (book thickness / 2)
 
-    private List<Interactable0thPuzzleObject> booksOnPlatform = new();
+    private List<Interactable<IInteractableBehaviour0thPuzzle>> booksOnPlatform = new();
     private float yValueToPutNextBook = 0f;
     private static readonly float BookThickness = 0.03f;
 
@@ -77,17 +77,22 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     private void UpdateAddedBookPosition()
     {
-        Interactable0thPuzzleObject addedBook = booksOnPlatform[-1];
-        Vector3 addedBookPosition = addedBook.GetPosition();
-        addedBookPosition.y = yValueToPutNextBook;
-        addedBook.SetPosition(addedBookPosition);
+        Interactable0thPuzzleObject addedBook = booksOnPlatform[^1] as Interactable0thPuzzleObject;
+        if (addedBook != null)
+        {  
+            Vector3 addedBookPosition = addedBook.GetPosition();
+            addedBookPosition.y = yValueToPutNextBook;
+            addedBook.SetPosition(addedBookPosition);
+        }
     }
 
     private void ShiftBooksDownAfterRemoval(int removedBookOrderOnPlatform)
     {
         int currentBookOrder = removedBookOrderOnPlatform;
-        List<Interactable0thPuzzleObject> booksFloatingAfterRemoval = booksOnPlatform.GetRange(removedBookOrderOnPlatform - 1, booksOnPlatform.Count);
-        foreach (Interactable0thPuzzleObject book in booksFloatingAfterRemoval)
+        List<Interactable<IInteractableBehaviour0thPuzzle>> booksToShiftDown;
+        booksToShiftDown = booksOnPlatform.GetRange(removedBookOrderOnPlatform - 1, booksOnPlatform.Count);
+
+        foreach (Interactable0thPuzzleObject book in booksToShiftDown.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
         {
             Vector3 newBookPosition = book.GetPosition();
             float yBookValue = currentBookOrder * BookThickness;
