@@ -154,7 +154,13 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void ToggleViewAndUpdate()
     {
+        CameraManager.Instance.SwitchToNextCamera();
+        ChangeGameState();
+        MouseManager.Instance.ChangeMouseVisibility();
+        if (PlayerMovementManager.Instance.enabled) PlayerScriptsManager.Instance.DisableMovementScript();
+        else PlayerScriptsManager.Instance.EnableMovementScript();
     }
 
     private void ChangeGameState()
