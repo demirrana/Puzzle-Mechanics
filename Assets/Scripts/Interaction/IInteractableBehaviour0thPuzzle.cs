@@ -156,6 +156,10 @@ public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviou
         Debug.Log("PickUpFromBookPlatform interact method is called.");
 
         interactable.SetParent(null);
+
+        Vector3 targetPosition = GetTargetPosition(interactable);
+        interactable.SetPosition(targetPosition);
+
         Interactable0thPuzzlePlatform.Instance.RemoveBookAndUpdate(interactable);
 
         Transform newParentTransform = GetNewParent();
