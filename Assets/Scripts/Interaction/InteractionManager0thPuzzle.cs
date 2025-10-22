@@ -33,6 +33,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     {
         base.Start();
         InitializeObjects();
+        OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
+        OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
+        OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
     }
 
     private void Update()
