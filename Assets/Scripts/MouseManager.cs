@@ -17,6 +17,15 @@ public class MouseManager : MonoBehaviour
         Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
+    public Vector3 GetMousePositionInWorld()
+    {
+        float distanceFromCamera = 1.7f; //TO BE CHANGED according to the real table and camera
+        Vector3 mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = distanceFromCamera;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        return worldPos;
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
