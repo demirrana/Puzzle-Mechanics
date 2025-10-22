@@ -43,6 +43,23 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         }
     }
 
+    public Interactable0thPuzzleObject GetPointedBook()
+    {
+        if (!HasBooks())
+        {
+            return null;
+        }
+        else
+        {
+            Interactable<IInteractableBehaviour0thPuzzle> pointedBook = null;
+            Vector3 mousePositionInWorld = MouseManager.Instance.GetMousePositionInWorld();
+            pointedBook = booksOnPlatform
+                .OrderBy(pointedBook => Vector3.Distance(pointedBook.transform.position, mousePositionInWorld))
+                .FirstOrDefault();
+            return pointedBook as Interactable0thPuzzleObject;
+        }
+    }
+
     public bool HasPlace()
     {
         return booksOnPlatform.Count < BookCapacity;
