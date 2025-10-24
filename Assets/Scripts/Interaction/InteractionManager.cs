@@ -94,8 +94,8 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
     protected virtual void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
-        List<Interactable<T>> interactableObjects = GetNearInteractablesList(colliderList);
-        DetectInteractableApproached(interactableObjects);
+        List<Interactable<T>> nearInteractables = GetNearInteractablesList(colliderList);
+        DetectInteractableApproached(nearInteractables);
     }
 
     protected virtual void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
@@ -156,14 +156,14 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         return interactableObjects;
     }
 
-    protected virtual void DetectInteractableApproached(List<Interactable<T>> interactableObjects)
+    protected virtual void DetectInteractableApproached(List<Interactable<T>> nearInteractables)
     {
-        switch (interactableObjects.Count)
+        switch (nearInteractables.Count)
         {
             case 0:
                 break;
             default: //CHOOSE THE OBJECT CLOSER TO MOUSE LATER
-                Interactable<T> interactable = interactableObjects[0];
+                Interactable<T> interactable = nearInteractables[0];
                 RaiseInteractableApproached(this, interactable);
                 break;
         }
