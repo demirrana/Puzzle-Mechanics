@@ -229,6 +229,20 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    //A new list is created with the books that are not on platform (the distinction is made here) //TO DO LATER
+    private Interactable0thPuzzleObject GetNearestBookToScreen(List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables)
+    {
+        foreach (Interactable0thPuzzleObject book in nearInteractables.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
+        {
+            if (book != null && !bookPlatform.HasTheBook(book))
+            {
+                return book;
+            }
+        }
+
+        return null;
+    }
+
     private void TriggerInteractionPanelIndividualActivated(object sender, InteractionBehaviourEventArgs e)
     {
         isUIActivatedThisFrame = true;
