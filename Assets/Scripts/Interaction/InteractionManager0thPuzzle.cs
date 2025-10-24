@@ -165,12 +165,16 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
                 if (!bookPlatform.HasTheBook(book))
                 {
                     InteractableBehaviourPickUpFromShelf pickUpFromShelf = new();
-                    DetectBehaviourApplied(interactable, pickUpFromShelf);
+                    RaiseInteractionConditionsMet(sender, book, pickUpFromShelf);
                 }
             }
         }
     }
 
+    protected override void InteractionManager_InteractionConditionsMet(object sender, InteractionBehaviourEventArgs e)
+    {
+        DetectBehaviourApplied(e.InteractedObject, e.InteractionBehaviour);
+    }
 
     protected override void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
     {
@@ -193,7 +197,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         if (pointedBook != null)
         {
             InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform = new();
-            DetectBehaviourApplied(pointedBook, pickUpFromPlatform); //BURDAYIM (bu metodu kullanarak normal viewe dönme yapmam lazım)
+            RaiseInteractionConditionsMet(this, pointedBook, pickUpFromPlatform);
         }
     }
 
