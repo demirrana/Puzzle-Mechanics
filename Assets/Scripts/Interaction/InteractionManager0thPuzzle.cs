@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehaviour0thPuzzle> //to be changed to 0thPuzzle
@@ -23,6 +24,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
     private InteractionPanelIndividual InteractionPanelIndividual;
+    private bool wasUIActivatedPreviousFrame;
+    private bool isUIActivatedThisFrame;
 
     private void Awake()
     {
@@ -43,7 +46,14 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void Update()
     {
+        isUIActivatedThisFrame = false;
         DetectInteractionConditionsMet();
+        if (!isUIActivatedThisFrame && wasUIActivatedPreviousFrame) //Deactivate only if previously activated
+        {
+            Debug.Log("Changed from activated to deactivated");
+            TriggerInteractionPanelIndividualDeactivated(this);
+        }
+        wasUIActivatedPreviousFrame = isUIActivatedThisFrame;
     }
 
     public Transform GetObjectsHolderTransform()
@@ -203,6 +213,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void TriggerInteractionPanelIndividualActivated(object sender, InteractionBehaviourEventArgs e)
     {
+        isUIActivatedThisFrame = true;
+
         Transform targetTransform = e.InteractedObject.transform;
         KeyCode behaviourKey = e.InteractionBehaviour.InteractionKeyCode;
         InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, behaviourKey);
@@ -210,6 +222,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void TriggerInteractionPanelIndividualActivated(object sender, Transform targetTransform, KeyCode targetKey)
     {
+        isUIActivatedThisFrame = true;
+
         InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, targetKey);
     }
 
@@ -241,6 +255,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     {
         bookPlatform = Interactable0thPuzzlePlatform.Instance;
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        isUIActivatedThisFrame = false;
+        wasUIActivatedPreviousFrame = false;
     }
 
     private void SetInstance()
