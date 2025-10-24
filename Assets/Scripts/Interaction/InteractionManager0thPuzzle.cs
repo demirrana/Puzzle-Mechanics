@@ -22,7 +22,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
-
+    private InteractionPanelIndividual InteractionPanelIndividual;
 
     private void Awake()
     {
@@ -201,6 +201,23 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void TriggerInteractionPanelIndividualActivated(object sender, InteractionBehaviourEventArgs e)
+    {
+        Transform targetTransform = e.InteractedObject.transform;
+        KeyCode behaviourKey = e.InteractionBehaviour.InteractionKeyCode;
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, behaviourKey);
+    }
+
+    private void TriggerInteractionPanelIndividualActivated(object sender, Transform targetTransform, KeyCode targetKey)
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, targetKey);
+    }
+
+    private void TriggerInteractionPanelIndividualDeactivated(object sender)
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
+    }
+
     private void ToggleViewAndUpdate()
     {
         CameraManager.Instance.SwitchToNextCamera();
@@ -223,6 +240,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void InitializeObjects()
     {
         bookPlatform = Interactable0thPuzzlePlatform.Instance;
+        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
     }
 
     private void SetInstance()
