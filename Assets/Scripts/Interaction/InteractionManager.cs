@@ -32,6 +32,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     [SerializeField] private Transform handTransform;
 
     protected Interactable<T> interactableInHand = null;
+    protected List<Collider> nearColliders = new();
     private bool interactedOnceKeyIsPressed = true;
 
     protected virtual void Start()
@@ -74,15 +75,15 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
     protected void DetectAnyColliderApproached()
     {
-        List<Collider> hitColliders = GetCollidersApproached();
+        UpdateCollidersApproached();
 
-        switch (hitColliders.Count)
+        switch (nearColliders.Count)
         {
             case 0:
                 RaiseNoInteractableNear(this);
                 break;
             default:
-                RaiseObjectCollidersApproached(this, hitColliders);
+                RaiseObjectCollidersApproached(this, nearColliders);
                 break;
         }
     }
@@ -189,7 +190,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     }
 
     //5 rays are cast along the height of the player to detect more than one objects near if there are any
-    protected List<Collider> GetCollidersApproached()
+    protected void UpdateCollidersApproached()
     {
         Vector3 rayOriginBottom = transform.position;
         Vector3 rayOriginTop = transform.position + new Vector3(0f, playerHeight, 0f);
@@ -226,14 +227,12 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
             }
         }
 
-        return hitColliders;
+        SetNearColliders(hitColliders);
     }
 
     protected bool IsNear(Transform transform)
     {
-        List<Collider> hitColliders = GetCollidersApproached();
-
-        foreach (Collider collider in hitColliders)
+        foreach (Collider collider in nearColliders)
         {
             if (collider.gameObject == transform.gameObject)
                 return true;
@@ -263,6 +262,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected bool IsInteractedOnceKeyIsPressed()
     {
         return interactedOnceKeyIsPressed;
+    }
+
+    private void SetNearColliders(List<Collider> newNearColliders)
+    {
+        nearColliders = newNearColliders;
     }
 
     private bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
