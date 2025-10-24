@@ -101,7 +101,6 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectInteractionConditionsMet_BookPlatformView()
     {
-        
         if (bookPlatform.IsExitPlatformViewKeyPressed())
         {
             OnWorldViewActivated?.Invoke(this, null);
@@ -182,7 +181,6 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         TriggerInteractionPanelIndividualActivated(this, platformTopTransform, platformViewEnterKey);
     }
 
-
     protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour0thPuzzle> interactable)
     {
         if (interactable is Interactable0thPuzzleObject)
@@ -201,6 +199,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     protected override void InteractionManager_InteractionConditionsMet(object sender, InteractionBehaviourEventArgs e)
     {
+        TriggerInteractionPanelBasedOnBehaviour(sender, e);
         DetectBehaviourApplied(e.InteractedObject, e.InteractionBehaviour);
     }
 
@@ -257,6 +256,32 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         isUIActivatedThisFrame = true;
 
         InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, targetKey);
+    }
+
+    private void TriggerInteractionPanelBasedOnBehaviour(object sender, InteractionBehaviourEventArgs e)
+    {
+        switch(e.InteractionBehaviour)
+        {
+            case InteractableBehaviourPickUpFromShelf pickUpFromShelf:
+                TriggerInteractionPanelIndividualActivated(sender, e);
+                break;
+            case InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform:
+                TriggerInteractionPanelIndividualActivated(sender, e);
+                break;
+            case InteractableBehaviourPutOnBookPlatform putOnBookPlatform:
+                TriggerInteractionPanelIndividualActivated(sender, bookPlatform.GetTopCenterPointTransform(), bookPlatform.GetEnterPlatformViewKey());
+                break;
+            case InteractableBehaviourPutOnShelf putOnShelf:
+                Interactable0thPuzzleObject book = e.InteractedObject as Interactable0thPuzzleObject;
+                if (book != null)
+                {
+                    Transform initialPlace = book.GetBookPlaceOnShelfTransform();
+                    TriggerInteractionPanelIndividualActivated(sender, initialPlace, e.InteractionBehaviour.InteractionKeyCode);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void TriggerInteractionPanelIndividualDeactivated(object sender)
