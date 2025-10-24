@@ -143,6 +143,14 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void DetectIfBooksNear_HandsEmpty() //Handled by event OnInteractableApproached
     {
         DetectAnyColliderApproached();
+        List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables = GetNearInteractablesList(nearColliders);
+        if (nearInteractables.Count > 0)
+        {
+            InteractableBehaviourPickUpFromShelf pickUpFromShelf = new();
+            Interactable0thPuzzleObject nearestBook = GetNearestBookToScreen(nearInteractables);
+            if (nearestBook != null)
+                RaiseInteractionConditionsMet(this, nearestBook, pickUpFromShelf);
+        }
     }
 
     private void DetectIfBookPlatformNear_HandsEmpty()
