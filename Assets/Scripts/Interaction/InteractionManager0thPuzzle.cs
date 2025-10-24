@@ -159,10 +159,19 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void DetectPlatformView()
     {
         //Display UI for the key to be pressed when game switches to platform view
+        DisplayEnterPlatformViewUI();
+
         if (bookPlatform.IsEnterPlatformViewKeyPressed())
         {
             OnPlatformViewActivated?.Invoke(this, null);
         }
+    }
+
+    private void DisplayEnterPlatformViewUI()
+    {
+        Transform platformTopTransform = bookPlatform.GetTopCenterPointTransform();
+        KeyCode platformViewEnterKey = bookPlatform.GetEnterPlatformViewKey();
+        TriggerInteractionPanelIndividualActivated(this, platformTopTransform, platformViewEnterKey);
     }
 
 
