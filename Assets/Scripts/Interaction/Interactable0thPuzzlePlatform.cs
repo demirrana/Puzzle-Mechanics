@@ -101,7 +101,8 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     {
         int removedBookOrder = booksOnPlatform.IndexOf(book) + 1;
         RemoveBook(book);
-        ShiftBooksDownAfterRemoval(removedBookOrder);
+        if (removedBookOrder != booksOnPlatform.Count + 1) //no shift required when lastly put book removed
+            ShiftBooksDownAfterRemoval(removedBookOrder);
         UpdateAfterRemove_yValueForNextBook();
     }
 
