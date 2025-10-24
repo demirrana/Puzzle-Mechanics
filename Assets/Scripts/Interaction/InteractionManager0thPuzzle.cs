@@ -47,6 +47,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void Update()
     {
         isUIActivatedThisFrame = false;
+        DetectAnyColliderApproached();
         DetectInteractionConditionsMet();
         if (!isUIActivatedThisFrame && wasUIActivatedPreviousFrame) //Deactivate only if previously activated
         {
