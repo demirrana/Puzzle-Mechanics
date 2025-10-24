@@ -60,6 +60,21 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         }
     }
 
+    public Transform GetTopCenterPointTransform()
+    {
+        return topCenterPointTransform;
+    }
+
+    public KeyCode GetEnterPlatformViewKey()
+    {
+        return EnterPlatformViewKey;
+    }
+
+    public KeyCode GetExitPlatformViewKey()
+    {
+        return ExitPlatformViewKey;
+    }
+
     public bool HasPlace()
     {
         return booksOnPlatform.Count < BookCapacity;
