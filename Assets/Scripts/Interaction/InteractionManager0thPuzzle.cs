@@ -101,6 +101,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectInteractionConditionsMet_BookPlatformView()
     {
+        //Debug.Log("Platform view");
         if (bookPlatform.IsExitPlatformViewKeyPressed())
         {
             OnWorldViewActivated?.Invoke(this, null);
@@ -113,10 +114,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectIfBookPlaceNear_HandsFull()
     {
+        //Debug.Log("Put book on shelf check");
         if (interactableInHand is Interactable0thPuzzleObject bookInHand)
         {
             if (IsNear(bookInHand.GetBookPlaceOnShelfTransform()))
             {
+                //Debug.Log("book place near");
                 InteractableBehaviourPutOnShelf putOnShelfBehaviour = new();
                 RaiseInteractionConditionsMet(this, bookInHand, putOnShelfBehaviour);
             }
@@ -149,6 +152,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
             if (nearestBook != null)
                 RaiseInteractionConditionsMet(this, nearestBook, pickUpFromShelf);
         }
+        //Debug.Log("Take book from shelf check");
     }
 
     private void DetectIfBookPlatformNear_HandsEmpty()
@@ -156,8 +160,10 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         //Debug.Log("Take book from platform check");
         if (IsNear(bookPlatform.transform))
         {
+            //Debug.Log("platform near");
             if (bookPlatform.HasBooks()) //Any book can be got into hand when at least one book exists on platform
             {
+                //Debug.Log("platform has books");
                 DetectPlatformView();
             }
         }
@@ -165,7 +171,6 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectPlatformView()
     {
-        //Display UI for the key to be pressed when game switches to platform view
         DisplayEnterPlatformViewUI();
 
         if (bookPlatform.IsEnterPlatformViewKeyPressed())
@@ -244,6 +249,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void TriggerInteractionPanelIndividualActivated(object sender, InteractionBehaviourEventArgs e)
     {
+        //Debug.Log("panel activated");
         isUIActivatedThisFrame = true;
 
         Transform targetTransform = e.InteractedObject.transform;
@@ -253,6 +259,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void TriggerInteractionPanelIndividualActivated(object sender, Transform targetTransform, KeyCode targetKey)
     {
+        //Debug.Log("panel activated for non interactable object");
         isUIActivatedThisFrame = true;
 
         InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, targetKey);
@@ -286,11 +293,13 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void TriggerInteractionPanelIndividualDeactivated(object sender)
     {
+        //Debug.Log("panel deactivated");
         InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
     }
 
     private void ToggleViewAndUpdate()
     {
+        //Debug.Log("ToggleViewAndUpdate method call");
         CameraManager.Instance.SwitchToNextCamera();
         ChangeGameState();
         MouseManager.Instance.ChangeMouseVisibility();
