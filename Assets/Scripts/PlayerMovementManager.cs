@@ -30,6 +30,16 @@ public class PlayerMovementManager : MonoBehaviour
         MovePlayer();
     }
 
+    private void OnEnable()
+    {
+        playerInputActions.PlayerMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerInputActions.PlayerMap.Disable();
+    }
+
     private void MovePlayer()
     {
         float xMoveInput = inputMoveVector.x;

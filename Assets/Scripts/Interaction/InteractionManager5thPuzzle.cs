@@ -242,19 +242,10 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
     }
 
-    public Vector3 GetMousePositionInWorld()
-    {
-        float distanceFromCamera = 1.7f; //TO BE CHANGED according to the real table and camera
-        Vector3 mouseScreenPos = Input.mousePosition;
-        mouseScreenPos.z = distanceFromCamera;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        return worldPos;
-    }
-
     private void MoveInteractableWithMouse()
     {
         float lerpSpeed = 10f;
-        Vector3 worldPos = GetMousePositionInWorld();
+        Vector3 worldPos = MouseManager.Instance.GetMousePositionInWorld();
         interactableInHand.transform.position = Vector3.Lerp(interactableInHand.transform.position, worldPos, Time.deltaTime * lerpSpeed);
     }
 

@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehaviour0thPuzzle> //to be changed to 0thPuzzle
 {
     public static InteractionManager0thPuzzle Instance { get; private set; }
 
-    [SerializeField] private Transform puzzle0ObjectsHolder;
+    public event EventHandler OnWorldViewActivated;
+    public event EventHandler OnPlatformViewActivated;
 
-    private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
-    private static readonly KeyCode ExitPlatformViewKey = KeyCode.Escape;
+    [SerializeField] private Transform puzzle0ObjectsHolder;
 
     private enum GameState
     {
@@ -22,7 +23,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
-
+    private InteractionPanelIndividual InteractionPanelIndividual;
+    private bool wasUIActivatedPreviousFrame;
+    private bool isUIActivatedThisFrame;
 
     private void Awake()
     {
@@ -33,11 +36,26 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     {
         base.Start();
         InitializeObjects();
+        OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
+        OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
+        OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
+        OnWorldViewActivated += InteractionManager0thPuzzle_ActiveViewChanged;
+        OnPlatformViewActivated += InteractionManager0thPuzzle_ActiveViewChanged;
+        CameraManager.Instance.SetCameraViewToPuzzle0();
     }
 
     private void Update()
     {
+        isUIActivatedThisFrame = false;
+        DetectAnyColliderApproached();
         DetectInteractionConditionsMet();
+
+        if (!isUIActivatedThisFrame && wasUIActivatedPreviousFrame) //Deactivate only if previously activated
+        {
+            Debug.Log("Changed from activated to deactivated");
+            TriggerInteractionPanelIndividualDeactivated(this);
+        }
+        wasUIActivatedPreviousFrame = isUIActivatedThisFrame;
     }
 
     public Transform GetObjectsHolderTransform()
@@ -83,15 +101,25 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectInteractionConditionsMet_BookPlatformView()
     {
-        
+        //Debug.Log("Platform view");
+        if (bookPlatform.IsExitPlatformViewKeyPressed())
+        {
+            OnWorldViewActivated?.Invoke(this, null);
+        }
+        else
+        {
+            DetectPickUpPointedBook();
+        }
     }
 
     private void DetectIfBookPlaceNear_HandsFull()
     {
+        //Debug.Log("Put book on shelf check");
         if (interactableInHand is Interactable0thPuzzleObject bookInHand)
         {
             if (IsNear(bookInHand.GetBookPlaceOnShelfTransform()))
             {
+                //Debug.Log("book place near");
                 InteractableBehaviourPutOnShelf putOnShelfBehaviour = new();
                 RaiseInteractionConditionsMet(this, bookInHand, putOnShelfBehaviour);
             }
@@ -100,44 +128,188 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectIfBookPlatformNear_HandsFull()
     {
-        if (bookPlatform.HasPlace()) //A book can be placed on platform with other books
+        //Debug.Log("Put book on platform check");
+        if (interactableInHand is Interactable0thPuzzleObject bookInHand)
         {
-            InteractableBehaviourPutOnBookPlatform putOnBookPlatformBehaviour = new();
-            RaiseInteractionConditionsMet(this, interactableInHand, putOnBookPlatformBehaviour);
+            if (IsNear(bookPlatform.transform))
+            {
+                if (bookPlatform.HasPlace()) //A book can be placed on platform with other books
+                {
+                    InteractableBehaviourPutOnBookPlatform putOnBookPlatformBehaviour = new();
+                    RaiseInteractionConditionsMet(this, interactableInHand, putOnBookPlatformBehaviour);
+                }
+            }
         }
     }
 
-    private void DetectIfBooksNear_HandsEmpty()
+    private void DetectIfBooksNear_HandsEmpty() //Handled by event OnInteractableApproached
     {
-
+        List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables = GetNearInteractablesList(nearColliders);
+        if (nearInteractables.Count > 0)
+        {
+            InteractableBehaviourPickUpFromShelf pickUpFromShelf = new();
+            Interactable0thPuzzleObject nearestBook = GetNearestBookToScreen(nearInteractables);
+            if (nearestBook != null)
+                RaiseInteractionConditionsMet(this, nearestBook, pickUpFromShelf);
+        }
+        //Debug.Log("Take book from shelf check");
     }
 
     private void DetectIfBookPlatformNear_HandsEmpty()
     {
-        if (bookPlatform.HasBooks()) //Any book can be got into hand when at least one book exists on platform
+        //Debug.Log("Take book from platform check");
+        if (IsNear(bookPlatform.transform))
         {
-            DetectPlatformView();
+            //Debug.Log("platform near");
+            if (bookPlatform.HasBooks()) //Any book can be got into hand when at least one book exists on platform
+            {
+                //Debug.Log("platform has books");
+                DetectPlatformView();
+            }
         }
     }
 
     private void DetectPlatformView()
     {
-        //Display UI for the key to be pressed when game switches to platform view
-        if (IsEnterPlatformViewKeyPressed())
+        DisplayEnterPlatformViewUI();
+
+        if (bookPlatform.IsEnterPlatformViewKeyPressed())
         {
-            //Delete diplay of UI for the key of switching
-            SetGameState(GameState.BookPlatformView);
+            OnPlatformViewActivated?.Invoke(this, null);
         }
     }
 
-    private bool IsEnterPlatformViewKeyPressed()
+    private void DisplayEnterPlatformViewUI()
     {
-        return Input.GetKeyDown(EnterPlatformViewKey);
+        Transform platformTopTransform = bookPlatform.GetTopCenterPointTransform();
+        KeyCode platformViewEnterKey = bookPlatform.GetEnterPlatformViewKey();
+        TriggerInteractionPanelIndividualActivated(this, platformTopTransform, platformViewEnterKey);
     }
 
-    private bool IsExitPlatformViewKeyPressed()
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour0thPuzzle> interactable)
     {
-        return Input.GetKeyDown(ExitPlatformViewKey);
+        if (interactable is Interactable0thPuzzleObject)
+        {
+            Interactable0thPuzzleObject book = interactable as Interactable0thPuzzleObject;
+            foreach (IInteractableBehaviour0thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
+            {
+                if (!bookPlatform.HasTheBook(book))
+                {
+                    InteractableBehaviourPickUpFromShelf pickUpFromShelf = new();
+                    RaiseInteractionConditionsMet(sender, book, pickUpFromShelf);
+                }
+            }
+        }
+    }
+
+    protected override void InteractionManager_InteractionConditionsMet(object sender, InteractionBehaviourEventArgs e)
+    {
+        TriggerInteractionPanelBasedOnBehaviour(sender, e);
+        DetectBehaviourApplied(e.InteractedObject, e.InteractionBehaviour);
+    }
+
+    protected override void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
+    {
+        if (e.InteractionBehaviour is InteractableBehaviourPickUpFromBookPlatform)
+        {
+            OnWorldViewActivated?.Invoke(this, null);
+        }
+        
+        base.InteractionManager_InteractableInteracted(sender, e);
+    }
+
+    private void InteractionManager0thPuzzle_ActiveViewChanged(object sender, EventArgs e)
+    {
+        ToggleViewAndUpdate();
+    }
+
+    private void DetectPickUpPointedBook()
+    {
+        Interactable0thPuzzleObject pointedBook = bookPlatform.GetPointedBook();
+        if (pointedBook != null)
+        {
+            InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform = new();
+            RaiseInteractionConditionsMet(this, pointedBook, pickUpFromPlatform);
+        }
+    }
+
+    //A new list is created with the books that are not on platform (the distinction is made here) //TO DO LATER
+    private Interactable0thPuzzleObject GetNearestBookToScreen(List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables)
+    {
+        foreach (Interactable0thPuzzleObject book in nearInteractables.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
+        {
+            if (book != null && !bookPlatform.HasTheBook(book))
+            {
+                return book;
+            }
+        }
+
+        return null;
+    }
+
+    private void TriggerInteractionPanelIndividualActivated(object sender, InteractionBehaviourEventArgs e)
+    {
+        //Debug.Log("panel activated");
+        isUIActivatedThisFrame = true;
+
+        Transform targetTransform = e.InteractedObject.transform;
+        KeyCode behaviourKey = e.InteractionBehaviour.InteractionKeyCode;
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, behaviourKey);
+    }
+
+    private void TriggerInteractionPanelIndividualActivated(object sender, Transform targetTransform, KeyCode targetKey)
+    {
+        //Debug.Log("panel activated for non interactable object");
+        isUIActivatedThisFrame = true;
+
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, targetKey);
+    }
+
+    private void TriggerInteractionPanelBasedOnBehaviour(object sender, InteractionBehaviourEventArgs e)
+    {
+        switch(e.InteractionBehaviour)
+        {
+            case InteractableBehaviourPickUpFromShelf pickUpFromShelf:
+                TriggerInteractionPanelIndividualActivated(sender, e);
+                break;
+            case InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform:
+                TriggerInteractionPanelIndividualActivated(sender, e);
+                break;
+            case InteractableBehaviourPutOnBookPlatform putOnBookPlatform:
+                TriggerInteractionPanelIndividualActivated(sender, bookPlatform.GetTopCenterPointTransform(), bookPlatform.GetEnterPlatformViewKey());
+                break;
+            case InteractableBehaviourPutOnShelf putOnShelf:
+                Interactable0thPuzzleObject book = e.InteractedObject as Interactable0thPuzzleObject;
+                if (book != null)
+                {
+                    Transform initialPlace = book.GetBookPlaceOnShelfTransform();
+                    TriggerInteractionPanelIndividualActivated(sender, initialPlace, e.InteractionBehaviour.InteractionKeyCode);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void TriggerInteractionPanelIndividualDeactivated(object sender)
+    {
+        //Debug.Log("panel deactivated");
+        InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
+    }
+
+    private void ToggleViewAndUpdate()
+    {
+        //Debug.Log("ToggleViewAndUpdate method call");
+        CameraManager.Instance.SwitchToNextCamera();
+        ChangeGameState();
+        MouseManager.Instance.ChangeMouseVisibility();
+        if (PlayerMovementManager.Instance.enabled) PlayerScriptsManager.Instance.DisableMovementScript();
+        else PlayerScriptsManager.Instance.EnableMovementScript();
+    }
+
+    private void ChangeGameState()
+    {
+        currentState = currentState == GameState.WorldView ? GameState.BookPlatformView : GameState.WorldView;
     }
     
     private void SetGameState(GameState gameState)
@@ -148,6 +320,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void InitializeObjects()
     {
         bookPlatform = Interactable0thPuzzlePlatform.Instance;
+        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        isUIActivatedThisFrame = false;
+        wasUIActivatedPreviousFrame = false;
     }
 
     private void SetInstance()
