@@ -2400,6 +2400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryButton: {fileID: 912830322}
   scrollRect: {fileID: 478205968}
+  contentTransform: {fileID: 0}
+  keyPartUIPrefab: {fileID: 0}
 --- !u!1 &2131402282
 GameObject:
   m_ObjectHideFlags: 0
