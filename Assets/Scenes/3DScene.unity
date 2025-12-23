@@ -11041,6 +11041,7 @@ GameObject:
   - component: {fileID: 486003481}
   - component: {fileID: 486003480}
   - component: {fileID: 486003479}
+  - component: {fileID: 486003482}
   m_Layer: 0
   m_Name: ExtraPart_Rectangle
   m_TagString: Untagged
@@ -11137,6 +11138,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486003477}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &486003482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486003477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de931afdb5ea7b4689605fc85d09a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &500050459
 GameObject:
   m_ObjectHideFlags: 0
@@ -12185,6 +12198,7 @@ GameObject:
   - component: {fileID: 848166823}
   - component: {fileID: 848166822}
   - component: {fileID: 848166821}
+  - component: {fileID: 848166824}
   m_Layer: 0
   m_Name: ExtraPart_Cylinder
   m_TagString: Untagged
@@ -12281,6 +12295,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848166819}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &848166824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848166819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de931afdb5ea7b4689605fc85d09a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &875205674
 GameObject:
   m_ObjectHideFlags: 0
@@ -15079,6 +15105,7 @@ GameObject:
   - component: {fileID: 1995910530}
   - component: {fileID: 1995910529}
   - component: {fileID: 1995910528}
+  - component: {fileID: 1995910531}
   m_Layer: 0
   m_Name: ExtraPart_Sphere
   m_TagString: Untagged
@@ -15175,6 +15202,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995910526}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1995910531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995910526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de931afdb5ea7b4689605fc85d09a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997342647
 GameObject:
   m_ObjectHideFlags: 0
