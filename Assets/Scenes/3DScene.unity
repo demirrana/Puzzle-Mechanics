@@ -15030,7 +15030,7 @@ MonoBehaviour:
   playerHeight: 1.67
   rayCount: 5
   handTransform: {fileID: 1040594790}
-  mainKeyPartPrefab: {fileID: 0}
+  mainKeyPartPrefab: {fileID: 2364286278051484150, guid: 723c54f2f51fc5441a48aadcdd723f0c, type: 3}
 --- !u!1 &1957844719
 GameObject:
   m_ObjectHideFlags: 0
