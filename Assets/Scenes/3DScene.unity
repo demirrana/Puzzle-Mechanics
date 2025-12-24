@@ -11345,7 +11345,7 @@ GameObject:
   - component: {fileID: 573764279}
   - component: {fileID: 573764278}
   - component: {fileID: 573764277}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12497,7 +12497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1040594790}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13018,7 +13018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1169253578}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Follow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13178,7 +13178,7 @@ GameObject:
   - component: {fileID: 1235324937}
   - component: {fileID: 1235324936}
   - component: {fileID: 1235324935}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14920,7 +14920,7 @@ GameObject:
   - component: {fileID: 1868460036}
   - component: {fileID: 1868460037}
   - component: {fileID: 1868460038}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
