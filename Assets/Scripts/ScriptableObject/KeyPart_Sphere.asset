@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21be895b0e3ef8742963a23e623503ea, type: 3}
   m_Name: KeyPart_Sphere
   m_EditorClassIdentifier: 
-  keyPartID: 
-  displayName: 
-  inventoryIcon: {fileID: 0}
-  prefab: {fileID: 0}
+  keyPartID: 03
+  displayName: Sphere
+  inventoryIcon: {fileID: 21300000, guid: 4db7f0f8b0440fb40a7b446972a6e217, type: 3}
+  prefab: {fileID: 4931958263040233272, guid: 1a31e8df2842e1d4c9634487fed28790, type: 3}
