@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de28822cc265e14f8eeb69c92452fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyPartIcon: {fileID: 0}
+  keyPartIcon: {fileID: 1547050824628006800}
   keyPartName: {fileID: 4575054225946861973}
 --- !u!1 &8181226959142603025
 GameObject:
