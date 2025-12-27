@@ -15462,6 +15462,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6963373099473169570, guid: feea3d795d843a6458cf7f4c88f7df07, type: 3}
+      propertyPath: keyPartName
+      value: Rectangular Prism
+      objectReference: {fileID: 0}
     - target: {fileID: 7748042968608258258, guid: feea3d795d843a6458cf7f4c88f7df07, type: 3}
       propertyPath: keyPartData
       value: 
@@ -15614,6 +15618,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6710051982580849440, guid: 1a31e8df2842e1d4c9634487fed28790, type: 3}
+      propertyPath: keyPartName
+      value: Sphere
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15635,6 +15643,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1663447678}
     m_Modifications:
+    - target: {fileID: 1799701075896806796, guid: faa39496deafe5d448bda3747cd7c9c6, type: 3}
+      propertyPath: keyPartName
+      value: Cylinder
+      objectReference: {fileID: 0}
     - target: {fileID: 2223066702453567590, guid: faa39496deafe5d448bda3747cd7c9c6, type: 3}
       propertyPath: keyPartData
       value: 
