@@ -14830,6 +14830,7 @@ GameObject:
   - component: {fileID: 1868460036}
   - component: {fileID: 1868460037}
   - component: {fileID: 1868460038}
+  - component: {fileID: 1868460039}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -14967,6 +14968,18 @@ MonoBehaviour:
   rayCount: 5
   handTransform: {fileID: 1040594790}
   mainKeyPartPrefab: {fileID: 2364286278051484150, guid: 723c54f2f51fc5441a48aadcdd723f0c, type: 3}
+--- !u!114 &1868460039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868460029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fa921cd16ab634f95d2b22195310d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1957844719
 GameObject:
   m_ObjectHideFlags: 0
