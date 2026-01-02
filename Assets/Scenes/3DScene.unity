@@ -11519,7 +11519,7 @@ Transform:
   m_GameObject: {fileID: 662216958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 35, y: 0, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15064,7 +15064,7 @@ MonoBehaviour:
   rayCount: 5
   handTransform: {fileID: 1040594790}
   mainKeyPartPrefab: {fileID: 3770473239362888071, guid: 723c54f2f51fc5441a48aadcdd723f0c, type: 3}
-  displayTransform: {fileID: 0}
+  displayTransform: {fileID: 662216959}
 --- !u!114 &1868460039
 MonoBehaviour:
   m_ObjectHideFlags: 0
