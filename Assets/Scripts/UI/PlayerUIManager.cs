@@ -24,6 +24,15 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
+    public void HideExceptHand()
+    {
+        foreach (Transform childTransform in transform)
+        {
+            if (childTransform.name != "Hand") //adjust later
+                childTransform.gameObject.SetActive(false);
+        }
+    }
+
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
