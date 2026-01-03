@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class InventoryPanel : MonoBehaviour
 {
+    [SerializeField] private Button inventoryButton;
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private Transform contentTransform;
+
     public static InventoryPanel Instance { get; private set; }
 
     private void Awake()
