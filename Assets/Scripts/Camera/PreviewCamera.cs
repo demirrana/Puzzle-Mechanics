@@ -4,7 +4,15 @@ public class PreviewCamera : MonoBehaviour
 {
     public static PreviewCamera Instance { get; private set; }
 
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
     private float rotationSpeed = 12f;
+
+    public void ResetPositionRotation()
+    {
+        transform.localPosition = initialPosition;
+        transform.localRotation = initialRotation;
+    }
 
     public void RotateAroundObject(GameObject gameObject)
     {
@@ -14,6 +22,7 @@ public class PreviewCamera : MonoBehaviour
     private void Awake()
     {
         SetInstance();
+        SetVariables();
     }
 
     private void SetInstance()
@@ -24,5 +33,11 @@ public class PreviewCamera : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    private void SetVariables()
+    {
+        initialPosition = transform.localPosition;
+        initialRotation = transform.localRotation;
     }
 }
