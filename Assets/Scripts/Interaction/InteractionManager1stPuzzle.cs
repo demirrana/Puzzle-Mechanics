@@ -12,6 +12,15 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         SetInstance();
     }
 
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -22,12 +31,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
     }
 
-    private void SetInstance()
     {
-        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
         }
-        Instance = this;
     }
 }
