@@ -54,6 +54,14 @@ public class InventoryPanel : MonoBehaviour
         return slotContainer.gameObject.activeSelf;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleSlotContainerVisibility();
+            MouseManager.Instance.ChangeMouseVisibility();
+        }
+    }
 
     public void HideInventoryButton()
     {
