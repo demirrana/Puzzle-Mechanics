@@ -9,6 +9,8 @@ public class InventoryPanel : MonoBehaviour
     [SerializeField] private ScrollRect slotContainer;
     [SerializeField] private Transform contentTransform;
 
+    [SerializeField] private UI_Puzzle1stObject inventorySlotPrefab;
+
     public static InventoryPanel Instance { get; private set; }
 
     private void Awake()
