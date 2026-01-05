@@ -32,6 +32,28 @@ public class InventoryPanel : MonoBehaviour
         slotContainer.gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        inventoryButton.onClick.AddListener(ToggleScrollViewVisibility);
+    }
+
+    private void ToggleScrollViewVisibility()
+    {
+        if (IsInventoryActive())
+        {
+            HideInventoryContent();
+        }
+        else
+        {
+            ShowInventoryContent();
+        }
+    }
+
+    private bool IsInventoryActive()
+    {
+        return slotContainer.gameObject.activeSelf;
+    }
+
 
     private void ShowInventoryContent()
     {
