@@ -26,4 +26,15 @@ public class InventoryPanel : MonoBehaviour
         }
         Instance = this;
     }
-}
+    
+    private void HideInventoryContent()
+    {
+        slotContainer.gameObject.SetActive(false);
+    }
+
+
+    private void ShowInventoryContent()
+    {
+        slotContainer.gameObject.SetActive(true);
+    }
+
