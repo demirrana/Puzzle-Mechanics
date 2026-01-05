@@ -8,9 +8,12 @@ public class Interactable1stPuzzleMainKey : MonoBehaviour
     private Vector3 velocity;
     private bool isDragging = false;
 
+    private Quaternion initialRotation;
+
     private void Awake()
     {
         SetInstance();
+        InitializeVariables();
     }
 
     public bool IsDragging()
@@ -42,6 +45,12 @@ public class Interactable1stPuzzleMainKey : MonoBehaviour
 
         transform.Rotate(Vector3.up, -velocity.x, Space.World);
         transform.Rotate(Vector3.right, velocity.y, Space.World);
+    }
+
+
+    private void InitializeVariables()
+    {
+        initialRotation = transform.rotation;
     }
 
     private void SetInstance()
