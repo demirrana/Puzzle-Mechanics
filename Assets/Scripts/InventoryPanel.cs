@@ -55,6 +55,17 @@ public class InventoryPanel : MonoBehaviour
     }
 
 
+    public void HideInventoryButton()
+    {
+        inventoryButton.gameObject.SetActive(false);
+    }
+
+    public void ShowInventoryButton()
+    {
+        inventoryButton.gameObject.SetActive(true);
+    }
+
+
     private void ShowInventoryContent()
     {
         slotContainer.gameObject.SetActive(true);
