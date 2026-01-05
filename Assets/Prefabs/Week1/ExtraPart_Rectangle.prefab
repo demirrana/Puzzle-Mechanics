@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6117400592160188370}
   - component: {fileID: 3955499302551728097}
   - component: {fileID: 7748042968608258258}
-  - component: {fileID: 6963373099473169570}
   m_Layer: 8
   m_Name: ExtraPart_Rectangle
   m_TagString: Untagged
@@ -123,17 +122,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyPartData: {fileID: 0}
---- !u!114 &6963373099473169570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2547495782779738542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0de28822cc265e14f8eeb69c92452fb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyPartIcon: {fileID: 21300000, guid: fc0310c0ab2be914fb56fed03655df2f, type: 3}
-  keyPartName: {fileID: 0}

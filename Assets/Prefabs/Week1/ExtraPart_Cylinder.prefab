@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1458247935769347736}
   - component: {fileID: 6597382897419856076}
   - component: {fileID: 2223066702453567590}
-  - component: {fileID: 1799701075896806796}
   m_Layer: 8
   m_Name: ExtraPart_Cylinder
   m_TagString: Untagged
@@ -123,17 +122,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyPartData: {fileID: 0}
---- !u!114 &1799701075896806796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3563801955503033834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0de28822cc265e14f8eeb69c92452fb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyPartIcon: {fileID: 21300000, guid: 75983a6f2f71e1246833fc76e9ed05c5, type: 3}
-  keyPartName: {fileID: 0}
