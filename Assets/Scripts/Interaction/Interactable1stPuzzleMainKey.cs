@@ -47,6 +47,15 @@ public class Interactable1stPuzzleMainKey : MonoBehaviour
         transform.Rotate(Vector3.right, velocity.y, Space.World);
     }
 
+    public Quaternion GetInitialRotation()
+    {
+        return initialRotation;
+    }
+
+    public void SetRotation(Quaternion targetRotation)
+    {
+        transform.rotation = targetRotation;
+    }
 
     private void InitializeVariables()
     {
