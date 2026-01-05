@@ -19,6 +19,21 @@ public class UI_Puzzle1stObject : MonoBehaviour
         this.keyPart = keyPart;
     }
 
+    public GameObject GetKeyPartObject()
+    {
+        return keyPartData.prefab;
+    }
+
+    public SOCollectibleKeyPart GetKeyPartData()
+    {
+        return keyPartData;
+    }
+
+    public Interactable1stPuzzleObject GetKeyPart()
+    {
+        return keyPart;
+    }
+
     public void Hide()
     {
         gameObject.SetActive(false);
