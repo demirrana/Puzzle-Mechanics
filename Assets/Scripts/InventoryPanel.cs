@@ -34,10 +34,10 @@ public class InventoryPanel : MonoBehaviour
 
     private void Start()
     {
-        inventoryButton.onClick.AddListener(ToggleScrollViewVisibility);
+        inventoryButton.onClick.AddListener(ToggleSlotContainerVisibility);
     }
 
-    private void ToggleScrollViewVisibility()
+    private void ToggleSlotContainerVisibility()
     {
         if (IsInventoryActive())
         {
