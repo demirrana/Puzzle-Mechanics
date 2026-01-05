@@ -74,8 +74,15 @@ public class InventoryPanel : MonoBehaviour
     }
 
 
+    public void CreateNewSlot(Interactable1stPuzzleObject keyPart)
+    {
+        SOCollectibleKeyPart keyPartData = keyPart.GetKeyPartData();
+        UI_Puzzle1stObject keyPartUI = Instantiate(inventorySlotPrefab, contentTransform);
+        keyPartUI.Setup(keyPartData, keyPart);
+    }
+
     private void ShowInventoryContent()
     {
         slotContainer.gameObject.SetActive(true);
     }
-
+}
