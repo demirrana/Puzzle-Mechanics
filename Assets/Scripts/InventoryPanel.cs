@@ -34,6 +34,9 @@ public class InventoryPanel : MonoBehaviour
 
     private void Start()
     {
+        UI_Puzzle1Manager.Instance.OnInventoryPanelActivated += InventoryPanel_InventoryPanelActivated;
+        UI_Puzzle1Manager.Instance.OnInventoryPanelDeactivated += InventoryPanel_InventoryPanelDeactivated;
+
         inventoryButton.onClick.AddListener(ToggleSlotContainerVisibility);
     }
 
@@ -73,6 +76,16 @@ public class InventoryPanel : MonoBehaviour
         inventoryButton.gameObject.SetActive(true);
     }
 
+    private void InventoryPanel_InventoryPanelActivated(object sender, EventArgs e)
+    {
+        ShowInventoryButton();
+    }
+
+    private void InventoryPanel_InventoryPanelDeactivated(object sender, EventArgs e)
+    {
+        HideInventoryContent();
+        HideInventoryButton();
+    }
 
     public void CreateNewSlot(Interactable1stPuzzleObject keyPart)
     {
