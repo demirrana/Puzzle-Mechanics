@@ -126,3 +126,9 @@ public class UI_Puzzle1Manager : MonoBehaviour
     {
         InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
     }
+
+    private void UI_Puzzle1Manager_KeyPartCollected(object sender, Interactable1stPuzzleObject keyPart)
+    {
+        keyPart.gameObject.Hide();
+        InventoryPanel.Instance.CreateNewSlot(keyPart);
+    }
