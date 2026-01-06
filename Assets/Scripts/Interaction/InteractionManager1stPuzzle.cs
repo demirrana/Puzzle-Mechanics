@@ -77,6 +77,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
 
+    private void Update()
+    {
+        DetectInteractionConditionsMet();
+    }
 
     protected override void DetectInteractionConditionsMet()
     {
