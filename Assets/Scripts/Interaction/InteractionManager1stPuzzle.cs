@@ -53,6 +53,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         base.Start();
         InitializeVariables();
+        SubscribeEvents();
     }
 
     private void InitializeVariables()
