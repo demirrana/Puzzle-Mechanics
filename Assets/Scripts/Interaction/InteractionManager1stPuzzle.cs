@@ -77,6 +77,17 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
 
+    private void ResetEditViewRelatedElements()
+    {
+        if (movingKeyPart != null)
+        {
+            movingKeyPart.gameObject.Hide();
+            movingKeyPart = null;
+        }
+
+        isKeyFollowingMouse = false;
+    }
+
     private void ResetMainKeyRotation()
     {
         Interactable1stPuzzleMainKey mainKey = Interactable1stPuzzleMainKey.Instance;
