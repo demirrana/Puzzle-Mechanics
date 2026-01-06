@@ -200,6 +200,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             keyPartObj.gameObject.Hide();
         }
     }
+    private void AdjustVariablesForPreview(GameObject gameObject)
+    {
+        gameObject.SetActive(true);
+        previewingKeyPartObject = gameObject;
+        PreviewCamera.Instance.ResetPositionRotation();
+        hasPreviewStarted = true;
+    }
     public Vector3 GetMousePositionInWorld()
     {
         float distanceFromCamera = GameplayCamera.Instance.GetComponent<CinemachineFollow>().FollowOffset.z;
