@@ -16,6 +16,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         EditView
     }
 
+    [SerializeField] private Interactable<IInteractableBehaviour1stPuzzle> mainKeyPartPrefab;
 
     private InteractionPanelIndividual InteractionPanelIndividual;
     private ViewMode currentViewMode;
