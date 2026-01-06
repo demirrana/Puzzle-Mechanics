@@ -115,3 +115,9 @@ public class UI_Puzzle1Manager : MonoBehaviour
             }
         }
     }
+
+    private void UI_Puzzle1Manager_InteractableApproached(object sender, Interactable<IInteractableBehaviour1stPuzzle> keyPart)
+    {
+        InteractableBehaviourCollectKeyPart collectKeyPart = new();
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(sender, keyPart.transform, collectKeyPart.InteractionKeyCode);
+    }
