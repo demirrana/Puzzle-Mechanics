@@ -185,6 +185,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         InteractableBehaviourCollectKeyPart collectKeyPart = new();
         RaiseInteractionConditionsMet(sender, keyPart, collectKeyPart);
+    }
+
     protected override void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
     {
         base.InteractionManager_InteractableInteracted(sender, e);
