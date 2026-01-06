@@ -41,7 +41,16 @@ public class UI_Puzzle1Manager : MonoBehaviour
         }
         Instance = this;
     }
-}
+
+    private void Start()
+    {
+        InteractionManager1stPuzzle.Instance.OnInteractableApproached += UI_Puzzle1Manager_InteractableApproached;
+        InteractionManager1stPuzzle.Instance.OnNoInteractableNear += UI_Puzzle1Manager_NoInteractableNear;
+        InteractionManager1stPuzzle.Instance.OnAnyKeyPartCollected += UI_Puzzle1Manager_KeyPartCollected;
+        InteractionManager1stPuzzle.Instance.OnEditViewActivated += UI_Puzzle1Manager_EditViewActivated;
+        InteractionManager1stPuzzle.Instance.OnEditViewDeactivated += UI_Puzzle1Manager_EditViewDeactivated;
+        InteractionManager1stPuzzle.Instance.OnDoorNear += UI_Puzzle1Manager_DoorNear;
+    }
 
     public bool IsMouseOverInventoryPanel()
     {
@@ -154,3 +163,4 @@ public class UI_Puzzle1Manager : MonoBehaviour
     {
         InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(sender, door.transform, door.GetInteractionKey());
     }
+}
