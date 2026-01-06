@@ -121,3 +121,8 @@ public class UI_Puzzle1Manager : MonoBehaviour
         InteractableBehaviourCollectKeyPart collectKeyPart = new();
         InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(sender, keyPart.transform, collectKeyPart.InteractionKeyCode);
     }
+
+    private void UI_Puzzle1Manager_NoInteractableNear(object sender, EventArgs e)
+    {
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+    }
