@@ -12,6 +12,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     public event EventHandler<Interactable1stPuzzleObject> OnAnyKeyPartCollected;
     public event EventHandler OnEditViewActivated;
     public event EventHandler OnEditViewDeactivated;
+    public event EventHandler<Interactable1stPuzzleDoor> OnDoorNear;
 
     public enum ViewMode
     {
