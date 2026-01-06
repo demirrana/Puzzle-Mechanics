@@ -77,6 +77,16 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
 
+
+    private void ExitEditView()
+    {
+        currentViewMode = ViewMode.WorldView;
+        OnEditViewDeactivated?.Invoke(this, EventArgs.Empty);
+        ResetEditViewRelatedElements();
+        ResetMainKeyRotation();
+        CameraManager.Instance.SwitchToNextCamera();
+    }
+
     private void ResetEditViewRelatedElements()
     {
         if (movingKeyPart != null)
