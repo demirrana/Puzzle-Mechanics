@@ -42,3 +42,18 @@ public class UI_Puzzle1Manager : MonoBehaviour
         Instance = this;
     }
 }
+
+    public bool IsMouseOverInventoryPanel()
+    {
+        PointerEventData eventData = new(EventSystem.current) { position = Input.mousePosition };
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (var result in results)
+        {
+            if (result.gameObject.GetComponentInParent<InventoryPanel>() != null)
+                return true;
+        }
+
+        return false;
+    }
