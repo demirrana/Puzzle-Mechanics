@@ -31,3 +31,15 @@ public class IInteractableBehaviour1stPuzzle : IInteractableBehaviour
     }
 }
 
+public class InteractableBehaviourCollectKeyPart : IInteractableBehaviour1stPuzzle
+{
+    public override KeyCode InteractionKeyCode => KeyCode.E;
+
+    public override void Interact<IInteractableBehaviour1stPuzzle>(Interactable1stPuzzleObject interactable)
+    {
+        Debug.Log("Key part is collected from floor.");
+
+        interactable.SetParent(null);
+    }
+
+}
