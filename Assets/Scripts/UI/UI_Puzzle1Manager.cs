@@ -23,6 +23,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
     public event EventHandler OnInventoryPanelActivated;
     public event EventHandler OnInventoryPanelDeactivated;
     public event EventHandler<ChangeInHoveredObjectEventArgs> OnHoveredInventorySlotChanged;
+    public event EventHandler OnNoHoveredInventorySlot;
     private void Awake()
     {
         SetInstance();
