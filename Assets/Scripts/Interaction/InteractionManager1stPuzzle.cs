@@ -109,6 +109,20 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         InteractableBehaviourCollectKeyPart collectKeyPart = new();
         RaiseInteractionConditionsMet(sender, keyPart, collectKeyPart);
+    protected override void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
+    {
+        base.InteractionManager_InteractableInteracted(sender, e);
+
+        Interactable<IInteractableBehaviour1stPuzzle> keyPart = e.InteractedObject; //type can be changed
+
+        if (keyPart is Interactable1stPuzzleObject)
+        {
+            Interactable1stPuzzleObject keyPartObj = keyPart as Interactable1stPuzzleObject;
+            OnAnyKeyPartCollected?.Invoke(sender, keyPartObj);
+
+            collectedKeyParts.Add(keyPart);
+            keyPartObj.gameObject.Hide();
+        }
     }
     }
 }
