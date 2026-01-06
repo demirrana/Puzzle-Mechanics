@@ -76,7 +76,34 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged += InteractionManager1stPuzzle_HoveredInventorySlotChanged;
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
+    protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
+    {
+        Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
+
+        if (nearDoor != null) //when a door is near, it is either editing key parts or trying the key in hand on the door
         {
+            OnDoorNear?.Invoke(sender, nearDoor);
+            if (Input.GetKeyDown(KeyCode.Alpha1)) //try on door
+            {
+                
+            }
+            else if (Input.GetKeyDown(nearDoor.GetInteractionKey())) //edit key
+            {
+                SwitchToEditView();
+            }
         }
+        else
+        {
+            base.PlayerInteractionManager_ObjectCollidersApproached(sender, colliderList);
+        }
+    }
+
+    private void SwitchToEditView()
+    {
+        currentViewMode = ViewMode.EditView;
+        CameraManager.Instance.FollowWithCamera(interactableInHand.transform, CameraManager.CameraName.GameplayCamera);
+        CameraManager.Instance.SwitchToNextCamera();
+        OnEditViewActivated?.Invoke(this, EventArgs.Empty);
+    }
     }
 }
