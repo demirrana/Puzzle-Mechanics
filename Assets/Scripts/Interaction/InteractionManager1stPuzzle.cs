@@ -251,6 +251,18 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         PreviewCamera.Instance.ResetPositionRotation();
         hasPreviewStarted = true;
     }
+
+    private void InteractionManager1stPuzzle_InventorySlotClicked(object sender, UI_Puzzle1stObject inventorySlot)
+    {
+        if (movingKeyPart != null && movingKeyPart != inventorySlot.GetKeyPart()) //stop displaying the previously chosen key part
+        {
+            movingKeyPart.gameObject.Hide();
+        }
+
+        movingKeyPart = inventorySlot.GetKeyPart();
+        movingKeyPart.gameObject.Show();
+        isKeyFollowingMouse = true;
+    }
     public Vector3 GetMousePositionInWorld()
     {
         float distanceFromCamera = GameplayCamera.Instance.GetComponent<CinemachineFollow>().FollowOffset.z;
