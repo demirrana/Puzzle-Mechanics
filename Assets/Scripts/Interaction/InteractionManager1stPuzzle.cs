@@ -105,5 +105,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         CameraManager.Instance.SwitchToNextCamera();
         OnEditViewActivated?.Invoke(this, EventArgs.Empty);
     }
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour1stPuzzle> keyPart)
+    {
+        InteractableBehaviourCollectKeyPart collectKeyPart = new();
+        RaiseInteractionConditionsMet(sender, keyPart, collectKeyPart);
+    }
     }
 }
