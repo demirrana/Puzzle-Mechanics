@@ -91,6 +91,14 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void MoveKeyPartOnScreen()
+    {
+        if (isKeyFollowingMouse)
+        {
+            MoveKeyPartWithMouse(movingKeyPart);
+        }
+    }
+
     private void RotateMainKey()
     {
         if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel())
