@@ -156,5 +156,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             keyPartObj.gameObject.Hide();
         }
     }
+    public Vector3 GetMousePositionInWorld()
+    {
+        float distanceFromCamera = GameplayCamera.Instance.GetComponent<CinemachineFollow>().FollowOffset.z;
+        Vector3 mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = -distanceFromCamera;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        return worldPos;
+    }
     }
 }
