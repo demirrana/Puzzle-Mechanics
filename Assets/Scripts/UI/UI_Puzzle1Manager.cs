@@ -149,3 +149,8 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
         OnInventoryPanelDeactivated?.Invoke(sender, e);
     }
+
+    private void UI_Puzzle1Manager_DoorNear(object sender, Interactable1stPuzzleDoor door)
+    {
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(sender, door.transform, door.GetInteractionKey());
+    }
