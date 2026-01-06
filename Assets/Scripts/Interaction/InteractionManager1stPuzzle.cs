@@ -67,7 +67,14 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         previewingKeyPartObject = null;
     }
 
+    private void SubscribeEvents()
     {
+        OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
+        UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged += InteractionManager1stPuzzle_HoveredInventorySlotChanged;
+        UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
+    }
         {
         }
     }
