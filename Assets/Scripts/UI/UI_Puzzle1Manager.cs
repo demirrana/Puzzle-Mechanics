@@ -132,3 +132,20 @@ public class UI_Puzzle1Manager : MonoBehaviour
         keyPart.gameObject.Hide();
         InventoryPanel.Instance.CreateNewSlot(keyPart);
     }
+
+    private void UI_Puzzle1Manager_EditViewActivated(object sender, EventArgs e)
+    {
+        PlayerUIManager.Instance.HideExceptHand();
+        MouseManager.Instance.ChangeMouseVisibility();
+
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+        OnInventoryPanelActivated?.Invoke(sender, e);
+    }
+
+    private void UI_Puzzle1Manager_EditViewDeactivated(object sender, EventArgs e)
+    {
+        PlayerUIManager.Instance.Show();
+        MouseManager.Instance.ChangeMouseVisibility();
+
+        OnInventoryPanelDeactivated?.Invoke(sender, e);
+    }
