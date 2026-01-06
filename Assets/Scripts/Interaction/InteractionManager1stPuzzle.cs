@@ -76,6 +76,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged += InteractionManager1stPuzzle_HoveredInventorySlotChanged;
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
+
+    private void ResetMainKeyRotation()
+    {
+        Interactable1stPuzzleMainKey mainKey = Interactable1stPuzzleMainKey.Instance;
+        mainKey.SetRotation(mainKey.GetInitialRotation());
+    }
+
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
