@@ -83,6 +83,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         mainKey.SetRotation(mainKey.GetInitialRotation());
     }
 
+    private void RotatePreviewCameraAroundKeyPart()
+    {
+        if (hasPreviewStarted)
+        {
+            PreviewCamera.Instance.RotateAroundObject(previewingKeyPartObject);
+        }
+    }
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
