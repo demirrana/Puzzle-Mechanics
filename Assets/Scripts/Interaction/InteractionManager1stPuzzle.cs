@@ -5,6 +5,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     public static InteractionManager1stPuzzle Instance { get; private set; }
 
 
+    public enum ViewMode
+    {
+        WorldView,
+        EditView
+    }
+
+
     private InteractionPanelIndividual InteractionPanelIndividual;
 
     private void Awake()
