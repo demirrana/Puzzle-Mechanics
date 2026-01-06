@@ -27,6 +27,9 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private List<Interactable<IInteractableBehaviour1stPuzzle>> collectedKeyParts;
 
+    private bool isKeyFollowingMouse;
+    private Interactable1stPuzzleObject movingKeyPart;
+
     private void Awake()
     {
         SetInstance();
