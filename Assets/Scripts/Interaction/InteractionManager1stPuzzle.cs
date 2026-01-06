@@ -98,6 +98,16 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             Interactable1stPuzzleMainKey.Instance.RotateObject();
         }
     }
+
+    private void DeselectKeyPart()
+    {
+        if (Input.GetMouseButtonDown(1)) //deselect when lmb is clicked
+        {
+            movingKeyPart.gameObject.Hide();
+            isKeyFollowingMouse = false;
+        }
+    }
+
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
