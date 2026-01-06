@@ -13,6 +13,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
 
     private InteractionPanelIndividual InteractionPanelIndividual;
+    private ViewMode currentViewMode;
+
 
     private void Awake()
     {
