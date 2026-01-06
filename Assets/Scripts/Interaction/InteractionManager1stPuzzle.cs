@@ -30,6 +30,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     private bool isKeyFollowingMouse;
     private Interactable1stPuzzleObject movingKeyPart;
 
+    private List<GameObject> keyPartsPreviewed;
+    private bool hasPreviewStarted;
+    private GameObject previewingKeyPartObject;
+
     private void Awake()
     {
         SetInstance();
