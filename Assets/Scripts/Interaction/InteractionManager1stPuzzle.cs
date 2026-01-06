@@ -215,6 +215,4 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         Vector3 worldPos = GetMousePositionInWorld();
         keyPart.transform.position = Vector3.Lerp(keyPart.transform.position, worldPos, Time.deltaTime * lerpSpeed);
     }
-
-    }
 }
