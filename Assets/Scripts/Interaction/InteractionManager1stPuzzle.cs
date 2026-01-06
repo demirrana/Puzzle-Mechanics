@@ -201,6 +201,20 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+
+    private void HandlePreview(Interactable1stPuzzleObject keyPart)
+    {
+        GameObject displayedKeyPartGameObject = FindPreviewedGameObject(keyPart);
+        if (displayedKeyPartGameObject == null) //instantiate since it is displayed for the first time
+        {
+            displayedKeyPartGameObject = Instantiate(keyPart.gameObject, previewTransform); //rotation could be added as parameter
+            displayedKeyPartGameObject.transform.localPosition = Vector3.zero;
+            keyPartsPreviewed.Add(displayedKeyPartGameObject);
+        }
+
+        AdjustVariablesForPreview(displayedKeyPartGameObject);
+    }
+
     private GameObject FindPreviewedGameObject(Interactable1stPuzzleObject keyPart)
     {
         foreach (GameObject displayedGameObject in keyPartsPreviewed)
