@@ -75,3 +75,13 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
         return foundSlot;
     }
+
+    private void DetectHoveredSlotChange(UI_Puzzle1stObject hoveredSlot)
+    {
+        if (currentlyHoveredSlot != hoveredSlot)
+        {
+            ChangeInHoveredObjectEventArgs e = new(currentlyHoveredSlot, hoveredSlot);
+            OnHoveredInventorySlotChanged?.Invoke(this, e);
+            PreviewPanel.Instance.Show();
+        }
+    }
