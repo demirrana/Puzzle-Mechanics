@@ -201,6 +201,21 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void InteractionManager1stPuzzle_HoveredInventorySlotChanged(object sender, UI_Puzzle1Manager.ChangeInHoveredObjectEventArgs e)
+    {
+        UI_Puzzle1stObject previousSlot = e.PreviousInventorySlot;
+        UI_Puzzle1stObject currentSlot = e.CurrentInventorySlot;
+
+        if (previousSlot == null) //Hide all previously previewed keys
+        {
+            foreach (GameObject keyPart in keyPartsPreviewed)
+            {
+                keyPart.SetActive(false);
+            }
+        }
+
+        HandlePreview(currentSlot.GetKeyPart());
+    }
 
     private void HandlePreview(Interactable1stPuzzleObject keyPart)
     {
