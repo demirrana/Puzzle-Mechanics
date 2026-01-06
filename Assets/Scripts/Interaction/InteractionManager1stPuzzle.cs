@@ -77,6 +77,19 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
 
+
+    protected override void DetectInteractionConditionsMet()
+    {
+        if (currentViewMode == ViewMode.WorldView)
+        {
+            DetectAnyColliderApproached();
+        }
+        else if (currentViewMode == ViewMode.EditView)
+        {
+            DetectInteractionInEditView();
+        }
+    }
+
     private void DetectInteractionInEditView()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) //exit from edit view
