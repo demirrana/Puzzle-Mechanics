@@ -57,3 +57,21 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
         return false;
     }
+
+    private UI_Puzzle1stObject GetHoveredSlot()
+    {
+        PointerEventData eventData = new(EventSystem.current) { position = Input.mousePosition };
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        UI_Puzzle1stObject foundSlot = null;
+        foreach (var result in results)
+        {
+            foundSlot = result.gameObject.GetComponentInParent<UI_Puzzle1stObject>();
+
+            if (foundSlot != null) //first found slot is saved
+                break;
+        }
+
+        return foundSlot;
+    }
