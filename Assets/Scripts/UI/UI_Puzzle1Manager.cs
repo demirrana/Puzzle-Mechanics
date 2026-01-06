@@ -85,3 +85,14 @@ public class UI_Puzzle1Manager : MonoBehaviour
             PreviewPanel.Instance.Show();
         }
     }
+
+    private void DetectClickOnInventorySlot()
+    {
+        if (currentlyHoveredSlot != null)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnInventorySlotClicked?.Invoke(this, currentlyHoveredSlot);
+            }
+        }
+    }
