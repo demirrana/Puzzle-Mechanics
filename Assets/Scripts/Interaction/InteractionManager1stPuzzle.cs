@@ -200,6 +200,21 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             keyPartObj.gameObject.Hide();
         }
     }
+
+    private GameObject FindPreviewedGameObject(Interactable1stPuzzleObject keyPart)
+    {
+        foreach (GameObject displayedGameObject in keyPartsPreviewed)
+        {
+            Interactable1stPuzzleObject displayedKeyPart = displayedGameObject.GetComponent<Interactable1stPuzzleObject>();
+            if (displayedKeyPart.GetKeyPartData() == keyPart.GetKeyPartData())
+            {
+                return displayedGameObject;
+            }
+        }
+
+        return null;
+    }
+
     private void AdjustVariablesForPreview(GameObject gameObject)
     {
         gameObject.SetActive(true);
