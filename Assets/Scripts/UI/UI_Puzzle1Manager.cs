@@ -58,6 +58,25 @@ public class UI_Puzzle1Manager : MonoBehaviour
         return false;
     }
 
+    public void HandleSlotInteraction()
+    {
+        UI_Puzzle1stObject hoveredSlot = GetHoveredSlot();
+
+        if (hoveredSlot == null)
+        {
+            OnNoHoveredInventorySlot?.Invoke(this, EventArgs.Empty);
+            currentlyHoveredSlot = null;
+            PreviewPanel.Instance.Hide();
+            return;
+        }
+
+        DetectHoveredSlotChange(hoveredSlot);
+
+        currentlyHoveredSlot = hoveredSlot;
+
+        DetectClickOnInventorySlot();
+    }
+
     private UI_Puzzle1stObject GetHoveredSlot()
     {
         PointerEventData eventData = new(EventSystem.current) { position = Input.mousePosition };
