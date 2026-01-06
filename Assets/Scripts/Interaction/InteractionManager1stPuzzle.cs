@@ -51,11 +51,19 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     protected override void Start()
     {
         base.Start();
+        InitializeVariables();
     }
 
     private void InitializeVariables()
     {
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        currentViewMode = ViewMode.WorldView;
+        collectedKeyParts = new();
+        isKeyFollowingMouse = false;
+        movingKeyPart = null;
+        keyPartsPreviewed = new();
+        hasPreviewStarted = false;
+        previewingKeyPartObject = null;
     }
 
     {
