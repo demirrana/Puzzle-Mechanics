@@ -25,6 +25,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     private InteractionPanelIndividual InteractionPanelIndividual;
     private ViewMode currentViewMode;
 
+    private List<Interactable<IInteractableBehaviour1stPuzzle>> collectedKeyParts;
 
     private void Awake()
     {
