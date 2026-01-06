@@ -35,7 +35,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         base.Start();
     }
 
-    private void InitializeInstances()
+    private void InitializeVariables()
     {
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
     }
