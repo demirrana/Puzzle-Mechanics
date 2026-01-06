@@ -10,6 +10,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     public static InteractionManager1stPuzzle Instance { get; private set; }
 
     public event EventHandler<Interactable1stPuzzleObject> OnAnyKeyPartCollected;
+    public event EventHandler OnEditViewActivated;
+    public event EventHandler OnEditViewDeactivated;
 
     public enum ViewMode
     {
