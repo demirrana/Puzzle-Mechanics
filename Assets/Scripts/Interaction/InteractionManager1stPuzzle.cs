@@ -175,7 +175,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void RotateMainKey()
     {
-        if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel())
+        if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel() && movingKeyPart == null)
         {
             Interactable1stPuzzleMainKey.Instance.RotateObject();
         }
