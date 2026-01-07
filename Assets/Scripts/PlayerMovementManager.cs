@@ -30,6 +30,27 @@ public class PlayerMovementManager : MonoBehaviour
         MovePlayer();
     }
 
+    private List<RaycastHit> GetHitRaycasts(Vector3 movementInput)
+    {
+        RaycastHit[] raycastsHit = Physics.CapsuleCastAll(
+            transform.position,
+            transform.position + Vector3.up * 1.6f,
+            0.5f,
+            movementInput,
+            0.1f
+        );
+
+        List<RaycastHit> filteredRaycastsHit = new();
+
+        foreach (RaycastHit raycastHit in raycastsHit)
+        {
+            if (IsColliderBlockingMovements(raycastHit.collider))
+                filteredRaycastsHit.Add(raycastHit);
+        }
+
+        return filteredRaycastsHit;
+    }
+
     private bool IsColliderBlockingMovements(Collider collider)
     {
         if (collider.gameObject.layer == NON_BLOCKING_LAYER)
