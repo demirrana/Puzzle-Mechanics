@@ -191,6 +191,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     {
         Vector3 rayOriginBottom = transform.position;
         Vector3 rayOriginTop = transform.position + new Vector3(0f, playerHeight, 0f);
+        /*
         Vector3 direction = transform.forward; //I might have to use parent's forward vector
 
         List<Vector3> rayOrigins = new();
@@ -213,6 +214,23 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
                 {
                     hitColliders.Add(hitInfo.collider);
                 }
+            }
+        }
+        */
+
+        Collider[] hitCollidersArray = Physics.OverlapCapsule(
+            rayOriginBottom,
+            rayOriginTop,
+            0.6f
+        );
+
+        List<Collider> hitColliders = new();
+
+        foreach (Collider collider in hitCollidersArray)
+        {
+            if (collider.gameObject.layer != 7 && collider.gameObject.layer != 9) //exclude player and her child objs from interactable objects
+            {
+                hitColliders.Add(collider);
             }
         }
 
