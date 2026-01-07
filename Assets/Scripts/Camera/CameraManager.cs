@@ -19,6 +19,7 @@ public class CameraManager : MonoBehaviour
     private CameraName activeCameraName;
     private int activeCameraIndex;
     private CameraBase activeCamera;
+    private CinemachineVirtualCameraBase activeVirtualCamera;
     private Dictionary<CameraName, CameraBase> cameraMap; //Will be changed to a List of KeyValuePair.
 
     private void Awake()
