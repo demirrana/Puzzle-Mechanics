@@ -16602,9 +16602,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryButton: {fileID: 5105553955283744808}
-  scrollRect: {fileID: 3325427734542227777}
+  slotContainer: {fileID: 3325427734542227777}
   contentTransform: {fileID: 6060220647294155829}
-  keyPartUIPrefab: {fileID: 2437013694760274520, guid: 1faf1042e1476cd43ae16c2d4e814e48, type: 3}
+  inventorySlotPrefab: {fileID: 2437013694760274520, guid: 1faf1042e1476cd43ae16c2d4e814e48, type: 3}
 --- !u!114 &7744495783059393641
 MonoBehaviour:
   m_ObjectHideFlags: 0
