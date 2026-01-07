@@ -43,3 +43,13 @@ public class InteractableBehaviourCollectKeyPart : IInteractableBehaviour1stPuzz
     }
 
 }
+
+public class InteractableBehaviourAddToMainKey : IInteractableBehaviour1stPuzzle
+{
+    
+}
+
+public class InteractableBehaviourSeperateFromMainKey : IInteractableBehaviour1stPuzzle
+{
+    
+}
