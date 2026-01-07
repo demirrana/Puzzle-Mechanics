@@ -31,6 +31,7 @@ public class CameraManager : MonoBehaviour
         activeCameraName = CameraName.PlayerCamera; //Can be changed based on the game's first look
         activeCameraIndex = 0;
         activeCamera = PlayerCamera.Instance;
+        activeVirtualCamera = GetCameraUnderTheName(activeCameraName);
         SetActiveCamera(activeCameraName);
     }
 
@@ -53,6 +54,7 @@ public class CameraManager : MonoBehaviour
 
         //activeCameraIndex = cameraMap. 
         activeCameraName = cameraName;
+        activeVirtualCamera = GetCameraUnderTheName(activeCameraName);
         //Debug.Log("active camera name: " + activeCameraName);
         //Debug.Log("cameraMap 0th element: " + cameraMap.ElementAt(0).ToString());
         //activeCamera = cameraMap.ElementAt(activeCameraIndex).Value;
