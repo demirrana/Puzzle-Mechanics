@@ -250,6 +250,19 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         return false;
     }
 
+    protected C GetTypeNear<C>() where C : Component
+    {
+        List<Collider> hitColliders = GetCollidersApproached();
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.transform.parent.TryGetComponent<C>(out C component)) //assuming mesh is always a child to the empty object which has the script
+                return component;
+        }
+
+        return null;
+    }
+
     protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable, T behaviour)
     {
         if (behaviour == null)
