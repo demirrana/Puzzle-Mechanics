@@ -72,6 +72,19 @@ public class CameraManager : MonoBehaviour
         SetActiveCamera(cameraMap.Keys.ElementAt(activeCameraIndex));
     }
 
+    public void FollowWithCamera(Transform followedTransform, CameraName cameraName)
+    {
+        CinemachineVirtualCameraBase camera = GetCameraUnderTheName(cameraName);
+        camera.Follow = followedTransform;
+        camera.LookAt = followedTransform;
+    }
+
+    public void FollowWithActiveCamera(Transform followedTransform)
+    {
+        activeVirtualCamera.Follow = followedTransform;
+        activeVirtualCamera.LookAt = followedTransform;
+    }
+
     public CinemachineVirtualCameraBase GetCameraUnderTheName(CameraName cameraName)
     {
         foreach (CinemachineVirtualCameraBase virtualCamera in cameraList)
