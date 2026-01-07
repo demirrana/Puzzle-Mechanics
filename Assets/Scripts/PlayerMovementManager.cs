@@ -85,7 +85,8 @@ public class PlayerMovementManager : MonoBehaviour
 
             //Vector3 finalMovement = rotation * movementInput;
 
-            bool isHit = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * 1.6f, 0.5f, movementInput, out RaycastHit hit, 0.1f);
+            List<RaycastHit> hits = GetHitRaycasts(movementInput);
+            bool isHit = hits.Count > 0;
 
             if (!isHit)
             {
