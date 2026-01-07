@@ -42,6 +42,22 @@ public class InteractableBehaviourCollectKeyPart : IInteractableBehaviour1stPuzz
         interactable.SetParent(null);
     }
 
+    public override List<IInteractableBehaviour1stPuzzle> GetNewBehaviours()
+    {
+        List<IInteractableBehaviour1stPuzzle> newBehaviours = new();
+        newBehaviours.Add(new InteractableBehaviourAddToMainKey());
+        return newBehaviours;
+    }
+
+    public override Vector3 GetTargetPosition(Interactable1stPuzzleObject interactable)
+    {
+        return InteractionManager1stPuzzle.Instance.GetHandPosition();
+    }
+
+    public override Transform GetNewParent()
+    {
+        return InteractionManager1stPuzzle.Instance.GetHandTransform();
+    }
 }
 
 public class InteractableBehaviourAddToMainKey : IInteractableBehaviour1stPuzzle
