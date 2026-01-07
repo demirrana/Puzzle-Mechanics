@@ -30,6 +30,17 @@ public class PlayerMovementManager : MonoBehaviour
         MovePlayer();
     }
 
+    private bool IsColliderBlockingMovements(Collider collider)
+    {
+        if (collider.gameObject.layer == NON_BLOCKING_LAYER)
+            return false;
+        
+        if (collider.transform.root.TryGetComponent<PlayerMovementManager>(out _)) //child objs of player (especially the one in hand)
+            return false;
+
+        return true;
+    }
+
     private void MovePlayer()
     {
         float xMoveInput = inputMoveVector.x;
