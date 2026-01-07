@@ -183,7 +183,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void DeselectKeyPart()
     {
-        if (Input.GetMouseButtonDown(1)) //deselect when lmb is clicked
+        if (movingKeyPart != null && Input.GetMouseButtonDown(1)) //deselect when lmb is clicked
         {
             movingKeyPart.gameObject.Hide();
             movingKeyPart = null;
