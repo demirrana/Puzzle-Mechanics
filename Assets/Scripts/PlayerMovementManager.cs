@@ -7,6 +7,8 @@ public class PlayerMovementManager : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
 
+    private readonly int NON_BLOCKING_LAYER = 9;
+
     private PlayerInputActions playerInputActions;
 
     private Vector2 inputMoveVector;
