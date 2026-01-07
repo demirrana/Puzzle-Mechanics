@@ -302,6 +302,12 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         movingKeyPart.gameObject.Show();
         isKeyFollowingMouse = true;
     }
+
+    private void EndPuzzle()
+    {
+        //set the follow of GameplayCamera to none
+    }
+
     public Vector3 GetMousePositionInWorld()
     {
         float distanceFromCamera = GameplayCamera.Instance.GetComponent<CinemachineFollow>().FollowOffset.z;
