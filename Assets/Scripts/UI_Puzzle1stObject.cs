@@ -36,11 +36,11 @@ public class UI_Puzzle1stObject : MonoBehaviour
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); //will be changed to child's activeness because parent will be empty and mesh will be the child
     }
 
     public void Show()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(true); //will be changed to child's activeness because parent will be empty and mesh will be the child
     }
 }

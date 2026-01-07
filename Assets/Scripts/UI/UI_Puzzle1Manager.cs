@@ -149,6 +149,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
         InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
         OnInventoryPanelActivated?.Invoke(sender, e);
+        //maybe hide other objects around too
     }
 
     private void UI_Puzzle1Manager_EditViewDeactivated(object sender, EventArgs e)

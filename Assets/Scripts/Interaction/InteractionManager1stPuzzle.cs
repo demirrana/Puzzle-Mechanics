@@ -127,6 +127,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         MoveKeyPartOnScreen();
         RotateMainKey();
         DeselectKeyPart();
+
+        //show chosen key part on screen along with the inventory view
+        //display the main key on screen
+        //make background blurry
     }
 
     private void ExitEditView()
@@ -196,6 +200,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         if (nearDoor != null) //when a door is near, it is either editing key parts or trying the key in hand on the door
         {
             OnDoorNear?.Invoke(sender, nearDoor);
+            //display UI of (try on door, edit key)
             if (Input.GetKeyDown(KeyCode.Alpha1)) //try on door
             {
                 
@@ -214,19 +219,35 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     private void SwitchToEditView()
     {
         currentViewMode = ViewMode.EditView;
+        //update camera view to focus on the main part and freeze the camera
         CameraManager.Instance.FollowWithCamera(interactableInHand.transform, CameraManager.CameraName.GameplayCamera);
         CameraManager.Instance.SwitchToNextCamera();
+        //stop showing player (make main key's parent null and update the pos to the mouse pos)
         OnEditViewActivated?.Invoke(this, EventArgs.Empty);
     }
+
+    //approached object could be any interactable in puzzle 1 (such as table, cat etc.)
+    //maybe type should be changed into Interactable1stPuzzleObject
     protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour1stPuzzle> keyPart)
     {
         InteractableBehaviourCollectKeyPart collectKeyPart = new();
         RaiseInteractionConditionsMet(sender, keyPart, collectKeyPart);
+
+        /*
+        //This is applied in manager of 5th puzzle
+        foreach (IInteractableBehaviour1stPuzzle interactionBehaviour in keyPart.GetInteractionBehaviours())
+        {
+            DetectBehaviourApplied(keyPart, interactionBehaviour);
+        }
+        */
     }
 
     protected override void InteractionManager_InteractableInteracted(object sender, InteractionBehaviourEventArgs e)
     {
         base.InteractionManager_InteractableInteracted(sender, e);
+
+        //there are more than 1 types of interactables (door and key part etc.) so each type should be judged differently
+        //but for now, this code is based only on key parts
 
         Interactable<IInteractableBehaviour1stPuzzle> keyPart = e.InteractedObject; //type can be changed
 
@@ -251,6 +272,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             {
                 keyPart.SetActive(false);
             }
+            //find it from keyPartsDisplayed and stop displaying it by hiding it
         }
 
         HandlePreview(currentSlot.GetKeyPart());
@@ -283,12 +305,17 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         return null;
     }
 
+    //feat: add method handling preview
+    //-Instantiate the key that is previewed for the first time
+    //-Adjust variables to prepare for preview
+
     private void AdjustVariablesForPreview(GameObject gameObject)
     {
         gameObject.SetActive(true);
         previewingKeyPartObject = gameObject;
         PreviewCamera.Instance.ResetPositionRotation();
         hasPreviewStarted = true;
+        //camera shows the object
     }
 
     private void InteractionManager1stPuzzle_InventorySlotClicked(object sender, UI_Puzzle1stObject inventorySlot)
@@ -308,6 +335,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         //set the follow of GameplayCamera to none
     }
 
+    //The 2 methods below belong to the manager 5th class. These should be placed in MouseManager
     public Vector3 GetMousePositionInWorld()
     {
         float distanceFromCamera = GameplayCamera.Instance.GetComponent<CinemachineFollow>().FollowOffset.z;
