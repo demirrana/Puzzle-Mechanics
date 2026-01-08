@@ -148,6 +148,11 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
                 {
                     interactableObjects.Add(interactableObject);
                 }
+                //only this part should stay, the one above should be deleted (after making every interactable mesh a child of an empty object)
+                else if (hitObject.transform.parent.TryGetComponent<Interactable<T>>(out var _interactableObject))
+                {
+                    interactableObjects.Add(_interactableObject);
+                }
             }
         }
 
