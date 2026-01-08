@@ -77,8 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de931afdb5ea7b4689605fc85d09a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyPartData: {fileID: 0}
   sockets: []
+  keyPartData: {fileID: 0}
+  plugTransform: {fileID: 7150980369770969608}
+  plugID: 3
 --- !u!1 &8412992642163684529
 GameObject:
   m_ObjectHideFlags: 0
