@@ -309,7 +309,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void AdjustVariablesForPreview(GameObject gameObject)
     {
-        gameObject.SetActive(true);
+        gameObject.Show();
         previewingKeyPartObject = gameObject;
         PreviewCamera.Instance.ResetPositionRotation();
         hasPreviewStarted = true;
