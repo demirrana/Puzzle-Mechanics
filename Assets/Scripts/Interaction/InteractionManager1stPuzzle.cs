@@ -266,14 +266,12 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         UI_Puzzle1stObject previousSlot = e.PreviousInventorySlot;
         UI_Puzzle1stObject currentSlot = e.CurrentInventorySlot;
 
-        if (previousSlot == null) //Hide all previously previewed keys
+        //Hide all previously previewed keys
+        foreach (GameObject keyPart in keyPartsPreviewed)
         {
-            foreach (GameObject keyPart in keyPartsPreviewed)
-            {
-                keyPart.SetActive(false);
-            }
-            //find it from keyPartsDisplayed and stop displaying it by hiding it
+            keyPart.Hide();
         }
+        //find it from keyPartsDisplayed and stop displaying it by hiding it
 
         HandlePreview(currentSlot.GetKeyPart());
     }
