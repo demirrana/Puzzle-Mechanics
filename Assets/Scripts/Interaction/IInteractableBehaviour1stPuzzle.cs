@@ -45,7 +45,7 @@ public class InteractableBehaviourCollectKeyPart : IInteractableBehaviour1stPuzz
     public override List<IInteractableBehaviour1stPuzzle> GetNewBehaviours()
     {
         List<IInteractableBehaviour1stPuzzle> newBehaviours = new();
-        newBehaviours.Add(new InteractableBehaviourAddToMainKey());
+        newBehaviours.Add(new InteractableBehaviourSnapToKeySocket());
         return newBehaviours;
     }
 
@@ -60,7 +60,7 @@ public class InteractableBehaviourCollectKeyPart : IInteractableBehaviour1stPuzz
     }
 }
 
-public class InteractableBehaviourAddToMainKey : IInteractableBehaviour1stPuzzle
+public class InteractableBehaviourSnapToKeySocket : IInteractableBehaviour1stPuzzle
 {
     
 }
