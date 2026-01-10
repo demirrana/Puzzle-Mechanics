@@ -26,6 +26,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     public event EventHandler<Interactable1stPuzzleDoor> OnDoorNear;
     public event EventHandler<SnapToSocketEventArgs> OnKeySnappedToSocket;
     public event EventHandler<SnapToSocketEventArgs> OnSnappedSocketChanged;
+    public event EventHandler OnKeyDeselected;
 
     public enum ViewMode
     {
@@ -297,6 +298,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         if (movingKeyPart != null && Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
         {
+            OnKeyDeselected?.Invoke(this, EventArgs.Empty);
             movingKeyPart.gameObject.Hide();
             movingKeyPart = null;
             isKeyFollowingMouse = false;
