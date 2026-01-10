@@ -9,6 +9,13 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
 
     protected List<T> behavioursList = new();
 
+    private int initialLayerIndex;
+
+    private void Awake()
+    {
+        initialLayerIndex = gameObject.layer;
+    }
+
     protected virtual void Start()
     {
         //Might be a problem since PlayerInteractionManager is disabled and enabled along the game!!!!!!!!
@@ -32,6 +39,12 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
 
         gameObject.layer = layerIndex;
     }
+
+    public int GetInitialLayerIndex()
+    {
+        return initialLayerIndex;
+    }
+
     public bool CanObjectBeInteracted()
     {
         return true;
