@@ -147,6 +147,9 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
     private void UI_Puzzle1Manager_KeySnappedToSocket(object sender, InteractionManager1stPuzzle.SnapToSocketEventArgs e)
     {
+        currentlyClickedSlot.Hide();
+        currentlyClickedSlot = null;
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
     }
 
     private void UI_Puzzle1Manager_SnappedSocketChanged(object sender, InteractionManager1stPuzzle.SnapToSocketEventArgs e)
