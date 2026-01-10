@@ -197,6 +197,16 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     }
 
 
+    private Interactable1stPuzzleObject GetKeyInCombinedKeys(GameObject obj) //controls if it is main key or any key that is attached to it
+    {
+        Interactable1stPuzzleObject key = obj.GetComponentInParent<Interactable1stPuzzleObject>();
+
+        if (key != null)
+            return combinedKeys.Find(x => x == key);
+
+        return null;
+    }
+
     private void SnapToNewSocket(SocketData newSocket) //snap key visually onto that socket
     {
         movingKeyPart.transform.position += newSocket.socketTransform.position - movingKeyPart.GetPlugTransform().position;
