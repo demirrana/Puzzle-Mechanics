@@ -47,6 +47,9 @@ public class UI_Puzzle1Manager : MonoBehaviour
         InteractionManager1stPuzzle.Instance.OnInteractableApproached += UI_Puzzle1Manager_InteractableApproached;
         InteractionManager1stPuzzle.Instance.OnNoInteractableNear += UI_Puzzle1Manager_NoInteractableNear;
         InteractionManager1stPuzzle.Instance.OnAnyKeyPartCollected += UI_Puzzle1Manager_KeyPartCollected;
+        InteractionManager1stPuzzle.Instance.OnKeySnappedToSocket += UI_Puzzle1Manager_KeySnappedToSocket;
+        InteractionManager1stPuzzle.Instance.OnSnappedSocketChanged += UI_Puzzle1Manager_SnappedSocketChanged;
+        InteractionManager1stPuzzle.Instance.OnKeyDeselected += UI_Puzzle1Manager_KeyDeselected;
         InteractionManager1stPuzzle.Instance.OnEditViewActivated += UI_Puzzle1Manager_EditViewActivated;
         InteractionManager1stPuzzle.Instance.OnEditViewDeactivated += UI_Puzzle1Manager_EditViewDeactivated;
         InteractionManager1stPuzzle.Instance.OnDoorNear += UI_Puzzle1Manager_DoorNear;
@@ -140,6 +143,18 @@ public class UI_Puzzle1Manager : MonoBehaviour
     {
         keyPart.gameObject.Hide();
         InventoryPanel.Instance.CreateNewSlot(keyPart);
+    }
+
+    private void UI_Puzzle1Manager_KeySnappedToSocket(object sender, InteractionManager1stPuzzle.SnapToSocketEventArgs e)
+    {
+    }
+
+    private void UI_Puzzle1Manager_SnappedSocketChanged(object sender, InteractionManager1stPuzzle.SnapToSocketEventArgs e)
+    {
+    }
+
+    private void UI_Puzzle1Manager_KeyDeselected(object sender, EventArgs e)
+    {
     }
 
     private void UI_Puzzle1Manager_EditViewActivated(object sender, EventArgs e)
