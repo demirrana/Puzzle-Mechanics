@@ -177,6 +177,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
     {
         currentlyClickedSlot.Show();
         currentlyClickedSlot = null;
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
     }
 
     private void UI_Puzzle1Manager_EditViewActivated(object sender, EventArgs e)
