@@ -196,6 +196,35 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private SocketData GetClosestSocket()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //later, exclude the one held on mouse
+        RaycastHit hit;
+        float maxRayDistance = 20f;
+
+        int ignoreRaycastLayerIndex = 2;
+        movingKeyPart.SetLayer(ignoreRaycastLayerIndex);
+
+        if (Physics.Raycast(ray, out hit, maxRayDistance))
+        {
+            Vector3 hitPosition = hit.point;
+
+            Interactable1stPuzzleObject hitKey = GetKeyInCombinedKeys(hit.collider.gameObject);
+
+            if (hitKey != null)
+            {
+                SocketData closestSocket = hitKey.sockets.OrderBy(x => Vector3.Distance(x.socketTransform.position, hitPosition)).FirstOrDefault();
+                
+                if (!closestSocket.isOccupied)
+                {
+                    return closestSocket;
+                }
+            }
+        }
+
+        movingKeyPart.SetLayer(movingKeyPart.GetInitialLayerIndex());
+        return null;
+    }
 
     private Interactable1stPuzzleObject GetKeyInCombinedKeys(GameObject obj) //controls if it is main key or any key that is attached to it
     {
