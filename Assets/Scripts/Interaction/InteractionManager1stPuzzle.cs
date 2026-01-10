@@ -42,6 +42,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private List<Interactable<IInteractableBehaviour1stPuzzle>> collectedKeyParts;
 
+    private List<Interactable1stPuzzleObject> combinedKeys;
+
     private bool isKeyFollowingMouse;
     private Interactable1stPuzzleObject movingKeyPart;
 
@@ -75,6 +77,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
         currentViewMode = ViewMode.WorldView;
         collectedKeyParts = new();
+        combinedKeys = new();
         isKeyFollowingMouse = false;
         movingKeyPart = null;
         keyPartsPreviewed = new();
@@ -113,6 +116,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             GetHandTransform().rotation,
             GetHandTransform()
         );
+
+        combinedKeys.Add(interactableInHand.GetComponent<Interactable1stPuzzleObject>());
 
         RaiseInteractableInHandChanged(interactableInHand);
     }
