@@ -1,11 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehaviour1stPuzzle> //to be changed into 1stPuzzle
 {
     public static InteractionManager1stPuzzle Instance { get; private set; }
+
+    public class SnapToSocketEventArgs : EventArgs
+    {
+        public SocketData Socket { get; }
+        public Interactable1stPuzzleObject SnappedKey { get; }
+
+        public SnapToSocketEventArgs(SocketData socket, Interactable1stPuzzleObject key)
+        {
+            Socket = socket;
+            SnappedKey = key;
+        }
+    }
 
     public event EventHandler<Interactable1stPuzzleObject> OnAnyKeyPartCollected;
     public event EventHandler OnEditViewActivated;
