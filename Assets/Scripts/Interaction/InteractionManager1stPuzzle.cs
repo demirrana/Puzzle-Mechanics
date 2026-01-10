@@ -194,7 +194,47 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         if (isKeyFollowingMouse)
         {
+            SnapKeyPlugToSocket();
+        }
+    }
+
+    private void SnapKeyPlugToSocket()
+    {
+        String plugID = movingKeyPart.GetPlugID();
+        Transform plugTransform = movingKeyPart.GetPlugTransform();
+
+        SocketData closestSocket = GetClosestSocket();
+        
+        if (closestSocket == null)
+        {
+            if (currentSnappedSocket != null)
+            {
+                OnSnappedSocketChanged?.Invoke(this, new(closestSocket, movingKeyPart));
+
+                movingKeyPart.SetParent(keysInitialParent);
+                movingKeyPart.transform.localRotation = Quaternion.identity;
+            }
+            
+            currentSnappedSocket = closestSocket;
             MoveKeyPartWithMouse(movingKeyPart);
+            return;
+        }
+
+        if (currentSnappedSocket != closestSocket)
+        {
+            OnSnappedSocketChanged?.Invoke(this, new(closestSocket, movingKeyPart));
+            SnapToNewSocket(closestSocket);
+            currentSnappedSocket = closestSocket;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnKeySnappedToSocket?.Invoke(this, new(closestSocket, movingKeyPart));
+
+            closestSocket.isOccupied = true;
+            combinedKeys.Add(movingKeyPart);
+            movingKeyPart = null;
+            isKeyFollowingMouse = false;
         }
     }
 
