@@ -196,6 +196,14 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+
+    private void SnapToNewSocket(SocketData newSocket) //snap key visually onto that socket
+    {
+        movingKeyPart.transform.position += newSocket.socketTransform.position - movingKeyPart.GetPlugTransform().position;
+        movingKeyPart.SetParent(newSocket.socketTransform);
+        movingKeyPart.transform.localRotation = newSocket.targetRotation;
+    }
+
     private void RotateMainKey()
     {
         if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel() && movingKeyPart == null)
