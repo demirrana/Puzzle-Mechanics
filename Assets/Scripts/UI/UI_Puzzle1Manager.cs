@@ -154,6 +154,20 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
     private void UI_Puzzle1Manager_SnappedSocketChanged(object sender, InteractionManager1stPuzzle.SnapToSocketEventArgs e)
     {
+        SocketData socket = e.Socket;
+        Interactable1stPuzzleObject snappedKey = e.SnappedKey;
+
+        if (socket == null) //stop displaying key on previous socket
+        {
+            InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+            return;
+        }
+
+        //display snap key on new socket
+        InteractableBehaviourSnapToKeySocket snapToKey = new();
+        Transform targetTransform = socket.socketTransform;
+        KeyCode targetKey = snapToKey.InteractionKeyCode;
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(this, targetTransform, targetKey);
     }
 
     private void UI_Puzzle1Manager_KeyDeselected(object sender, EventArgs e)
