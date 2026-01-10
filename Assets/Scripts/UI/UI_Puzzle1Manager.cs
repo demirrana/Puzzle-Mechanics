@@ -125,6 +125,8 @@ public class UI_Puzzle1Manager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 OnInventorySlotClicked?.Invoke(this, currentlyHoveredSlot);
+                currentlyClickedSlot = currentlyHoveredSlot;
+                currentlyClickedSlot.Hide();
             }
         }
     }
@@ -173,6 +175,8 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
     private void UI_Puzzle1Manager_KeyDeselected(object sender, EventArgs e)
     {
+        currentlyClickedSlot.Show();
+        currentlyClickedSlot = null;
     }
 
     private void UI_Puzzle1Manager_EditViewActivated(object sender, EventArgs e)
