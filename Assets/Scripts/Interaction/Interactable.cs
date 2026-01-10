@@ -23,6 +23,15 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
         //Debug.Log("Interaction behavior name: " + interactionBeaviour.ToString());
     }
 
+    public void SetLayer(int layerIndex)
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = layerIndex;
+        }
+
+        gameObject.layer = layerIndex;
+    }
     public bool CanObjectBeInteracted()
     {
         return true;
