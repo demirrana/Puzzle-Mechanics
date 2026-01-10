@@ -46,6 +46,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private bool isKeyFollowingMouse;
     private Interactable1stPuzzleObject movingKeyPart;
+    private SocketData currentSnappedSocket;
 
     private List<GameObject> keyPartsPreviewed;
     private bool hasPreviewStarted;
@@ -80,6 +81,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         combinedKeys = new();
         isKeyFollowingMouse = false;
         movingKeyPart = null;
+        currentSnappedSocket = null;
         keyPartsPreviewed = new();
         hasPreviewStarted = false;
         previewingKeyPartObject = null;
