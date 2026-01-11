@@ -529,10 +529,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         return null;
     }
 
-    //feat: add method handling preview
-    //-Instantiate the key that is previewed for the first time
-    //-Adjust variables to prepare for preview
-
     private void AdjustVariablesForPreview(GameObject gameObject)
     {
         gameObject.Show();
