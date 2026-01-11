@@ -244,6 +244,11 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             OnKeySnappedToSocket?.Invoke(this, new(closestSocket, movingKeyPart));
 
+            if (closestSocket.targetPlugID.Equals(movingKeyPart.GetPlugID()))
+            {
+                correctSnapCount++;
+            }
+
             closestSocket.isOccupied = true;
             closestSocket.snappedKey = movingKeyPart;
             combinedKeys.Add(movingKeyPart);
@@ -348,6 +353,11 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             snappedSocket.snappedKey = null;
 
             OnKeyUnsnappedFromSocket?.Invoke(this, new(snappedSocket, movingKeyPart));
+
+            if (snappedSocket.targetPlugID.Equals(keyPointedAt.GetPlugID()))
+            {
+                correctSnapCount--;
+            }
 
             movingKeyPart.SetParent(keysInitialParent);
             movingKeyPart.transform.localRotation = Quaternion.identity;
