@@ -39,6 +39,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     [SerializeField] private Transform previewTransform;
     [SerializeField] private Transform keysInitialParent;
     [SerializeField] private List<int> totalCorrectSnapCounts;
+    [SerializeField] private int doorCount;
 
     private InteractionPanelIndividual InteractionPanelIndividual;
     private ViewMode currentViewMode;
