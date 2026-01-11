@@ -38,6 +38,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     [SerializeField] private Interactable<IInteractableBehaviour1stPuzzle> mainKeyPartPrefab;
     [SerializeField] private Transform previewTransform;
     [SerializeField] private Transform keysInitialParent;
+    [SerializeField] private List<int> totalCorrectSnapCounts;
 
     private InteractionPanelIndividual InteractionPanelIndividual;
     private ViewMode currentViewMode;
