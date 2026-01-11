@@ -65,7 +65,7 @@ public class InteractableBehaviourSnapToKeySocket : IInteractableBehaviour1stPuz
     public override KeyCode InteractionKeyCode => KeyCode.Mouse0;
 }
 
-public class InteractableBehaviourSeperateFromMainKey : IInteractableBehaviour1stPuzzle
+public class InteractableBehaviourUnsnapFromSocket : IInteractableBehaviour1stPuzzle
 {
     
 }
