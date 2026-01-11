@@ -15258,6 +15258,8 @@ MonoBehaviour:
   mainKeyPartPrefab: {fileID: 3770473239362888071, guid: 723c54f2f51fc5441a48aadcdd723f0c, type: 3}
   previewTransform: {fileID: 662216959}
   keysInitialParent: {fileID: 1663447678}
+  totalCorrectSnapCounts: 020000000200000003000000
+  doorCount: 3
 --- !u!114 &1868460039
 MonoBehaviour:
   m_ObjectHideFlags: 0
