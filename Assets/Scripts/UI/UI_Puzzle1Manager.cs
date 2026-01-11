@@ -50,6 +50,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
         InteractionManager1stPuzzle.Instance.OnAnyKeyPartCollected += UI_Puzzle1Manager_KeyPartCollected;
         InteractionManager1stPuzzle.Instance.OnKeySnappedToSocket += UI_Puzzle1Manager_KeySnappedToSocket;
         InteractionManager1stPuzzle.Instance.OnSnappedSocketChanged += UI_Puzzle1Manager_SnappedSocketChanged;
+        InteractionManager1stPuzzle.Instance.OnKeyUnsnappedFromSocket += UI_Puzzle1Manager_KeyUnsnappedFromSocket;
         InteractionManager1stPuzzle.Instance.OnKeyDeselected += UI_Puzzle1Manager_KeyDeselected;
         InteractionManager1stPuzzle.Instance.OnEditViewActivated += UI_Puzzle1Manager_EditViewActivated;
         InteractionManager1stPuzzle.Instance.OnEditViewDeactivated += UI_Puzzle1Manager_EditViewDeactivated;
@@ -174,6 +175,23 @@ public class UI_Puzzle1Manager : MonoBehaviour
         Transform targetTransform = socket.socketTransform;
         KeyCode targetKey = snapToKey.InteractionKeyCode;
         InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(this, targetTransform, targetKey);
+    }
+
+    private void UI_Puzzle1Manager_KeyUnsnappedFromSocket(object sender, InteractionManager1stPuzzle.SnapToSocketEventArgs e)
+    {
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+
+        //find hidden slot of the unsnapped key and update currently clicked slot
+        Interactable1stPuzzleObject unsnappedKey = e.SnappedKey;
+        foreach (Transform slotTransform in InventoryPanel.Instance.GetContentTransform())
+        {
+            UI_Puzzle1stObject slot = slotTransform.GetComponent<UI_Puzzle1stObject>();
+            
+            if (slot.GetKeyPart() == unsnappedKey)
+            {
+                currentlyClickedSlot = slot;
+            }
+        }
     }
 
     private void UI_Puzzle1Manager_KeyDeselected(object sender, EventArgs e)
