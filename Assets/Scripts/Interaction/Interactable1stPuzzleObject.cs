@@ -13,14 +13,32 @@ public class Interactable1stPuzzleObject : Interactable1stPuzzle
     [SerializeField] private Transform plugTransform;
     [SerializeField] private String plugID;
 
+    private SocketData currentSocket;
+
     private void Awake()
     {
         behavioursList.Add(new InteractableBehaviourCollectKeyPart());
+        currentSocket = null;
     }
 
     public void SetParent(Transform parentTransform)
     {
         transform.parent = parentTransform;
+    }
+
+    public void Snap(SocketData socket)
+    {
+        currentSocket = socket;
+    }
+
+    public void Unsnap()
+    {
+        currentSocket = null;
+    }
+
+    public SocketData GetHostSocket()
+    {
+        return currentSocket;
     }
 
     public SOCollectibleKeyPart GetKeyPartData()
