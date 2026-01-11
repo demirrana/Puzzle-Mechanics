@@ -233,6 +233,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             OnKeySnappedToSocket?.Invoke(this, new(closestSocket, movingKeyPart));
 
             closestSocket.isOccupied = true;
+            closestSocket.snappedKey = movingKeyPart;
             combinedKeys.Add(movingKeyPart);
             movingKeyPart = null;
             isKeyFollowingMouse = false;
