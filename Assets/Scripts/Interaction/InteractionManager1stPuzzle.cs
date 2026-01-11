@@ -390,6 +390,22 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         if (correctSnapCount == totalCorrectSnapCounts[currentDoorIndex])
         {
             currentDoorIndex++;
+            RecountCorrectSnaps();
+        }
+    }
+
+    private void RecountCorrectSnaps()
+    {
+        correctSnapCount = 0;
+        foreach (Interactable1stPuzzleObject key in combinedKeys)
+        {
+            foreach (SocketData socket in key.sockets)
+            {
+                if (socket.targetPlugID.Equals(socket.snappedKey.GetPlugID()))
+                {
+                    correctSnapCount++;
+                }
+            }
         }
     }
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
