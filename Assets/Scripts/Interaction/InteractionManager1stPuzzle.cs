@@ -41,6 +41,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     [SerializeField] private List<int> totalCorrectSnapCounts;
     [SerializeField] private int doorCount;
 
+    private bool isPuzzleCompleted;
+
     private InteractionPanelIndividual InteractionPanelIndividual;
     private ViewMode currentViewMode;
 
@@ -82,6 +84,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void InitializeVariables()
     {
+        isPuzzleCompleted = false;
         InteractionPanelIndividual = InteractionPanelIndividual.Instance;
         currentViewMode = ViewMode.WorldView;
         collectedKeyParts = new();
@@ -110,6 +113,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         DetectTakeMainPartInHand();
         DetectInteractionConditionsMet();
         DetectProceedToNextDoor();
+        DetectPuzzleCompletion();
     }
 
     private void DetectTakeMainPartInHand() //this will happen when that scene's some exact part is finished SO EDIT LATER
@@ -408,6 +412,15 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             }
         }
     }
+
+    private void DetectPuzzleCompletion()
+    {
+        if (currentDoorIndex == doorCount)
+        {
+            isPuzzleCompleted = true;
+        }
+    }
+
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
