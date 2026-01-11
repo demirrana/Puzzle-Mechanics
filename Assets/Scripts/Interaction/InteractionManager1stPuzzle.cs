@@ -242,31 +242,41 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private SocketData GetClosestSocket()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //later, exclude the one held on mouse
-        RaycastHit hit;
-        float maxRayDistance = 20f;
-
         int ignoreRaycastLayerIndex = 2;
         movingKeyPart.SetLayer(ignoreRaycastLayerIndex);
 
-        if (Physics.Raycast(ray, out hit, maxRayDistance))
+        Vector3 hitPoint = Vector3.zero;
+        Interactable1stPuzzleObject keyPointedAt = GetKeyPointedAt(out hitPoint);
+        movingKeyPart.SetLayer(movingKeyPart.GetInitialLayerIndex());
+
+        if (keyPointedAt != null)
         {
-            Vector3 hitPosition = hit.point;
-
-            Interactable1stPuzzleObject hitKey = GetKeyInCombinedKeys(hit.collider.gameObject);
-
-            if (hitKey != null)
-            {
-                SocketData closestSocket = hitKey.sockets.OrderBy(x => Vector3.Distance(x.socketTransform.position, hitPosition)).FirstOrDefault();
+            SocketData closestSocket = keyPointedAt.sockets.OrderBy(x => Vector3.Distance(x.socketTransform.position, hitPoint)).FirstOrDefault();
                 
-                if (!closestSocket.isOccupied)
-                {
-                    return closestSocket;
-                }
+            if (closestSocket != null && !closestSocket.isOccupied)
+            {
+                return closestSocket;
             }
         }
 
-        movingKeyPart.SetLayer(movingKeyPart.GetInitialLayerIndex());
+        return null;
+    }
+
+    private Interactable1stPuzzleObject GetKeyPointedAt(out Vector3 hitPoint)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //later, exclude the one held on mouse
+        RaycastHit hit;
+        hitPoint = Vector3.zero;
+        float maxRayDistance = 20f;
+
+        if (Physics.Raycast(ray, out hit, maxRayDistance))
+        {
+            Interactable1stPuzzleObject hitKey = GetKeyInCombinedKeys(hit.collider.gameObject);
+
+            hitPoint = hit.point;
+            return hitKey;
+        }
+
         return null;
     }
 
