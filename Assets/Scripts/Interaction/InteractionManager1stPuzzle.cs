@@ -241,6 +241,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             OnSnappedSocketChanged?.Invoke(this, new(closestSocket, movingKeyPart));
             SnapToNewSocket(closestSocket);
+            movingKeyPart.Snap(closestSocket);
             currentSnappedSocket = closestSocket;
         }
 
@@ -353,6 +354,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             Transform parentKeyTransform = socketTransform.parent;
             Interactable1stPuzzleObject parentKey = parentKeyTransform.GetComponent<Interactable1stPuzzleObject>();
             SocketData snappedSocket = parentKey.sockets.Find(x => x.socketTransform == socketTransform);
+            movingKeyPart.Unsnap();
             snappedSocket.isOccupied = false;
             snappedSocket.snappedKey = null;
 
