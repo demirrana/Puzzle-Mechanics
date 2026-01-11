@@ -381,6 +381,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         if (movingKeyPart != null && Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
         {
             OnKeyDeselected?.Invoke(this, EventArgs.Empty);
+            movingKeyPart.SetParent(keysInitialParent);
             movingKeyPart.gameObject.Hide();
             movingKeyPart = null;
             isKeyFollowingMouse = false;
