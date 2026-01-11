@@ -26,6 +26,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     public event EventHandler<Interactable1stPuzzleDoor> OnDoorNear;
     public event EventHandler<SnapToSocketEventArgs> OnKeySnappedToSocket;
     public event EventHandler<SnapToSocketEventArgs> OnSnappedSocketChanged;
+    public event EventHandler<SnapToSocketEventArgs> OnKeyUnsnappedFromSocket;
     public event EventHandler OnKeyDeselected;
 
     public enum ViewMode
