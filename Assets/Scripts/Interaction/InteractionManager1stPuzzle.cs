@@ -249,7 +249,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             OnKeySnappedToSocket?.Invoke(this, new(closestSocket, movingKeyPart));
 
-            if (closestSocket.targetPlugID.Equals(movingKeyPart.GetPlugID()))
+            if (closestSocket.targetPlugIDs[currentDoorIndex].Equals(movingKeyPart.GetPlugID()))
             {
                 correctSnapCount++;
             }
@@ -359,7 +359,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
             OnKeyUnsnappedFromSocket?.Invoke(this, new(snappedSocket, movingKeyPart));
 
-            if (snappedSocket.targetPlugID.Equals(keyPointedAt.GetPlugID()))
+            if (snappedSocket.targetPlugIDs[currentDoorIndex].Equals(keyPointedAt.GetPlugID()))
             {
                 correctSnapCount--;
             }
@@ -405,7 +405,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             foreach (SocketData socket in key.sockets)
             {
-                if (socket.targetPlugID.Equals(socket.snappedKey.GetPlugID()))
+                if (socket.targetPlugIDs[currentDoorIndex].Equals(socket.snappedKey.GetPlugID()))
                 {
                     correctSnapCount++;
                 }

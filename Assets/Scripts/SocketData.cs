@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 public class SocketData
 {
-    public String targetPlugID;
+    public List<String> targetPlugIDs;
     public Transform socketTransform;
     public bool isOccupied;
     public Quaternion targetRotation;
