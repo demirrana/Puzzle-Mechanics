@@ -350,10 +350,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
             //find socket that key is snapped onto and update socket state
             movingKeyPart = keyPointedAt;
-            Transform socketTransform = movingKeyPart.transform.parent;
-            Transform parentKeyTransform = socketTransform.parent;
-            Interactable1stPuzzleObject parentKey = parentKeyTransform.GetComponent<Interactable1stPuzzleObject>();
-            SocketData snappedSocket = parentKey.sockets.Find(x => x.socketTransform == socketTransform);
+            SocketData snappedSocket = movingKeyPart.GetHostSocket();
             movingKeyPart.Unsnap();
             snappedSocket.isOccupied = false;
             snappedSocket.snappedKey = null;
