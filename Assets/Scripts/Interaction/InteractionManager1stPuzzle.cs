@@ -48,6 +48,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private List<Interactable1stPuzzleObject> combinedKeys;
 
+    private int correctSnapCount;
+
     private bool isKeyFollowingMouse;
     private Interactable1stPuzzleObject movingKeyPart;
     private SocketData currentSnappedSocket;
@@ -83,6 +85,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         currentViewMode = ViewMode.WorldView;
         collectedKeyParts = new();
         combinedKeys = new();
+        correctSnapCount = 0;
         isKeyFollowingMouse = false;
         movingKeyPart = null;
         currentSnappedSocket = null;
