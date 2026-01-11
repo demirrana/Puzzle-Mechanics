@@ -281,9 +281,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void SnapToNewSocket(SocketData newSocket) //snap key visually onto that socket
     {
-        movingKeyPart.transform.position += newSocket.socketTransform.position - movingKeyPart.GetPlugTransform().position;
         movingKeyPart.SetParent(newSocket.socketTransform);
         movingKeyPart.transform.localRotation = newSocket.targetRotation;
+        movingKeyPart.transform.localPosition = Vector3.zero;
+        movingKeyPart.transform.position += movingKeyPart.transform.position - movingKeyPart.GetPlugTransform().transform.position;
     }
 
     private void RotateMainKey()
