@@ -408,9 +408,12 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             foreach (SocketData socket in key.sockets)
             {
-                if (socket.targetPlugIDs[currentDoorIndex].Equals(socket.snappedKey.GetPlugID()))
+                if (socket.isOccupied)
                 {
-                    correctSnapCount++;
+                    if (socket.targetPlugIDs[currentDoorIndex].Equals(socket.snappedKey.GetPlugID()))
+                    {
+                        correctSnapCount++;
+                    }
                 }
             }
         }
