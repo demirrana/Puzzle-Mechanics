@@ -113,7 +113,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         DetectTakeMainPartInHand();
         DetectInteractionConditionsMet();
         DetectProceedToNextDoor();
-        DetectPuzzleCompletion();
     }
 
     private void DetectTakeMainPartInHand() //this will happen when that scene's some exact part is finished SO EDIT LATER
@@ -394,7 +393,11 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         if (correctSnapCount == totalCorrectSnapCounts[currentDoorIndex])
         {
             currentDoorIndex++;
-            RecountCorrectSnaps();
+
+            if (currentDoorIndex != doorCount)
+                RecountCorrectSnaps();
+            else
+                isPuzzleCompleted = true;
         }
     }
 
@@ -410,14 +413,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
                     correctSnapCount++;
                 }
             }
-        }
-    }
-
-    private void DetectPuzzleCompletion()
-    {
-        if (currentDoorIndex == doorCount)
-        {
-            isPuzzleCompleted = true;
         }
     }
 
