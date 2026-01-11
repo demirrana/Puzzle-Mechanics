@@ -109,6 +109,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         DetectTakeMainPartInHand();
         DetectInteractionConditionsMet();
+        DetectProceedToNextDoor();
     }
 
     private void DetectTakeMainPartInHand() //this will happen when that scene's some exact part is finished SO EDIT LATER
@@ -384,6 +385,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void DetectProceedToNextDoor()
+    {
+        if (correctSnapCount == totalCorrectSnapCounts[currentDoorIndex])
+        {
+            currentDoorIndex++;
+        }
+    }
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
