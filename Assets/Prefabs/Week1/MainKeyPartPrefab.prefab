@@ -63,18 +63,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sockets:
-  - targetPlugID: 
+  - targetPlugIDs:
+    - 1
+    - 2
+    - 2
     socketTransform: {fileID: 2536000177018498662}
     isOccupied: 0
     targetRotation: {x: 0, y: 0, z: 0, w: 0}
-  - targetPlugID: 1
+    snappedKey: {fileID: 0}
+  - targetPlugIDs:
+    - 3
+    - 
+    - 1
     socketTransform: {fileID: 3119363374142459815}
     isOccupied: 0
     targetRotation: {x: -0.3535534, y: -0.3535534, z: -0.14644665, w: 0.85355335}
-  - targetPlugID: 
+    snappedKey: {fileID: 0}
+  - targetPlugIDs:
+    - 
+    - 3
+    - 3
     socketTransform: {fileID: 7872786943307523387}
     isOccupied: 0
     targetRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
+    snappedKey: {fileID: 0}
   keyPartData: {fileID: 0}
   plugTransform: {fileID: 0}
   plugID: 
