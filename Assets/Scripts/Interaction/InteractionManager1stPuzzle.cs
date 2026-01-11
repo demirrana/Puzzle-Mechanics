@@ -48,6 +48,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private List<Interactable1stPuzzleObject> combinedKeys;
 
+    private int currentDoorIndex;
     private int correctSnapCount;
 
     private bool isKeyFollowingMouse;
@@ -85,6 +86,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         currentViewMode = ViewMode.WorldView;
         collectedKeyParts = new();
         combinedKeys = new();
+        currentDoorIndex = 0;
         correctSnapCount = 0;
         isKeyFollowingMouse = false;
         movingKeyPart = null;
