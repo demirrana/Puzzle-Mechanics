@@ -124,6 +124,9 @@ public class UI_Puzzle1Manager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (currentlyClickedSlot != null) //show slot of previously clicked obj on inventory
+                    currentlyClickedSlot.Show();
+
                 OnInventorySlotClicked?.Invoke(this, currentlyHoveredSlot);
                 currentlyClickedSlot = currentlyHoveredSlot;
                 currentlyClickedSlot.Hide();
