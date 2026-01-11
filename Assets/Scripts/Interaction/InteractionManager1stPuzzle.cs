@@ -198,6 +198,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             SnapKeyPlugToSocket();
         }
+        else
+        {
+            UnsnapKeyFromSocket();
+        }
     }
 
     private void SnapKeyPlugToSocket()
@@ -297,6 +301,51 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         movingKeyPart.transform.localRotation = newSocket.targetRotation;
         movingKeyPart.transform.localPosition = Vector3.zero;
         movingKeyPart.transform.position += movingKeyPart.transform.position - movingKeyPart.GetPlugTransform().transform.position;
+    }
+
+    private void UnsnapKeyFromSocket()
+    {
+        Interactable1stPuzzleObject keyPointedAt = GetKeyPointedAt(out _);
+
+        if (keyPointedAt == null || keyPointedAt.transform.TryGetComponent<Interactable1stPuzzleMainKey>(out _)) //disregard main key
+        {
+            InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(this);
+            return;
+        }
+
+        InteractableBehaviourUnsnapFromSocket unsnap = new();
+        KeyCode unsnapKey = unsnap.InteractionKeyCode;
+
+        //show keycode on the key that is about to be unsnapped (keyPointedAt)
+        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(this, keyPointedAt.transform, unsnapKey);
+        //this stays opened on wrong places
+
+        if (Input.GetKeyDown(unsnapKey))
+        {
+            foreach (SocketData socket in keyPointedAt.sockets) //able to unsnap only the outermost ones
+            {
+                if (socket.isOccupied)
+                {
+                    //warn there is a key snapped onto it
+                    return;
+                }
+            }
+
+            //find socket that key is snapped onto and update socket state
+            movingKeyPart = keyPointedAt;
+            Transform socketTransform = movingKeyPart.transform.parent;
+            Transform parentKeyTransform = socketTransform.parent;
+            Interactable1stPuzzleObject parentKey = parentKeyTransform.GetComponent<Interactable1stPuzzleObject>();
+            SocketData snappedSocket = parentKey.sockets.Find(x => x.socketTransform == socketTransform);
+            snappedSocket.isOccupied = false;
+            snappedSocket.snappedKey = null;
+
+            OnKeyUnsnappedFromSocket?.Invoke(this, new(snappedSocket, movingKeyPart));
+
+            movingKeyPart.SetParent(keysInitialParent);
+            movingKeyPart.transform.localRotation = Quaternion.identity;
+            isKeyFollowingMouse = true;
+        }
     }
 
     private void RotateMainKey()
