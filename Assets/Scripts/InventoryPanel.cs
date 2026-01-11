@@ -12,6 +12,11 @@ public class InventoryPanel : MonoBehaviour
 
     public static InventoryPanel Instance { get; private set; }
 
+    public Transform GetContentTransform()
+    {
+        return contentTransform;
+    }
+
     private void Awake()
     {
         SetInstance();
