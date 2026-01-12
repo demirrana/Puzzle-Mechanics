@@ -43,7 +43,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private bool isPuzzleCompleted;
 
-    private InteractionPanelIndividual InteractionPanelIndividual;
     private ViewMode currentViewMode;
 
     private List<Interactable<IInteractableBehaviour1stPuzzle>> collectedKeyParts;
@@ -84,19 +83,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void InitializeVariables()
     {
-        isPuzzleCompleted = false;
-        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
         currentViewMode = ViewMode.WorldView;
         collectedKeyParts = new();
         combinedKeys = new();
-        currentDoorIndex = 0;
-        correctSnapCount = 0;
-        isKeyFollowingMouse = false;
-        movingKeyPart = null;
-        currentSnappedSocket = null;
         keyPartsPreviewed = new();
-        hasPreviewStarted = false;
-        previewingKeyPartObject = null;
     }
 
     private void SubscribeEvents()
