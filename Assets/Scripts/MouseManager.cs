@@ -4,6 +4,14 @@ public class MouseManager : MonoBehaviour
 {
     public static MouseManager Instance { get; private set; }
 
+    public Vector3 GetMousePositionInWorld(float distanceFromCamera)
+    {
+        Vector3 mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = -distanceFromCamera;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        return worldPos;
+    }
+
     private void Awake()
     {
         SetInstance();
