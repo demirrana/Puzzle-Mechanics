@@ -8,25 +8,10 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 {
     public static InteractionManager1stPuzzle Instance { get; private set; }
 
-    public class SnapToSocketEventArgs : EventArgs
-    {
-        public SocketData Socket { get; }
-        public Interactable1stPuzzleObject SnappedKey { get; }
-
-        public SnapToSocketEventArgs(SocketData socket, Interactable1stPuzzleObject key)
-        {
-            Socket = socket;
-            SnappedKey = key;
-        }
-    }
-
     public event EventHandler<Interactable1stPuzzleObject> OnAnyKeyPartCollected;
     public event EventHandler OnEditViewActivated;
     public event EventHandler OnEditViewDeactivated;
     public event EventHandler<Interactable1stPuzzleDoor> OnDoorNear;
-    public event EventHandler<SnapToSocketEventArgs> OnKeySnappedToSocket;
-    public event EventHandler<SnapToSocketEventArgs> OnSnappedSocketChanged;
-    public event EventHandler<SnapToSocketEventArgs> OnKeyUnsnappedFromSocket;
     public event EventHandler OnKeyDeselected;
 
     public enum ViewMode
@@ -51,10 +36,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private int currentDoorIndex;
     private int correctSnapCount;
-
-    private bool isKeyFollowingMouse;
-    private Interactable1stPuzzleObject movingKeyPart;
-    private SocketData currentSnappedSocket;
 
     private List<GameObject> keyPartsPreviewed;
     private bool hasPreviewStarted;
@@ -119,8 +100,9 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         OnObjectCollidersApproached += PlayerInteractionManager_ObjectCollidersApproached;
         OnInteractableApproached += PlayerInteractionManager_InteractableApproached;
         OnNoInteractableNear += PlayerInteractionManager_NoInteractableNear;
+        SnapHandler.Instance.OnKeySnappedToSocket += InteractionManager1stPuzzle_KeySnappedToSocket;
+        SnapHandler.Instance.OnKeyUnsnappedFromSocket += InteractionManager1stPuzzle_KeyUnsnappedFromSocket;
         UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged += InteractionManager1stPuzzle_HoveredInventorySlotChanged;
-        UI_Puzzle1Manager.Instance.OnInventorySlotClicked += InteractionManager1stPuzzle_InventorySlotClicked;
     }
 
     private void Update()
@@ -186,20 +168,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         currentViewMode = ViewMode.WorldView;
         OnEditViewDeactivated?.Invoke(this, EventArgs.Empty);
-        ResetEditViewRelatedElements();
         ResetMainKeyRotation();
         CameraManager.Instance.SwitchToNextCamera();
-    }
-
-    private void ResetEditViewRelatedElements()
-    {
-        if (movingKeyPart != null)
-        {
-            movingKeyPart.gameObject.Hide();
-            movingKeyPart = null;
-        }
-
-        isKeyFollowingMouse = false;
     }
 
     private void ResetMainKeyRotation()
@@ -218,168 +188,15 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void MoveKeyPartOnScreen()
     {
-        if (isKeyFollowingMouse)
+        if (SnapHandler.Instance.IsKeyFollowingMouse())
         {
-            SnapKeyPlugToSocket();
+            SnapHandler.Instance.SnapKeyPlugToSocket();
             DeselectKeyPart();
         }
         else
         {
             RotateMainKey();
-            UnsnapKeyFromSocket();
-        }
-    }
-
-    private void SnapKeyPlugToSocket()
-    {
-        String plugID = movingKeyPart.GetPlugID();
-        Transform plugTransform = movingKeyPart.GetPlugTransform();
-
-        SocketData closestSocket = GetClosestSocket();
-        
-        if (closestSocket == null)
-        {
-            if (currentSnappedSocket != null)
-            {
-                OnSnappedSocketChanged?.Invoke(this, new(closestSocket, movingKeyPart));
-
-                movingKeyPart.SetParent(keysInitialParent);
-                movingKeyPart.transform.localRotation = Quaternion.identity;
-            }
-            
-            currentSnappedSocket = closestSocket;
-            MoveKeyPartWithMouse(movingKeyPart);
-            return;
-        }
-
-        if (currentSnappedSocket != closestSocket)
-        {
-            OnSnappedSocketChanged?.Invoke(this, new(closestSocket, movingKeyPart));
-            SnapToNewSocket(closestSocket);
-            movingKeyPart.Snap(closestSocket);
-            currentSnappedSocket = closestSocket;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnKeySnappedToSocket?.Invoke(this, new(closestSocket, movingKeyPart));
-
-            if (closestSocket.targetPlugIDs[currentDoorIndex].Equals(movingKeyPart.GetPlugID()))
-            {
-                correctSnapCount++;
-            }
-
-            closestSocket.isOccupied = true;
-            closestSocket.snappedKey = movingKeyPart;
-            combinedKeys.Add(movingKeyPart);
-            movingKeyPart = null;
-            isKeyFollowingMouse = false;
-        }
-    }
-
-    private SocketData GetClosestSocket()
-    {
-        int ignoreRaycastLayerIndex = 2;
-        movingKeyPart.SetLayer(ignoreRaycastLayerIndex);
-
-        Vector3 hitPoint = Vector3.zero;
-        Interactable1stPuzzleObject keyPointedAt = GetKeyPointedAt(out hitPoint);
-        movingKeyPart.SetLayer(movingKeyPart.GetInitialLayerIndex());
-
-        if (keyPointedAt != null)
-        {
-            SocketData closestSocket = keyPointedAt.sockets.OrderBy(x => Vector3.Distance(x.socketTransform.position, hitPoint)).FirstOrDefault();
-                
-            if (closestSocket != null && !closestSocket.isOccupied)
-            {
-                return closestSocket;
-            }
-        }
-
-        return null;
-    }
-
-    private Interactable1stPuzzleObject GetKeyPointedAt(out Vector3 hitPoint)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //later, exclude the one held on mouse
-        RaycastHit hit;
-        hitPoint = Vector3.zero;
-        float maxRayDistance = 20f;
-
-        if (Physics.Raycast(ray, out hit, maxRayDistance))
-        {
-            Interactable1stPuzzleObject hitKey = GetKeyInCombinedKeys(hit.collider.gameObject);
-
-            hitPoint = hit.point;
-            return hitKey;
-        }
-
-        return null;
-    }
-
-    private Interactable1stPuzzleObject GetKeyInCombinedKeys(GameObject obj) //controls if it is main key or any key that is attached to it
-    {
-        Interactable1stPuzzleObject key = obj.GetComponentInParent<Interactable1stPuzzleObject>();
-
-        if (key != null)
-            return combinedKeys.Find(x => x == key);
-
-        return null;
-    }
-
-    private void SnapToNewSocket(SocketData newSocket) //snap key visually onto that socket
-    {
-        movingKeyPart.SetParent(newSocket.socketTransform);
-        movingKeyPart.transform.localRotation = newSocket.targetRotation;
-        movingKeyPart.transform.localPosition = Vector3.zero;
-        movingKeyPart.transform.position += movingKeyPart.transform.position - movingKeyPart.GetPlugTransform().transform.position;
-    }
-
-    private void UnsnapKeyFromSocket()
-    {
-        Interactable1stPuzzleObject keyPointedAt = GetKeyPointedAt(out _);
-
-        if (keyPointedAt == null || keyPointedAt.transform.TryGetComponent<Interactable1stPuzzleMainKey>(out _)) //disregard main key
-        {
-            InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(this);
-            return;
-        }
-
-        InteractableBehaviourUnsnapFromSocket unsnap = new();
-        KeyCode unsnapKey = unsnap.InteractionKeyCode;
-
-        //show keycode on the key that is about to be unsnapped (keyPointedAt)
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(this, keyPointedAt.transform, unsnapKey);
-        //this stays opened on wrong places
-
-        if (Input.GetKeyDown(unsnapKey))
-        {
-            foreach (SocketData socket in keyPointedAt.sockets) //able to unsnap only the outermost ones
-            {
-                if (socket.isOccupied)
-                {
-                    //warn there is a key snapped onto it
-                    return;
-                }
-            }
-
-            //find socket that key is snapped onto and update socket state
-            movingKeyPart = keyPointedAt;
-            SocketData snappedSocket = movingKeyPart.GetHostSocket();
-            movingKeyPart.Unsnap();
-            snappedSocket.isOccupied = false;
-            snappedSocket.snappedKey = null;
-
-            OnKeyUnsnappedFromSocket?.Invoke(this, new(snappedSocket, movingKeyPart));
-
-            if (snappedSocket.targetPlugIDs[currentDoorIndex].Equals(keyPointedAt.GetPlugID()))
-            {
-                correctSnapCount--;
-            }
-
-            movingKeyPart.SetParent(keysInitialParent);
-            movingKeyPart.transform.localRotation = Quaternion.identity;
-            isKeyFollowingMouse = true;
+            SnapHandler.Instance.UnsnapKeyFromSocket();
         }
     }
 
@@ -396,10 +213,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         if (Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
         {
             OnKeyDeselected?.Invoke(this, EventArgs.Empty);
-            movingKeyPart.SetParent(keysInitialParent);
-            movingKeyPart.gameObject.Hide();
-            movingKeyPart = null;
-            isKeyFollowingMouse = false;
         }
     }
 
@@ -553,37 +366,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         //camera shows the object
     }
 
-    private void InteractionManager1stPuzzle_InventorySlotClicked(object sender, UI_Puzzle1stObject inventorySlot)
-    {
-        if (movingKeyPart != null && movingKeyPart != inventorySlot.GetKeyPart()) //stop displaying the previously chosen key part
-        {
-            movingKeyPart.gameObject.Hide();
-        }
-
-        movingKeyPart = inventorySlot.GetKeyPart();
-        movingKeyPart.gameObject.Show();
-        isKeyFollowingMouse = true;
-    }
-
     private void EndPuzzle()
     {
         //set the follow of GameplayCamera to none
-    }
-
-    //The 2 methods below belong to the manager 5th class. These should be placed in MouseManager
-    public Vector3 GetMousePositionInWorld()
-    {
-        float distanceFromCamera = GameplayCamera.Instance.GetComponent<CinemachineFollow>().FollowOffset.z;
-        Vector3 mouseScreenPos = Input.mousePosition;
-        mouseScreenPos.z = -distanceFromCamera;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        return worldPos;
-    }
-
-    private void MoveKeyPartWithMouse(Interactable1stPuzzleObject keyPart)
-    {
-        float lerpSpeed = 10f;
-        Vector3 worldPos = GetMousePositionInWorld();
-        keyPart.transform.position = Vector3.Lerp(keyPart.transform.position, worldPos, Time.deltaTime * lerpSpeed);
     }
 }
