@@ -6,7 +6,7 @@ public class PreviewCamera : MonoBehaviour
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
-    private float rotationSpeed = 12f;
+    private float rotationSpeed = 30f;
 
     public void ResetPositionRotation()
     {
