@@ -186,10 +186,10 @@ public class SnapHandler : MonoBehaviour
 
             //find socket that key is snapped onto and update socket state
             movingKeyPart = keyPointedAt;
-            movingKeyPart.Unsnap();
-            InteractionManager1stPuzzle.Instance.UnregisterCombinedKey(movingKeyPart);
             SocketData snappedSocket = movingKeyPart.GetHostSocket();
             snappedSocket.Empty();
+            movingKeyPart.Unsnap();
+            InteractionManager1stPuzzle.Instance.UnregisterCombinedKey(movingKeyPart);
 
             OnKeyUnsnappedFromSocket?.Invoke(this, new(snappedSocket, movingKeyPart));
 
