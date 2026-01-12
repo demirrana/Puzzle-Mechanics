@@ -107,9 +107,12 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void Update()
     {
-        DetectTakeMainPartInHand();
-        DetectInteractionConditionsMet();
-        DetectProceedToNextDoor();
+        if (!isPuzzleCompleted)
+        {
+            DetectTakeMainPartInHand();
+            DetectInteractionConditionsMet();
+            DetectProceedToNextDoor();
+        }
     }
 
     private void DetectTakeMainPartInHand() //this will happen when that scene's some exact part is finished SO EDIT LATER
