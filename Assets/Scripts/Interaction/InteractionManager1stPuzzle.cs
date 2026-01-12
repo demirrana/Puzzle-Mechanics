@@ -60,6 +60,16 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     private bool hasPreviewStarted;
     private GameObject previewingKeyPartObject;
 
+    public void RegisterCombinedKey(Interactable1stPuzzleObject newKey) 
+    {
+        combinedKeys.Add(newKey);
+    }
+
+    public void UnregisterCombinedKey(Interactable1stPuzzleObject newKey)
+    {
+        combinedKeys.Remove(newKey);
+    }
+
     public Interactable1stPuzzleObject GetKeyInCombinedKeys(GameObject obj) //controls if it is main key or any key that is attached to it
     {
         Interactable1stPuzzleObject key = obj.GetComponentInParent<Interactable1stPuzzleObject>();
