@@ -115,6 +115,10 @@ public class UI_Puzzle1Manager : MonoBehaviour
         {
             ChangeInHoveredObjectEventArgs e = new(currentlyHoveredSlot, hoveredSlot);
             OnHoveredInventorySlotChanged?.Invoke(this, e);
+            RectTransform previewPanelRectTransform = PreviewPanel.Instance.GetComponent<RectTransform>();
+            RectTransform slotRectTransform = hoveredSlot.GetComponent<RectTransform>();
+            Vector3 offset = new(220, 0, 0);
+            previewPanelRectTransform.position = slotRectTransform.position + offset;
             PreviewPanel.Instance.Show();
         }
     }
