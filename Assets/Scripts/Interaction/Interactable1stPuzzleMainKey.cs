@@ -16,6 +16,11 @@ public class Interactable1stPuzzleMainKey : MonoBehaviour
         InitializeVariables();
     }
 
+    private void Start()
+    {
+        SnapHandler.Instance.OnKeyUnsnappedFromSocket += MainKey_KeyUnsnappedFromSocket;
+    }
+
     public bool IsDragging()
     {
         return isDragging;
@@ -55,6 +60,11 @@ public class Interactable1stPuzzleMainKey : MonoBehaviour
     public void SetRotation(Quaternion targetRotation)
     {
         transform.rotation = targetRotation;
+    }
+
+    private void MainKey_KeyUnsnappedFromSocket(object sender, SnapHandler.SnapToSocketEventArgs e)
+    {
+        isDragging = false;
     }
 
     private void InitializeVariables()
