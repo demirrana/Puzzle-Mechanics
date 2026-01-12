@@ -59,7 +59,6 @@ public class SnapHandler : MonoBehaviour
 
     public void SnapKeyPlugToSocket()
     {
-        String plugID = movingKeyPart.GetPlugID();
         Transform plugTransform = movingKeyPart.GetPlugTransform();
 
         SocketData closestSocket = GetClosestSocket();
