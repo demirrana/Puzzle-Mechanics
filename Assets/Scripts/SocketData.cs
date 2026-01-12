@@ -13,13 +13,13 @@ public class SocketData
 
     public void Empty()
     {
-        isOccupied = true;
+        isOccupied = false;
         snappedKey = null;
     }
 
     public void SnapKey(Interactable1stPuzzleObject key)
     {
-        isOccupied = false;
+        isOccupied = true;
         snappedKey = key;
     }
 }
