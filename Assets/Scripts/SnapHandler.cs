@@ -179,13 +179,10 @@ public class SnapHandler : MonoBehaviour
 
         if (Input.GetKeyDown(unsnapKey))
         {
-            foreach (SocketData socket in keyPointedAt.sockets) //able to unsnap only the outermost ones
+            if (keyPointedAt.sockets.Find(x => x.isOccupied) != null) //able to unsnap only the outermost ones
             {
-                if (socket.isOccupied)
-                {
-                    //warn there is a key snapped onto it
-                    return;
-                }
+                //warn there is a key snapped onto it
+                return;
             }
 
             //find socket that key is snapped onto and update socket state
