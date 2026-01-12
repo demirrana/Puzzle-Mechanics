@@ -315,6 +315,28 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void InteractionManager1stPuzzle_KeySnappedToSocket(object sender, SnapHandler.SnapToSocketEventArgs e)
+    {
+        SocketData socket = e.Socket;
+        Interactable1stPuzzleObject key = e.SnappedKey;
+
+        if (socket.targetPlugIDs[currentDoorIndex].Equals(key.GetPlugID()))
+        {
+            correctSnapCount++;
+        }
+    }
+
+    private void InteractionManager1stPuzzle_KeyUnsnappedFromSocket(object sender, SnapHandler.SnapToSocketEventArgs e)
+    {
+        SocketData socket = e.Socket;
+        Interactable1stPuzzleObject key = e.SnappedKey;
+
+        if (socket.targetPlugIDs[currentDoorIndex].Equals(key.GetPlugID()))
+        {
+            correctSnapCount--;
+        }
+    }
+
     private void InteractionManager1stPuzzle_HoveredInventorySlotChanged(object sender, UI_Puzzle1Manager.ChangeInHoveredObjectEventArgs e)
     {
         UI_Puzzle1stObject previousSlot = e.PreviousInventorySlot;
