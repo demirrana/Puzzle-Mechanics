@@ -91,8 +91,7 @@ public class SnapHandler : MonoBehaviour
         {
             OnKeySnappedToSocket?.Invoke(this, new(closestSocket, movingKeyPart));
 
-            closestSocket.isOccupied = true;
-            closestSocket.snappedKey = movingKeyPart;
+            closestSocket.SnapKey(movingKeyPart);
             InteractionManager1stPuzzle.Instance.RegisterCombinedKey(movingKeyPart);
             movingKeyPart = null;
             isKeyFollowingMouse = false;
@@ -169,9 +168,7 @@ public class SnapHandler : MonoBehaviour
         if (hoveredKey != keyPointedAt) //check unsna
         {
             hoveredKey = keyPointedAt;
-
         }
-        
 
         InteractableBehaviourUnsnapFromSocket unsnap = new();
         KeyCode unsnapKey = unsnap.InteractionKeyCode;
@@ -193,11 +190,10 @@ public class SnapHandler : MonoBehaviour
 
             //find socket that key is snapped onto and update socket state
             movingKeyPart = keyPointedAt;
-            SocketData snappedSocket = movingKeyPart.GetHostSocket();
             movingKeyPart.Unsnap();
             InteractionManager1stPuzzle.Instance.UnregisterCombinedKey(movingKeyPart);
-            snappedSocket.isOccupied = false;
-            snappedSocket.snappedKey = null;
+            SocketData snappedSocket = movingKeyPart.GetHostSocket();
+            snappedSocket.Empty();
 
             OnKeyUnsnappedFromSocket?.Invoke(this, new(snappedSocket, movingKeyPart));
 
