@@ -151,8 +151,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
         RotatePreviewCameraAroundKeyPart();
         MoveKeyPartOnScreen();
-        RotateMainKey();
-        DeselectKeyPart();
 
         //show chosen key part on screen along with the inventory view
         //display the main key on screen
@@ -198,9 +196,11 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         if (isKeyFollowingMouse)
         {
             SnapKeyPlugToSocket();
+            DeselectKeyPart();
         }
         else
         {
+            RotateMainKey();
             UnsnapKeyFromSocket();
         }
     }
@@ -360,7 +360,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void RotateMainKey()
     {
-        if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel() && movingKeyPart == null)
+        if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel())
         {
             Interactable1stPuzzleMainKey.Instance.RotateObject();
         }
@@ -368,7 +368,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
     private void DeselectKeyPart()
     {
-        if (movingKeyPart != null && Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
+        if (Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
         {
             OnKeyDeselected?.Invoke(this, EventArgs.Empty);
             movingKeyPart.SetParent(keysInitialParent);
