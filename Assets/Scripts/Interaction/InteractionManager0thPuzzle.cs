@@ -21,6 +21,8 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     public List<Interactable0thPuzzleObject> allBooks;
     public List<Interactable0thPuzzleObject> representativeBooks;
 
+    private List<Collider> nearColliders = new();
+
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
     private InteractionPanelIndividual InteractionPanelIndividual;
@@ -184,6 +186,20 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         Transform platformTopTransform = bookPlatform.GetTopCenterPointTransform();
         KeyCode platformViewEnterKey = bookPlatform.GetEnterPlatformViewKey();
         TriggerInteractionPanelIndividualActivated(this, platformTopTransform, platformViewEnterKey);
+    }
+
+    protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
+    {
+        nearColliders = colliderList;
+        base.PlayerInteractionManager_ObjectCollidersApproached(sender, colliderList);
+    }
+
+    protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
+    {
+        if (nearColliders.Count != 0)
+        {
+            nearColliders.Clear();
+        }
     }
 
     protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour0thPuzzle> interactable)
