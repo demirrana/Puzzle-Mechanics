@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interactable0thPuzzlePlatform : MonoBehaviour
@@ -7,15 +10,23 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     [SerializeField] private Transform topCenterPointTransform; //should be set to that point + (book thickness / 2)
 
-    private List<Interactable0thPuzzleObject> booksOnPlatform = new();
-    private float yValueToPutNextBook = 0f;
+    private List<Interactable<IInteractableBehaviour0thPuzzle>> booksOnPlatform = new();
+    private float yValueToPutNextBook;
     private static readonly float BookThickness = 0.03f;
+
+    private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
+    private static readonly KeyCode ExitPlatformViewKey = KeyCode.Q; //TO BE CHANGED TO ESCAPE
 
     private readonly int BookCapacity = 8;
 
     private void Awake()
     {
         SetInstance();
+    }
+
+    private void Start()
+    {
+        InitializeValues();
     }
 
     public Vector3 GetNextBookPos()
@@ -30,6 +41,38 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
             newPosition.y = yValueToPutNextBook;
             return newPosition;
         }
+    }
+
+    public Interactable0thPuzzleObject GetPointedBook()
+    {
+        if (!HasBooks())
+        {
+            return null;
+        }
+        else
+        {
+            Interactable<IInteractableBehaviour0thPuzzle> pointedBook = null;
+            Vector3 mousePositionInWorld = MouseManager.Instance.GetMousePositionInWorld();
+            pointedBook = booksOnPlatform
+                .OrderBy(pointedBook => Vector3.Distance(pointedBook.transform.position, mousePositionInWorld))
+                .FirstOrDefault();
+            return pointedBook as Interactable0thPuzzleObject;
+        }
+    }
+
+    public Transform GetTopCenterPointTransform()
+    {
+        return topCenterPointTransform;
+    }
+
+    public KeyCode GetEnterPlatformViewKey()
+    {
+        return EnterPlatformViewKey;
+    }
+
+    public KeyCode GetExitPlatformViewKey()
+    {
+        return ExitPlatformViewKey;
     }
 
     public bool HasPlace()
@@ -50,7 +93,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     public void AddBookAndUpdate(Interactable0thPuzzleObject newBook)
     {
         AddBook(newBook);
-        UpdateAddedBookPosition();
+        //UpdateAddedBookPosition(); this is handled by behaviour 
         UpdateAfterAdd_yValueForNextBook();
     }
 
@@ -58,7 +101,8 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     {
         int removedBookOrder = booksOnPlatform.IndexOf(book) + 1;
         RemoveBook(book);
-        ShiftBooksDownAfterRemoval(removedBookOrder);
+        if (removedBookOrder != booksOnPlatform.Count + 1) //no shift required when lastly put book removed
+            ShiftBooksDownAfterRemoval(removedBookOrder);
         UpdateAfterRemove_yValueForNextBook();
     }
 
@@ -72,19 +116,34 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         booksOnPlatform.Remove(book);
     }
 
+    public bool IsEnterPlatformViewKeyPressed()
+    {
+        return Input.GetKeyDown(EnterPlatformViewKey);
+    }
+
+    public bool IsExitPlatformViewKeyPressed()
+    {
+        return Input.GetKeyDown(ExitPlatformViewKey);
+    }
+
     private void UpdateAddedBookPosition()
     {
-        Interactable0thPuzzleObject addedBook = booksOnPlatform[-1];
-        Vector3 addedBookPosition = addedBook.GetPosition();
-        addedBookPosition.y = yValueToPutNextBook;
-        addedBook.SetPosition(addedBookPosition);
+        Interactable0thPuzzleObject addedBook = booksOnPlatform[^1] as Interactable0thPuzzleObject;
+        if (addedBook != null)
+        {  
+            Vector3 addedBookPosition = topCenterPointTransform.position;
+            addedBookPosition.y = yValueToPutNextBook;
+            addedBook.SetPosition(addedBookPosition);
+        }
     }
 
     private void ShiftBooksDownAfterRemoval(int removedBookOrderOnPlatform)
     {
         int currentBookOrder = removedBookOrderOnPlatform;
-        List<Interactable0thPuzzleObject> booksFloatingAfterRemoval = booksOnPlatform.GetRange(removedBookOrderOnPlatform - 1, booksOnPlatform.Count);
-        foreach (Interactable0thPuzzleObject book in booksFloatingAfterRemoval)
+        List<Interactable<IInteractableBehaviour0thPuzzle>> booksToShiftDown;
+        booksToShiftDown = booksOnPlatform.GetRange(removedBookOrderOnPlatform - 1, booksOnPlatform.Count);
+
+        foreach (Interactable0thPuzzleObject book in booksToShiftDown.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
         {
             Vector3 newBookPosition = book.GetPosition();
             float yBookValue = currentBookOrder * BookThickness;
@@ -97,10 +156,15 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     {
         yValueToPutNextBook += BookThickness;
     }
-    
+
     private void UpdateAfterRemove_yValueForNextBook()
     {
         yValueToPutNextBook -= BookThickness;
+    }
+    
+    private void InitializeValues()
+    {
+        yValueToPutNextBook = topCenterPointTransform.position.y;
     }
 
     private void SetInstance()

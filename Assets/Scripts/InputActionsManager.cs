@@ -10,8 +10,8 @@ public class InputActionsManager : MonoBehaviour
     {
         //Below ones should execute before PlayerCamera's and PlayerMovementManager's.
         SetInstance();
-
         PlayerInputActions = new PlayerInputActions();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void SetInstance()

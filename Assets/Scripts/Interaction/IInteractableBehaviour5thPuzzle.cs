@@ -169,7 +169,7 @@ public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5t
     //After this, object should be following the position of the mouse
     public override Vector3 GetTargetPosition()
     {
-        return InteractionManager5thPuzzle.Instance.GetMousePositionInWorld();
+        return MouseManager.Instance.GetMousePositionInWorld();
     }
 }
 
@@ -199,6 +199,6 @@ public class InteractableBehaviourDragOnTableFromSlot : IInteractableBehaviour5t
     //After this, object should be following the position of the mouse
     public override Vector3 GetTargetPosition()
     {
-        return InteractionManager5thPuzzle.Instance.GetMousePositionInWorld();
+        return MouseManager.Instance.GetMousePositionInWorld();
     }
 }

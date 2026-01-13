@@ -33,6 +33,16 @@ public class PlayerMovementManager : MonoBehaviour
         MovePlayer();
     }
 
+    private void OnEnable()
+    {
+        playerInputActions.PlayerMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerInputActions.PlayerMap.Disable();
+    }
+
     private List<RaycastHit> GetHitRaycasts(Vector3 movementInput)
     {
         RaycastHit[] raycastsHit = Physics.CapsuleCastAll(

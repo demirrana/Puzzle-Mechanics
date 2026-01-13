@@ -217,7 +217,15 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
             {
                 if (!hitColliders.Contains(hitInfo.collider))
                 {
-                    hitColliders.Add(hitInfo.collider);
+                    //Make sure interactable in hand is not counted as near interactable
+                    if (interactableInHand != null && hitInfo.collider.transform == interactableInHand.transform)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        hitColliders.Add(hitInfo.collider);
+                    }
                 }
             }
         }

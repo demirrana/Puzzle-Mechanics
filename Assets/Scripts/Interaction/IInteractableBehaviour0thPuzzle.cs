@@ -113,13 +113,21 @@ public class InteractableBehaviourPutOnBookPlatform : IInteractableBehaviour0thP
     public override void Interact<IInteractableBehaviour0thPuzzle>(Interactable0thPuzzleObject interactable)
     {
         base.Interact<IInteractableBehaviour0thPuzzle>(interactable);
-        Debug.Log("PutOnBookPlatform interact method is called.");
+        //Debug.Log("PutOnBookPlatform interact method is called.");
 
+        //Debug.Log("Before setting parent to null: " + interactable.gameObject.transform.position);
         interactable.SetParent(null);
+        //Debug.Log("After setting parent to null: " + interactable.gameObject.transform.position);
+        
+        Vector3 targetPosition = GetTargetPosition(interactable);
+        interactable.SetPosition(targetPosition);
+
         Interactable0thPuzzlePlatform.Instance.AddBookAndUpdate(interactable);
+        //Debug.Log("After AddBookAndUpdate method: " + interactable.gameObject.transform.position);
 
         Transform newParentTransform = GetNewParent();
         interactable.SetParent(newParentTransform);
+        //Debug.Log("After setting parent: " + interactable.gameObject.transform.position);
 
         InteractionManager0thPuzzle.Instance.RaiseInteractableInHandChanged(null);
     }
@@ -152,6 +160,10 @@ public class InteractableBehaviourPickUpFromBookPlatform : IInteractableBehaviou
         Debug.Log("PickUpFromBookPlatform interact method is called.");
 
         interactable.SetParent(null);
+
+        Vector3 targetPosition = GetTargetPosition(interactable);
+        interactable.SetPosition(targetPosition);
+
         Interactable0thPuzzlePlatform.Instance.RemoveBookAndUpdate(interactable);
 
         Transform newParentTransform = GetNewParent();
