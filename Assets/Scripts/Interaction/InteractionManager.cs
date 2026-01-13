@@ -32,6 +32,8 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected Interactable<T> interactableInHand = null;
     private bool interactedOnceKeyIsPressed = true;
 
+    private static int lastFrameUsed = -1;
+
     protected virtual void Start()
     {
         OnInteractionConditionsMet += InteractionManager_InteractionConditionsMet;
@@ -301,12 +303,14 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
     private bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
     {
-        if (Input.GetKeyDown(interactionKeyCode))
+        if (lastFrameUsed != Time.frameCount && Input.GetKeyDown(interactionKeyCode))
         {
             //OnInteractionKeyPressed?.Invoke(this, null); !!!!could be on the extending classes
+            lastFrameUsed = Time.frameCount;
             return true;
         }
 
+        lastFrameUsed = Time.frameCount;
         return false;
     }
 }
