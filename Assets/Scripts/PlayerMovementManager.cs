@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class PlayerMovementManager : MonoBehaviour
     public static PlayerMovementManager Instance { get; private set; }
 
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 10f;
 
     private readonly int NON_BLOCKING_LAYER = 9;
 
@@ -80,30 +82,34 @@ public class PlayerMovementManager : MonoBehaviour
         float xMoveInput = inputMoveVector.x;
         float yMoveInput = inputMoveVector.y;
 
-        Vector3 movementInput = new(xMoveInput, 0f, yMoveInput);
+        //Vector3 movementInput = new(xMoveInput, 0f, yMoveInput);
 
-        if (movementInput != Vector3.zero)
+        if (xMoveInput != 0f || yMoveInput != 0f)
         {
-            /*Vector3 cameraForward = mainCamera.transform.forward;
-            Vector2 cameraForward2D = new(cameraForward.x, cameraForward.z);
+            CinemachineVirtualCameraBase activeCamera = CameraManager.Instance.GetCameraUnderTheName(CameraManager.Instance.GetActiveCameraName());
+            Vector3 camForward = activeCamera.transform.forward;
+            Vector3 camRight = activeCamera.transform.right;
 
-            cameraForward2D = cameraForward2D.normalized;
+            camForward.y = 0f;
+            camRight.y = 0f;
 
-            cameraForward.x = cameraForward2D.x;
-            cameraForward.y = 0f;
-            cameraForward.z = cameraForward2D.y;
+            camForward.Normalize();
+            camRight.Normalize();
 
-            Quaternion rotation = Quaternion.LookRotation(cameraForward);
-            */
+            Vector3 movementInput = (camForward * yMoveInput) + (camRight * xMoveInput);
 
-            //Vector3 finalMovement = rotation * movementInput;
+            if (movementInput != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(movementInput);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
 
             List<RaycastHit> hits = GetHitRaycasts(movementInput);
             bool isHit = hits.Count > 0;
 
             if (!isHit)
             {
-                transform.position += Time.deltaTime * moveSpeed * movementInput;
+                transform.position += moveSpeed * Time.deltaTime * movementInput;
             }
         }
     }
