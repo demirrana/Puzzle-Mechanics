@@ -303,10 +303,10 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
     private bool IsInteractionKeyPressed(KeyCode interactionKeyCode)
     {
-        if (lastFrameUsed != Time.frameCount && Input.GetKeyDown(interactionKeyCode))
+        if (Input.GetKeyDown(interactionKeyCode))
         {
-            //OnInteractionKeyPressed?.Invoke(this, null); !!!!could be on the extending classes
-            lastFrameUsed = Time.frameCount;
+            Debug.Log("Interaction key pressed: " + interactionKeyCode.ToString());
+            //lastFrameUsed = Time.frameCount;
             return true;
         }
 
