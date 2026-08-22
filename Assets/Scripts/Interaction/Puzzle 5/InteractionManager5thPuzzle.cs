@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehaviour5thPuzzle>
 {
+    #region Singleton
     public static InteractionManager5thPuzzle Instance { get; private set; }
+    #endregion
 
+    #region Fields
     [SerializeField] private Transform puzzle5ObjectsHolder;
 
     private enum GameState
@@ -19,7 +22,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     private InteractionPanelIndividual InteractionPanelIndividual;
     private Interactable5thPuzzleTable puzzle5Table;
     private float dropRadius = 0.5f;
+    #endregion
 
+    #region Unity Lifecycle
     private void Awake()
     {
         SetInstance();
@@ -38,25 +43,22 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         DetectInteractionConditionsMet();
     }
+    #endregion
 
-    public Transform GetObjectsHolderTransform()
+    #region Public API (Getters & State Control)
+    public Transform GetObjectsHolderTransform() => puzzle5ObjectsHolder;
+
+    public Interactable5thPuzzleTableSlot GetPointedSlotBeforeKeyPress()
     {
-        return puzzle5ObjectsHolder;
+        Debug.Log("GetPointedSlotBeforeKeyPress is called. The pointed slot is: " + pointedSlotBeforeKeyPress.name);
+        return pointedSlotBeforeKeyPress;
     }
+
+    public float GetDropRadius() => dropRadius;
 
     public void ChangeGameState()
     {
         currentState = currentState == GameState.WorldView ? GameState.TableView : GameState.WorldView;
-    }
-
-    public Interactable5thPuzzleTableSlot GetPointedSlotBeforeKeyPress()
-    {
-        return pointedSlotBeforeKeyPress;
-    }
-
-    public float GetDropRadius()
-    {
-        return dropRadius;
     }
 
     public Vector3 GetNearestPosCollidingWithNothing(float dropRadius)
@@ -78,7 +80,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
         return GetNearestPosCollidingWithNothing(2 * dropRadius);
     }
+    #endregion
 
+    #region Main Detection Logic (Core Processors)
     protected override void DetectInteractionConditionsMet()
     {
         if (currentState == GameState.WorldView)
@@ -99,12 +103,12 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         bool hasTableEmptySlots = puzzle5Table.HasEmptySlots();
         bool hasTableFullSlots = puzzle5Table.HasFullSlots();
 
-        if (AreHandsFull())
+        if (AreHandsFull()) //drop obj on floor
         {
             bool isDropOnFloorPossible = interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourDropOnFloor()) != null;
             DetectConditionsMet_WorldViewHandsFull(isTableNear, hasTableEmptySlots, isDropOnFloorPossible);
         }
-        else
+        else //pick obj from table or pick obj from floor
         {
             DetectConditionsMet_WorldViewHandsEmpty(isTableNear, hasTableFullSlots);
         }
@@ -112,11 +116,11 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     protected void DetectInteractionConditionsMet_TableView()
     {
-        if (AreHandsFull())
+        if (AreHandsFull()) //object is dragged on table or put on table slot or exitting table view
         {
             DetectConditionsMet_TableViewHandsFull();
         }
-        else
+        else //pick obj from table slot or exitting table view
         {
             DetectConditionsMet_TableViewHandsEmpty();
         }
@@ -152,7 +156,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     protected void DetectConditionsMet_TableViewHandsFull()
     {
-        //Debug.Log("Hands are full in the table view.");
+        Debug.Log("Hands are full in the table view.");
         MoveInteractableWithMouse(); //object is dragged on table
         RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
         DetectEmptySlotsOnTable(); //finds slots to put the object on and raises that event
@@ -164,7 +168,9 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         DetectFullSlotsOnTable(); //this should also handle the behaviour of the object inside it (it will be dragged once obtained)
         puzzle5Table.DetectCloseTableView();
     }
+    #endregion
 
+    #region Private Detection & Helper Methods
     private void DetectNearTableForPuttingObject()
     {
         InteractableBehaviourDragOnTableFromHand dragOnTableFromHand = new();
@@ -179,35 +185,16 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         ActivateInteractionPanel(this, puzzle5Table.transform, openTableViewKey);
     }
 
-    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
-    {
-        InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER
-        ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
-
-        foreach (IInteractableBehaviour5thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
-        {
-            DetectBehaviourApplied(interactable, interactionBehaviour);
-        }
-    }
-
-    //used to deactivate individual interaction panel
-    protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
-    {
-        bool tableNear = IsNear(puzzle5Table.transform);
-        bool tableHasFullSlots = puzzle5Table.HasFullSlots();
-        if (!tableNear || (tableNear && !tableHasFullSlots))
-        {
-            InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
-        }
-    }
-
     //interaction panel is displayed on the empty slot that is pointed by the mouse
     private void DetectEmptySlotsOnTable()
     {
+        Debug.Log("DetectEmptySlotsOnTable is called.");
         if (AreHandsFull() && puzzle5Table.HasEmptySlots()) //hands may be empty if game view is active in the loop
         {
+            Debug.Log("Hands are full and there are empty slots on the table.");
             SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedEmptySlot());
             Transform pointedSlotTransform = pointedSlotBeforeKeyPress.transform;
+            Debug.Log("Pointed slot before key press is: " + pointedSlotBeforeKeyPress.name);
             InteractableBehaviourPutOnTableSlot putOnSlot = new();
             ActivateInteractionPanel(this, pointedSlotTransform, putOnSlot.InteractionKeyCode);
             //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);
@@ -237,16 +224,16 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         pointedSlotBeforeKeyPress = slot;
     }
 
-    private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
-    {
-        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
-    }
-
     private void MoveInteractableWithMouse()
     {
         float lerpSpeed = 10f;
         Vector3 worldPos = MouseManager.Instance.GetMousePositionInWorld();
         interactableInHand.transform.position = Vector3.Lerp(interactableInHand.transform.position, worldPos, Time.deltaTime * lerpSpeed);
+    }
+
+    private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
     }
 
     private void InitializeInstances()
@@ -263,4 +250,29 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
         }
         Instance = this;
     }
+    #endregion
+
+    #region Base Class Overrides (Event Responses)
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
+    {
+        InteractableBehaviourPickUpFromFloor pickUpFromFloor = new(); //TO BE CHANGED LATER
+        ActivateInteractionPanel(this, interactable.transform, pickUpFromFloor.InteractionKeyCode);
+
+        foreach (IInteractableBehaviour5thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
+        {
+            DetectBehaviourApplied(interactable, interactionBehaviour);
+        }
+    }
+
+    //used to deactivate individual interaction panel
+    protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
+    {
+        bool tableNear = IsNear(puzzle5Table.transform);
+        bool tableHasFullSlots = puzzle5Table.HasFullSlots();
+        if (!tableNear || (tableNear && !tableHasFullSlots))
+        {
+            InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
+        }
+    }
+    #endregion
 }

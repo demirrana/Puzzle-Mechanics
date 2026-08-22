@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// <summary>
+// This class represents a slot on the 5th puzzle table that can hold an interactable object
 public class Interactable5thPuzzleTableSlot : MonoBehaviour
 {
     [SerializeField] private Transform slotTransform;

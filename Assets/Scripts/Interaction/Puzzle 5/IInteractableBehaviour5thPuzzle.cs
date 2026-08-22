@@ -5,7 +5,8 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
 {
     public virtual KeyCode InteractionKeyCode => KeyCode.E;
 
-    public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzleObject interactable)
+    //interaction is applied through this method, which is called in the InteractionManager when the interaction conditions are met
+    public virtual void Interact<IInteractableBehaviour>(Interactable5thPuzzleObject interactable) 
     {
         //Debug.Log("IInteractableBehaviour5thPuzzle has called Interact.");
         if (interactable == null)
@@ -15,22 +16,25 @@ public class IInteractableBehaviour5thPuzzle : IInteractableBehaviour
         }
     }
 
-    public virtual List<IInteractableBehaviour5thPuzzle> GetNewBehaviours()
+    public virtual List<IInteractableBehaviour5thPuzzle> GetNewBehaviours() //potential next behaviour list is updated after the interaction
     {
         return null;
     }
 
-    public virtual Vector3 GetTargetPosition()
+    public virtual Vector3 GetTargetPosition() //the position object will be moved after the interaction
     {
         return Vector3.zero;
     }
 
-    public virtual Transform GetNewParent()
+    public virtual Transform GetNewParent() //the parent object may be changed after the interaction
     {
         return InteractionManager5thPuzzle.Instance.GetObjectsHolderTransform();
     }
 }
 
+//Behaviour classes for the 5th puzzle
+
+//Pick up object from floor
 public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
@@ -61,6 +65,7 @@ public class InteractableBehaviourPickUpFromFloor : IInteractableBehaviour5thPuz
     }
 }
 
+//Pick up object from table (dragging) to hand
 public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
@@ -92,6 +97,7 @@ public class InteractableBehaviourPickUpFromTableToHand : IInteractableBehaviour
     }
 }
 
+//Drop object on floor from hand
 public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.F;
@@ -117,6 +123,7 @@ public class InteractableBehaviourDropOnFloor : IInteractableBehaviour5thPuzzle
     }
 }
 
+//Put object on table slot from dragging on table
 public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
@@ -146,6 +153,7 @@ public class InteractableBehaviourPutOnTableSlot : IInteractableBehaviour5thPuzz
     }
 }
 
+//Drag object on table from hand
 public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;
@@ -173,6 +181,7 @@ public class InteractableBehaviourDragOnTableFromHand : IInteractableBehaviour5t
     }
 }
 
+//Drag object on table by picking it up from table slot
 public class InteractableBehaviourDragOnTableFromSlot : IInteractableBehaviour5thPuzzle
 {
     public override KeyCode InteractionKeyCode => KeyCode.E;

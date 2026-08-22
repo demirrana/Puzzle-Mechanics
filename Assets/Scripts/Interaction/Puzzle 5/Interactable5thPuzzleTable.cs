@@ -6,17 +6,24 @@ using UnityEngine.InputSystem;
 
 public class Interactable5thPuzzleTable : MonoBehaviour
 {
+    #region Singleton & Events
     public static Interactable5thPuzzleTable Instance { get; private set; }
 
     public event EventHandler OnTableViewActivated;
     public event EventHandler OnTableViewDeactivated;
+    #endregion
 
-    private List<Interactable5thPuzzleTableSlot> emptySlots = new(); //these are gonna be changed to Interactable5thPuzzleTableSlot
-    private List<Interactable5thPuzzleTableSlot> fullSlots = new();
-
+    #region Fields
+    [Header("Input Settings")]
     private readonly KeyCode OpenTableViewKey = KeyCode.E;
     private readonly KeyCode CloseTableViewKey = KeyCode.F;
 
+    [Header("Slot Management")]
+    private List<Interactable5thPuzzleTableSlot> emptySlots = new(); //table slots without an interactable object on them
+    private List<Interactable5thPuzzleTableSlot> occupiedSlots = new(); //table slots with an interactable object on them
+    #endregion
+
+    #region Unity Lifecycle
     private void Awake()
     {
         SetInstance();
@@ -31,14 +38,18 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             emptySlots.Add(slot);
         }
     }
+    #endregion
 
+    #region Public API - Table View & Events
     public void RaiseTableViewActivated()
     {
+        Debug.Log("Table view is activated.");
         OnTableViewActivated?.Invoke(this, null);
     }
 
     public void RaiseTableViewDeactivated()
     {
+        Debug.Log("Table view is deactivated.");
         OnTableViewDeactivated?.Invoke(this, null);
     }
 
@@ -54,29 +65,40 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             RaiseTableViewDeactivated();
     }
 
-    public void TransferSlotToEmptySlots(Interactable5thPuzzleTableSlot slot)
+    public KeyCode GetKeyForOpenTableView() => OpenTableViewKey;
+    public KeyCode GetKeyForCloseTableView() => CloseTableViewKey;
+    #endregion
+
+    #region Public API - Slot Management
+    public void TransferSlotToEmptySlots(Interactable5thPuzzleTableSlot slot) //update slot state after object is removed from the slot
     {
-        Debug.Log("Slot is empty now: " + slot.name);
+        //Debug.Log("Slot is empty now: " + slot.name);
         emptySlots.Add(slot);
-        fullSlots.Remove(slot);
-        Debug.Log("Empty Slots:");
-        foreach (Interactable5thPuzzleTableSlot s in emptySlots)
-        {
-            Debug.Log(s.name);
-        }
+        occupiedSlots.Remove(slot);
+        // Debug.Log("Empty Slots:");
+        // foreach (Interactable5thPuzzleTableSlot s in emptySlots)
+        // {
+        //     Debug.Log(s.name);
+        // }
     }
 
-    public void TransferSlotToFullSlots(Interactable5thPuzzleTableSlot slot)
+    public void TransferSlotToFullSlots(Interactable5thPuzzleTableSlot slot) //update slot state after object is placed on the slot
     {
-        Debug.Log("Slot is full now: " + slot.name);
-        fullSlots.Add(slot);
+        //Debug.Log("Slot is full now: " + slot.name);
+        occupiedSlots.Add(slot);
         emptySlots.Remove(slot);
-        Debug.Log("Full Slots:");
-        foreach (Interactable5thPuzzleTableSlot s in fullSlots)
-        {
-            Debug.Log(s.name);
-        }
+        // Debug.Log("Full Slots:");
+        // foreach (Interactable5thPuzzleTableSlot s in occupiedSlots)
+        // {
+        //     Debug.Log(s.name);
+        // }
     }
+
+    public bool HasEmptySlots() => emptySlots.Count > 0;
+    public bool HasFullSlots() => occupiedSlots.Count > 0;
+
+    public Interactable5thPuzzleTableSlot GetPointedEmptySlot() => GetPointedSlot(emptySlots);
+    public Interactable5thPuzzleTableSlot GetPointedFullSlot() => GetPointedSlot(occupiedSlots);
 
     //for debugging (to be deleted)
     public void LogEmptyAndFullSlots()
@@ -87,51 +109,26 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             Debug.Log(s.name);
         }
         Debug.Log("Full Slots:");
-        foreach (Interactable5thPuzzleTableSlot s in fullSlots)
+        foreach (Interactable5thPuzzleTableSlot s in occupiedSlots)
         {
             Debug.Log(s.name);
         }
     }
+    #endregion
 
-    public KeyCode GetKeyForOpenTableView()
+    #region Private Helper Methods
+    private void SetInstance()
     {
-        return OpenTableViewKey;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
     }
 
-    public KeyCode GetKeyForCloseTableView()
-    {
-        return CloseTableViewKey;
-    }
+    private bool IsTableViewOpenKeyPressed() => Input.GetKeyDown(OpenTableViewKey);
 
-    private bool IsTableViewOpenKeyPressed()
-    {
-        return Input.GetKeyDown(KeyCode.E);
-    }
-
-    private bool IsTableViewCloseKeyPressed()
-    {
-        return Input.GetKeyDown(KeyCode.F);
-    }
-
-    public bool HasEmptySlots()
-    {
-        return emptySlots.Count > 0;
-    }
-
-    public bool HasFullSlots()
-    {
-        return fullSlots.Count > 0;
-    }
-
-    public Interactable5thPuzzleTableSlot GetPointedEmptySlot() //ray from mouse's position in the direction of camera 
-    {
-        return GetPointedSlot(emptySlots);
-    }
-
-    public Interactable5thPuzzleTableSlot GetPointedFullSlot() //ray from mouse's position in the direction of camera 
-    {
-        return GetPointedSlot(fullSlots);
-    }
+    private bool IsTableViewCloseKeyPressed() => Input.GetKeyDown(CloseTableViewKey);
 
     //Gets each slot's projected position onto the active camera and gives the closest one to the mouse.
     private Interactable5thPuzzleTableSlot GetPointedSlot(List<Interactable5thPuzzleTableSlot> slotList)
@@ -150,7 +147,9 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             new Vector2(mousePosition.x, mousePosition.y)))
         .FirstOrDefault()?.Slot;
     }
+    #endregion
 
+    #region Event Handlers
     private void ToggleTableView(object sender, EventArgs e)
     {
         CameraManager.Instance.SwitchToNextCamera();
@@ -159,13 +158,5 @@ public class Interactable5thPuzzleTable : MonoBehaviour
         if (PlayerMovementManager.Instance.enabled) PlayerScriptsManager.Instance.DisableMovementScript();
         else PlayerScriptsManager.Instance.EnableMovementScript();
     }
-
-    private void SetInstance()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
-    }
+    #endregion
 }
