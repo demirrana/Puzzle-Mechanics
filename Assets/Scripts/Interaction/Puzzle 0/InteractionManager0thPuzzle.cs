@@ -54,7 +54,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
         if (!isUIActivatedThisFrame && wasUIActivatedPreviousFrame) //Deactivate only if previously activated
         {
-            Debug.Log("Changed from activated to deactivated");
+            //Debug.Log("Changed from activated to deactivated");
             TriggerInteractionPanelIndividualDeactivated(this);
         }
         wasUIActivatedPreviousFrame = isUIActivatedThisFrame;

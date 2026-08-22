@@ -100,7 +100,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
     protected virtual void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
-        Debug.Log("Call base class PlayerInteractionManager_NoInteractableNear");
+        //Debug.Log("Call base class PlayerInteractionManager_NoInteractableNear");
     }
 
     protected virtual void PlayerInteractionManager_InteractableApproached(object sender, Interactable<T> interactable)
