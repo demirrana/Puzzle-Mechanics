@@ -194,10 +194,12 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         Vector3 movingInY = new(0f, 2f, 0f);
         float movingDuration = 1.2f;
 
+        Vector3 interactable1OriginalPos = interactable1stChosen.transform.position;
+        Vector3 interactable2OriginalPos = interactable2ndChosen.transform.position;
+
         Vector3 interactable1Pos = interactable1stChosen.transform.position;
         Vector3 interactable2Pos = interactable2ndChosen.transform.position;
-        //Quaternion interactable1Rot = interactable1stInHand.transform.rotation;
-        //Quaternion interactable2Rot = interactable2ndInHand.transform.rotation;
+        
         //moving into the air from floor
         yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, interactable1Pos + movingInY, interactable2Pos + movingInY, movingDuration);
 
@@ -205,8 +207,11 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         interactable2Pos = interactable2ndChosen.transform.position;
         interactable1stChosen.transform.position = interactable2Pos; //swapping in the air
         interactable2ndChosen.transform.position = interactable1Pos;
+        Vector3 targetInteractable1Pos = new(interactable2Pos.x, interactable1OriginalPos.y, interactable2Pos.z);
+        Vector3 targetInteractable2Pos = new(interactable1Pos.x, interactable2OriginalPos.y, interactable1Pos.z);
+
         //moving to the ground from the air
-        yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, interactable2Pos - movingInY, interactable1Pos - movingInY, movingDuration);
+        yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, targetInteractable1Pos, targetInteractable2Pos, movingDuration);
 
         interactable1stChosen.ResetBehaviours(); //goes back to the initial behaviour list it had at the beginning
         interactable2ndChosen.ResetBehaviours();
