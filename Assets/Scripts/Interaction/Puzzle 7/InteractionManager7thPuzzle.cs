@@ -191,37 +191,39 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 
     private IEnumerator ApplySwappingBetweenObjects()
     {
-        Vector3 movingInY = new(0f, 2f, 0f);
+        Interactable7thPuzzleObject interactable1stHolder = interactable1stChosen;
+        Interactable7thPuzzleObject interactable2ndHolder = interactable2ndChosen;
+        DeselectInteractable(interactable2ndChosen); //Panel is hidden (HANDLE LATER to call only hiding panel at the start of method)
+        DeselectInteractable(interactable1stChosen);
+
+        Vector3 movingInY = new(0f, 2f, 0f); //the amount of moving in y axis toward the air
         float movingDuration = 1.2f;
 
-        Vector3 interactable1OriginalPos = interactable1stChosen.transform.position;
-        Vector3 interactable2OriginalPos = interactable2ndChosen.transform.position;
+        Vector3 interactable1OriginalPos = interactable1stHolder.transform.position;
+        Vector3 interactable2OriginalPos = interactable2ndHolder.transform.position;
 
-        Vector3 interactable1Pos = interactable1stChosen.transform.position;
-        Vector3 interactable2Pos = interactable2ndChosen.transform.position;
-        
+        Vector3 interactable1Pos = interactable1stHolder.transform.position;
+        Vector3 interactable2Pos = interactable2ndHolder.transform.position;
+
         //moving into the air from floor
-        yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, interactable1Pos + movingInY, interactable2Pos + movingInY, movingDuration);
+        yield return MoveTo(interactable1stHolder.transform, interactable2ndHolder.transform, interactable1Pos + movingInY, interactable2Pos + movingInY, movingDuration);
 
-        interactable1Pos = interactable1stChosen.transform.position;
-        interactable2Pos = interactable2ndChosen.transform.position;
-        interactable1stChosen.transform.position = interactable2Pos; //swapping in the air
-        interactable2ndChosen.transform.position = interactable1Pos;
+        interactable1Pos = interactable1stHolder.transform.position;
+        interactable2Pos = interactable2ndHolder.transform.position;
+        interactable1stHolder.transform.position = interactable2Pos; //swapping in the air
+        interactable2ndHolder.transform.position = interactable1Pos;
         Vector3 targetInteractable1Pos = new(interactable2Pos.x, interactable1OriginalPos.y, interactable2Pos.z);
         Vector3 targetInteractable2Pos = new(interactable1Pos.x, interactable2OriginalPos.y, interactable1Pos.z);
 
         //moving to the ground from the air
-        yield return MoveTo(interactable1stChosen.transform, interactable2ndChosen.transform, targetInteractable1Pos, targetInteractable2Pos, movingDuration);
+        yield return MoveTo(interactable1stHolder.transform, interactable2ndHolder.transform, targetInteractable1Pos, targetInteractable2Pos, movingDuration);
 
-        interactable1stChosen.ResetBehaviours(); //goes back to the initial behaviour list it had at the beginning
-        interactable2ndChosen.ResetBehaviours();
+        interactable1stHolder.ResetBehaviours(); //goes back to the initial behaviour list it had at the beginning
+        interactable2ndHolder.ResetBehaviours();
 
         //Debug.Log("Swapping took place and vfx are stopped.");
         StopChoosingVFX(choosingCircle1);
         StopChoosingVFX(choosingCircle2);
-        
-        DeselectInteractable(interactable2ndChosen); //Panel is hidden (HANDLE LATER to call only hiding panel at the start of method)
-        DeselectInteractable(interactable1stChosen);
     }
 
     private IEnumerator MoveTo(Transform obj1, Transform obj2, Vector3 target1, Vector3 target2, float duration)
