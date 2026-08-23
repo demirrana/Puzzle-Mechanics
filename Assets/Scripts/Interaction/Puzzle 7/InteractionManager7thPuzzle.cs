@@ -10,6 +10,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
 
     public event EventHandler<KeyCode> OnBothInteractablesAreChosen;
     public event EventHandler OnAnyInteractableIsDeselected;
+    public event EventHandler OnSwapKeyPressed;
 
     [SerializeField] private ParticleSystem choosingCircle1;
     [SerializeField] private ParticleSystem choosingCircle2;
@@ -180,6 +181,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     {
         if (IsSwapKeyPressed())
         {
+            OnSwapKeyPressed?.Invoke(this, EventArgs.Empty);
             StartCoroutine(ApplySwappingBetweenObjects());
         }
     }

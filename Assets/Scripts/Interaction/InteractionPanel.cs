@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,9 @@ using UnityEngine.UI;
 public class InteractionPanel : InteractionPanelBase
 {
     public static InteractionPanel Instance { get; private set; }
+
+    [SerializeField] private Color originalBackgroundColor;
+    private readonly Color swapKeyPressColor = new(0.3f, 0.35f, 0f, 0.4f);
 
     //[SerializeField] private Image interactionPanelBackground;
     //[SerializeField] private TextMeshProUGUI interactionKeyText;
@@ -24,7 +28,17 @@ public class InteractionPanel : InteractionPanelBase
         InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
         InteractionManager5thPuzzle.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
         InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen += BothInteractablesAreChosen_InteractionPanel;
-        InteractionManager7thPuzzle.Instance.OnAnyInteractableIsDeselected += AnyInteractableIsDeselected_InteractionPanel;
+        InteractionManager7thPuzzle.Instance.OnSwapKeyPressed += SwapKeyPressed_InteractionPanel;
+    }
+
+    public void UpdateBackgroundColor() //go back to original background color
+    {
+        interactionPanelBackground.color = originalBackgroundColor;
+    }
+
+    public void UpdateBackgroundColor(Color newColor)
+    {
+        interactionPanelBackground.color = newColor;
     }
 
     private void InteractionConditionsMet_InteractionManager0thPuzzle(object sender, InteractionManager0thPuzzle.InteractionBehaviourEventArgs e)
@@ -58,9 +72,17 @@ public class InteractionPanel : InteractionPanelBase
         Show();
     }
 
-    private void AnyInteractableIsDeselected_InteractionPanel(object sender, EventArgs e)
+    private void SwapKeyPressed_InteractionPanel(object sender, EventArgs e)
     {
+        StartCoroutine(DisplaySwapKeyPressAndHide());
+    }
+
+    private IEnumerator DisplaySwapKeyPressAndHide() //display the swap key press color for a short duration and then hide the panel
+    {
+        UpdateBackgroundColor(swapKeyPressColor);
+        yield return new WaitForSeconds(0.25f);
         Hide();
+        UpdateBackgroundColor();
     }
 
     private void InteractionConditionsMet_InteractionManager5thPuzzle(object sender, InteractionManager5thPuzzle.InteractionBehaviourEventArgs e)
