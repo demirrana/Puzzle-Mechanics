@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,49 @@ public class Interactable7thPuzzleObject : Interactable7thPuzzle
         {
             //Debug.Log(b.ToString());
         }
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public IEnumerator FadeOut()
+    {
+        yield return FadeTo(0f);
+        Hide();
+    }
+
+    public IEnumerator FadeIn()
+    {
+        Show();
+        yield return FadeTo(1f);
+    }
+
+    private IEnumerator FadeTo(float targetAlpha, float duration = 1f)
+    {
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        Color color = renderer.material.color;
+
+        float startAlpha = color.a;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / duration);
+            renderer.material.color = new Color(color.r, color.g, color.b, newAlpha);
+
+            yield return null; 
+        }
+
+        renderer.material.color = new Color(color.r, color.g, color.b, targetAlpha);
     }
 
     public void LogBehaviours()

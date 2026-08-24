@@ -210,12 +210,24 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         //moving into the air from floor
         yield return MoveTo(interactable1stHolder.transform, interactable2ndHolder.transform, interactable1Pos + movingInY, interactable2Pos + movingInY, movingDuration);
 
+        Coroutine fade1 = StartCoroutine(interactable1stHolder.FadeOut());
+        Coroutine fade2 = StartCoroutine(interactable2ndHolder.FadeOut());
+
+        yield return fade1;
+        yield return fade2;
+
         interactable1Pos = interactable1stHolder.transform.position;
         interactable2Pos = interactable2ndHolder.transform.position;
         interactable1stHolder.transform.position = interactable2Pos; //swapping in the air
         interactable2ndHolder.transform.position = interactable1Pos;
         Vector3 targetInteractable1Pos = new(interactable2Pos.x, interactable1OriginalPos.y, interactable2Pos.z);
         Vector3 targetInteractable2Pos = new(interactable1Pos.x, interactable2OriginalPos.y, interactable1Pos.z);
+        
+        Coroutine fadeIn1 = StartCoroutine(interactable1stHolder.FadeIn());
+        Coroutine fadeIn2 = StartCoroutine(interactable2ndHolder.FadeIn());
+
+        yield return fadeIn1;
+        yield return fadeIn2;
 
         //moving to the ground from the air
         yield return MoveTo(interactable1stHolder.transform, interactable2ndHolder.transform, targetInteractable1Pos, targetInteractable2Pos, movingDuration);
