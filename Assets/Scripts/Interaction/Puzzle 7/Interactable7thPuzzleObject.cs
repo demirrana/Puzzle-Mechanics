@@ -36,7 +36,7 @@ public class Interactable7thPuzzleObject : Interactable7thPuzzle
         yield return FadeTo(1f);
     }
 
-    private IEnumerator FadeTo(float targetAlpha, float duration = 1f)
+    private IEnumerator FadeTo(float targetAlpha, float duration = 1f) //Fade the object to a target alpha value over a specified duration
     {
         MeshRenderer renderer = GetComponent<MeshRenderer>();
         Color color = renderer.material.color;

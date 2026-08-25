@@ -6,12 +6,15 @@ using UnityEngine.InputSystem;
 
 public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehaviour7thPuzzle>
 {
+    #region Singleton and Events
     public static InteractionManager7thPuzzle Instance { get; private set; }
 
     public event EventHandler<KeyCode> OnBothInteractablesAreChosen;
     public event EventHandler OnAnyInteractableIsDeselected;
     public event EventHandler OnSwapKeyPressed;
+    #endregion
 
+    #region Fields & Serialized Fields
     [SerializeField] private ParticleSystem choosingCircle1;
     [SerializeField] private ParticleSystem choosingCircle2;
 
@@ -20,7 +23,9 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     private Interactable7thPuzzleObject interactable2ndChosen; //2nd interactable chosen to swap with the one in hand
     private Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable;
     private KeyCode swapKey;
+    #endregion
 
+    #region Unity Lifecycle Methods
     private void Awake()
     {
         SetInstance();
@@ -40,34 +45,44 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         //if (approachedInteractable != null)
         //approachedInteractable.LogBehaviours();
         DetectInteractionConditionsMet();
-        LogChosenOnes();
+    }
+    #endregion
+
+    #region Initialization and Setup
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
     }
 
-    private void LogChosenOnes()
+    private void InitializeInstances()
     {
-        if (interactable1stChosen == null)
-            Debug.Log("1st is null.");
-        else
-            Debug.Log("1st is " + interactable1stChosen.ToString());
-        if (interactable2ndChosen == null)
-            Debug.Log("2nd is null.");
-        else
-            Debug.Log("2nd is " + interactable2ndChosen.ToString());
+        interactable1stChosen = interactableInHand as Interactable7thPuzzleObject;
+        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        interactable2ndChosen = null;
+        approachedInteractable = null;
+        swapKey = KeyCode.K;
     }
+    #endregion
 
-    public void ChooseInteractable(Interactable7thPuzzleObject interactable)
+    #region Selection & Deselection Logic
+    public void ChooseInteractable(Interactable7thPuzzleObject interactable) //is used by behaviour classes' Interact methods
     {
-        if (interactable1stChosen == null)
+        if (interactable1stChosen == null) //chosen obj is 1st one
         {
             interactable1stChosen = interactable;
         }
-        else
+        else //there is already a chosen obj, so the new one is the 2nd one
         {
             interactable2ndChosen = interactable;
         }
 
-        if (interactable2ndChosen != null)
+        if (interactable2ndChosen != null) //swap between interactables is possible
         {
+            Debug.Log("2nd interactable is chosen. Swap key is: " + swapKey.ToString());
             OnBothInteractablesAreChosen?.Invoke(this, swapKey);
         }
     }
@@ -84,34 +99,13 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         OnAnyInteractableIsDeselected?.Invoke(this, EventArgs.Empty);
     }
 
-    public void PlayChoosingVFX(Vector3 targetPosition)
+    private void SetApproachedInteractable(Interactable<IInteractableBehaviour7thPuzzle> interactable)
     {
-        if (choosingCircle1.isPlaying && choosingCircle2.isPlaying) //already playing
-            return;
-
-        Vector3 vfxPosition = new(targetPosition.x, 0.2f, targetPosition.z);
-
-        if (choosingCircle1.isPlaying)
-        {
-            //Debug.Log("circle 1 is already playing");
-            choosingCircle2.transform.position = vfxPosition;
-            choosingCircle2.Play();
-        }
-        else
-        {
-            //Debug.Log("circle 2 is already playing");
-            choosingCircle1.transform.position = vfxPosition;
-            choosingCircle1.Play();
-        }
+        approachedInteractable = interactable;
     }
+    #endregion
 
-    public void StopChoosingVFX(ParticleSystem vfx)
-    {
-        //Debug.Log("StopChoosingVFX is called for " + vfx.ToString());
-        if (vfx.isPlaying)
-            vfx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-    }
-
+    #region Interaction Detection State Machine
     protected override void DetectInteractionConditionsMet()
     {
         DetectAnyColliderApproached();
@@ -143,7 +137,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         bool isApproachedChosen = approachedInteractable == interactable1stChosen || approachedInteractable == interactable2ndChosen;
         if (approachedInteractable != null && isApproachedChosen)
             DetectDeselectingInteractable(approachedInteractable);
-        else
+        else //possible 2nd interactable to be chosen
             DetectChoosingInteractable(approachedInteractable);
     }
 
@@ -157,7 +151,6 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     {
         if (approachedInteractable != null)
         {
-            //Debug.Log("There is an approached one and behaviour is checked.");
             DetectBehaviourApplied(approachedInteractable, new InteractableBehaviourBeChosen());
         }
     }
@@ -190,7 +183,9 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     {
         return Input.GetKeyDown(swapKey);
     }
+    #endregion
 
+    #region Object Swapping and Animation Coroutines
     private IEnumerator ApplySwappingBetweenObjects()
     {
         Interactable7thPuzzleObject interactable1stHolder = interactable1stChosen;
@@ -213,6 +208,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         Coroutine fade1 = StartCoroutine(interactable1stHolder.FadeOut());
         Coroutine fade2 = StartCoroutine(interactable2ndHolder.FadeOut());
 
+        //fade out is completed before swapping the positions of the interactables in the air
         yield return fade1;
         yield return fade2;
 
@@ -223,13 +219,14 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         Vector3 targetInteractable1Pos = new(interactable2Pos.x, interactable1OriginalPos.y, interactable2Pos.z);
         Vector3 targetInteractable2Pos = new(interactable1Pos.x, interactable2OriginalPos.y, interactable1Pos.z);
         
+        //fading in the swapped interactables in the air
         Coroutine fadeIn1 = StartCoroutine(interactable1stHolder.FadeIn());
         Coroutine fadeIn2 = StartCoroutine(interactable2ndHolder.FadeIn());
 
         yield return fadeIn1;
         yield return fadeIn2;
 
-        //moving to the ground from the air
+        //moving interactable objects to the ground from the air
         yield return MoveTo(interactable1stHolder.transform, interactable2ndHolder.transform, targetInteractable1Pos, targetInteractable2Pos, movingDuration);
 
         interactable1stHolder.ResetBehaviours(); //goes back to the initial behaviour list it had at the beginning
@@ -240,6 +237,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         StopChoosingVFX(choosingCircle2);
     }
 
+    //Coroutine to move 2 objects simultaneously to their target positions in a given duration
     private IEnumerator MoveTo(Transform obj1, Transform obj2, Vector3 target1, Vector3 target2, float duration)
     {
         Vector3 start1 = obj1.position;
@@ -253,7 +251,9 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
             yield return null;
         }
     }
-
+    #endregion
+    
+    #region Event Handlers
     protected override void PlayerInteractionManager_NoInteractableNear(object sender, EventArgs e)
     {
         DeactivateInteractionPanel();
@@ -261,6 +261,67 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         ManageStoppingChoosingVFX_NoInteractableNear();
     }
 
+    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
+    {
+        bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
+        bool areTwoInteractablesChosen = interactable1stChosen != null && interactable2ndChosen != null;
+        if (areTwoInteractablesChosen && !isApproachedChosen) //when 2 are already chosen, approached is used for only deselecting
+        {
+            SetApproachedInteractable(null);
+            return;
+        }
+        
+        SetApproachedInteractable(interactable);
+        //Debug.Log("InteractableApproached and vfx is displayed. The approached interactable is " + interactable.ToString());
+        PlayChoosingVFX(interactable.transform.position);
+        IInteractableBehaviour7thPuzzle interactionBehaviour = interactable.GetInteractionBehaviours()[0]; //there can be only 1 behaviour
+        ActivateInteractionPanel(this, interactable.transform, interactionBehaviour.InteractionKeyCode);
+    }
+    #endregion
+
+    #region UI Panel Management
+    private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
+    }
+
+    private void DeactivateInteractionPanel()
+    {
+        InteractionPanelIndividual.RaiseInteractionPanelDeactivated(this);
+    }
+    #endregion
+
+    #region Visual Effects Management
+    public void PlayChoosingVFX(Vector3 targetPosition)
+    {
+        if (choosingCircle1.isPlaying && choosingCircle2.isPlaying) //already playing
+            return;
+
+        Vector3 vfxPosition = new(targetPosition.x, 0.2f, targetPosition.z);
+
+        if (choosingCircle1.isPlaying)
+        {
+            //Debug.Log("circle 1 is already playing");
+            choosingCircle2.transform.position = vfxPosition;
+            choosingCircle2.Play();
+        }
+        else
+        {
+            //Debug.Log("circle 2 is already playing");
+            choosingCircle1.transform.position = vfxPosition;
+            choosingCircle1.Play();
+        }
+    }
+
+    public void StopChoosingVFX(ParticleSystem vfx)
+    {
+        //Debug.Log("StopChoosingVFX is called for " + vfx.ToString());
+        if (vfx.isPlaying)
+            vfx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+
+    //Stops the vfx of the interactable that is not chosen, if any of them is chosen. If none is chosen, all vfx are stopped.
+    //(Because it is not known which vfx is played for the chosen interatable, it is detected with the distance to the chosen interactable.)
     private void ManageStoppingChoosingVFX_NoInteractableNear()
     {
         bool isOnly1stInteractableChosen = interactable1stChosen != null && interactable2ndChosen == null;
@@ -300,54 +361,5 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
             StopChoosingVFX(choosingCircle2);
         }
     }
-
-    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour7thPuzzle> interactable)
-    {
-        bool isApproachedChosen = interactable != null && (interactable == interactable1stChosen || interactable == interactable2ndChosen);
-        bool areTwoInteractablesChosen = interactable1stChosen != null && interactable2ndChosen != null;
-        if (areTwoInteractablesChosen && !isApproachedChosen) //when 2 are already chosen, approached is used for only deselecting
-        {
-            SetApproachedInteractable(null);
-            return;
-        }
-        
-        SetApproachedInteractable(interactable);
-        //Debug.Log("InteractableApproached and vfx is displayed. The approached interactable is " + interactable.ToString());
-        PlayChoosingVFX(interactable.transform.position);
-        IInteractableBehaviour7thPuzzle interactionBehaviour = interactable.GetInteractionBehaviours()[0]; //there can be only 1 behaviour
-        ActivateInteractionPanel(this, interactable.transform, interactionBehaviour.InteractionKeyCode);
-    }
-
-    private void ActivateInteractionPanel(object sender, Transform targetTransform, KeyCode interactionKey)
-    {
-        InteractionPanelIndividual.RaiseInteractionPanelActivated(sender, targetTransform, interactionKey);
-    }
-
-    private void DeactivateInteractionPanel()
-    {
-        InteractionPanelIndividual.RaiseInteractionPanelDeactivated(this);
-    }
-
-    private void SetApproachedInteractable(Interactable<IInteractableBehaviour7thPuzzle> interactable)
-    {
-        approachedInteractable = interactable;
-    }
-
-    private void InitializeInstances()
-    {
-        interactable1stChosen = interactableInHand as Interactable7thPuzzleObject;
-        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
-        interactable2ndChosen = null;
-        approachedInteractable = null;
-        swapKey = KeyCode.K;
-    }
-
-    private void SetInstance()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
-    }
+    #endregion
 }

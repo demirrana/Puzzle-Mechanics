@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehaviour
@@ -30,8 +31,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     [SerializeField] private Transform handTransform;
 
     protected Interactable<T> interactableInHand = null;
-    private bool interactedOnceKeyIsPressed = true;
-
+    private bool interactedOnceKeyIsPressed = true; //is behaviour performed as soon as key is pressed or not
     private static int lastFrameUsed = -1;
 
     protected virtual void Start()
@@ -306,11 +306,9 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         if (Input.GetKeyDown(interactionKeyCode))
         {
             Debug.Log("Interaction key pressed: " + interactionKeyCode.ToString());
-            //lastFrameUsed = Time.frameCount;
             return true;
         }
 
-        lastFrameUsed = Time.frameCount;
         return false;
     }
 }
