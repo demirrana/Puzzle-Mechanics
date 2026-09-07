@@ -202,22 +202,6 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    protected override void PlayerInteractionManager_InteractableApproached(object sender, Interactable<IInteractableBehaviour0thPuzzle> interactable)
-    {
-        if (interactable is Interactable0thPuzzleObject)
-        {
-            Interactable0thPuzzleObject book = interactable as Interactable0thPuzzleObject;
-            foreach (IInteractableBehaviour0thPuzzle interactionBehaviour in interactable.GetInteractionBehaviours())
-            {
-                if (!bookPlatform.HasTheBook(book))
-                {
-                    InteractableBehaviourPickUpFromShelf pickUpFromShelf = new();
-                    RaiseInteractionConditionsMet(sender, book, pickUpFromShelf);
-                }
-            }
-        }
-    }
-
     protected override void InteractionManager_InteractionConditionsMet(object sender, InteractionBehaviourEventArgs e)
     {
         TriggerInteractionPanelBasedOnBehaviour(sender, e);
