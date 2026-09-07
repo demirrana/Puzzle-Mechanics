@@ -21,6 +21,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     private void Awake()
     {
+        yValueToPutNextBook = topCenterPointTransform.position.y;
         SetInstance();
     }
 
@@ -146,8 +147,8 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         foreach (Interactable0thPuzzleObject book in booksToShiftDown.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
         {
             Vector3 newBookPosition = book.GetPosition();
-            float yBookValue = currentBookOrder * BookThickness;
-            newBookPosition.y = yBookValue;
+            float yBookValue = (currentBookOrder - 1) * BookThickness;
+            newBookPosition.y = yBookValue + topCenterPointTransform.position.y;
             book.SetPosition(newBookPosition);
         }
     }
