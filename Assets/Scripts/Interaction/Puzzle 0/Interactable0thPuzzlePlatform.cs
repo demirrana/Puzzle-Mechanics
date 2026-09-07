@@ -127,17 +127,6 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         return Input.GetKeyDown(ExitPlatformViewKey);
     }
 
-    private void UpdateAddedBookPosition()
-    {
-        Interactable0thPuzzleObject addedBook = booksOnPlatform[^1] as Interactable0thPuzzleObject;
-        if (addedBook != null)
-        {  
-            Vector3 addedBookPosition = topCenterPointTransform.position;
-            addedBookPosition.y = yValueToPutNextBook;
-            addedBook.SetPosition(addedBookPosition);
-        }
-    }
-
     private void ShiftBooksDownAfterRemoval(int removedBookOrderOnPlatform)
     {
         int currentBookOrder = removedBookOrderOnPlatform;
