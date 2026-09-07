@@ -91,7 +91,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     {
         if (AreHandsFull())
         {
-            DetectIfBookPlaceNear_HandsFull();
+            DetectIfBookShelfNear_HandsFull();
             DetectIfBookPlatformNear_HandsFull();
         }
         else
@@ -114,7 +114,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    private void DetectIfBookPlaceNear_HandsFull()
+    private void DetectIfBookShelfNear_HandsFull()
     {
         //Debug.Log("Put book on shelf check");
         if (interactableInHand is Interactable0thPuzzleObject bookInHand)
