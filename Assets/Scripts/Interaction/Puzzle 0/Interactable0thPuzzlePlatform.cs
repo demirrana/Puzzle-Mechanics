@@ -12,7 +12,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     private List<Interactable<IInteractableBehaviour0thPuzzle>> booksOnPlatform = new();
     private float yValueToPutNextBook;
-    private static readonly float BookThickness = 0.03f;
+    private static readonly float BookThickness = 0.1f;
 
     private static readonly KeyCode EnterPlatformViewKey = KeyCode.E;
     private static readonly KeyCode ExitPlatformViewKey = KeyCode.Q; //TO BE CHANGED TO ESCAPE
