@@ -87,6 +87,11 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         SubscribeEvents();
     }
 
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+
     private void InitializeVariables()
     {
         currentViewMode = ViewMode.WorldView;
@@ -103,6 +108,16 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         SnapHandler.Instance.OnKeySnappedToSocket += InteractionManager1stPuzzle_KeySnappedToSocket;
         SnapHandler.Instance.OnKeyUnsnappedFromSocket += InteractionManager1stPuzzle_KeyUnsnappedFromSocket;
         UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged += InteractionManager1stPuzzle_HoveredInventorySlotChanged;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        OnObjectCollidersApproached -= PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached -= PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear -= PlayerInteractionManager_NoInteractableNear;
+        SnapHandler.Instance.OnKeySnappedToSocket -= InteractionManager1stPuzzle_KeySnappedToSocket;
+        SnapHandler.Instance.OnKeyUnsnappedFromSocket -= InteractionManager1stPuzzle_KeyUnsnappedFromSocket;
+        UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged -= InteractionManager1stPuzzle_HoveredInventorySlotChanged;
     }
 
     private void Update()

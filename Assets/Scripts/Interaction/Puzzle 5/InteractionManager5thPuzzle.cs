@@ -43,6 +43,13 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     {
         DetectInteractionConditionsMet();
     }
+
+    private void OnDestroy()
+    {
+        OnObjectCollidersApproached -= PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached -= PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear -= PlayerInteractionManager_NoInteractableNear;
+    }
     #endregion
 
     #region Public API (Getters & State Control)

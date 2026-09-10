@@ -46,6 +46,12 @@ public class InteractionPanelIndividual : InteractionPanelBase
         }
     }
 
+    private void OnDestroy()
+    {
+        OnInteractionPanelActivated -= InteractionPanelActivated;
+        OnInteractionPanelDeactivated -= InteractionPanelDeactivated;
+    }
+
     public void RaiseInteractionPanelActivated(object sender, Transform targetTransform, KeyCode behaviourKeyCode)
     {
         OnInteractionPanelActivated?.Invoke(sender, new TransformKeyCodeEventArgs(targetTransform, behaviourKeyCode));

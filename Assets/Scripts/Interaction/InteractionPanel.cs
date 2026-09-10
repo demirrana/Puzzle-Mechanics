@@ -31,6 +31,17 @@ public class InteractionPanel : InteractionPanelBase
         InteractionManager7thPuzzle.Instance.OnSwapKeyPressed += SwapKeyPressed_InteractionPanel;
     }
 
+    private void OnDestroy()
+    {
+        InteractionManager0thPuzzle.Instance.OnInteractionConditionsMet -= InteractionConditionsMet_InteractionManager0thPuzzle;
+        InteractionManager5thPuzzle.Instance.OnInteractionConditionsMet -= InteractionConditionsMet_InteractionManager5thPuzzle;
+        //InteractionManager5thPuzzle.Instance.OnInteractableApproached -= InteractableApproached_PlayerInteractionManager;
+        InteractionManager5thPuzzle.Instance.OnInteractableInteracted -= InteractableInteracted_PlayerInteractionManager;
+        InteractionManager5thPuzzle.Instance.OnNoInteractableNear -= NoInteractableNear_PlayerInteractionManager;
+        InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen -= BothInteractablesAreChosen_InteractionPanel;
+        InteractionManager7thPuzzle.Instance.OnSwapKeyPressed -= SwapKeyPressed_InteractionPanel;
+    }
+
     public void UpdateBackgroundColor() //go back to original background color
     {
         interactionPanelBackground.color = originalBackgroundColor;

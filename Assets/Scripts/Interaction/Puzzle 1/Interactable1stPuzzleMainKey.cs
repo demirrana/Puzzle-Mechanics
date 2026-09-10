@@ -21,6 +21,11 @@ public class Interactable1stPuzzleMainKey : MonoBehaviour
         SnapHandler.Instance.OnKeyUnsnappedFromSocket += MainKey_KeyUnsnappedFromSocket;
     }
 
+    private void OnDestroy()
+    {
+        SnapHandler.Instance.OnKeyUnsnappedFromSocket -= MainKey_KeyUnsnappedFromSocket;
+    }
+
     public bool IsDragging()
     {
         return isDragging;

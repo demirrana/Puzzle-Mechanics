@@ -42,6 +42,14 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractableInHandChanged += InteractionManager_InteractableInHandChanged;
     }
 
+    private void OnDestroy()
+    {
+        OnInteractionConditionsMet -= InteractionManager_InteractionConditionsMet;
+        OnInteractionKeyPressed -= InteractionManager_InteractionKeyPressed;
+        OnInteractableInteracted -= InteractionManager_InteractableInteracted;
+        OnInteractableInHandChanged -= InteractionManager_InteractableInHandChanged;
+    }
+
     public Vector3 GetHandPosition()
     {
         return handTransform.position;

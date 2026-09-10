@@ -38,6 +38,12 @@ public class Interactable5thPuzzleTable : MonoBehaviour
             emptySlots.Add(slot);
         }
     }
+
+    private void OnDestroy()
+    {
+        OnTableViewActivated -= ToggleTableView;
+        OnTableViewDeactivated -= ToggleTableView;
+    }
     #endregion
 
     #region Public API - Table View & Events

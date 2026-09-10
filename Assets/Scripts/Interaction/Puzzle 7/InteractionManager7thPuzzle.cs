@@ -46,6 +46,13 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
         //approachedInteractable.LogBehaviours();
         DetectInteractionConditionsMet();
     }
+
+    private void OnDestroy()
+    {
+        OnObjectCollidersApproached -= PlayerInteractionManager_ObjectCollidersApproached;
+        OnInteractableApproached -= PlayerInteractionManager_InteractableApproached;
+        OnNoInteractableNear -= PlayerInteractionManager_NoInteractableNear;
+    }
     #endregion
 
     #region Initialization and Setup

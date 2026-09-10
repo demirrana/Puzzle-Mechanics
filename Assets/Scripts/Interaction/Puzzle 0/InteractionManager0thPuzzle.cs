@@ -60,6 +60,15 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         wasUIActivatedPreviousFrame = isUIActivatedThisFrame;
     }
 
+    private void OnDestroy()
+    {
+        OnObjectCollidersApproached -= PlayerInteractionManager_ObjectCollidersApproached;
+        OnNoInteractableNear -= PlayerInteractionManager_NoInteractableNear;
+        OnInteractableApproached -= PlayerInteractionManager_InteractableApproached;
+        OnWorldViewActivated -= InteractionManager0thPuzzle_ActiveViewChanged;
+        OnPlatformViewActivated -= InteractionManager0thPuzzle_ActiveViewChanged;
+    }
+
     public Transform GetObjectsHolderTransform()
     {
         return puzzle0ObjectsHolder;
