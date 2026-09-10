@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehaviour1stPuzzle> //to be changed into 1stPuzzle
 {
+    #region Singleton and Events
     public static InteractionManager1stPuzzle Instance { get; private set; }
 
     public event EventHandler<Interactable1stPuzzleObject> OnAnyKeyPartCollected;
@@ -13,6 +14,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     public event EventHandler OnEditViewDeactivated;
     public event EventHandler<Interactable1stPuzzleDoor> OnDoorNear;
     public event EventHandler OnKeyDeselected;
+    #endregion
 
     public enum ViewMode
     {
@@ -20,6 +22,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         EditView
     }
 
+    #region Fields & Serialized Fields
     [SerializeField] private Interactable<IInteractableBehaviour1stPuzzle> mainKeyPartPrefab;
     [SerializeField] private Transform previewTransform;
     [SerializeField] private Transform keysInitialParent;
@@ -40,44 +43,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     private List<GameObject> keyPartsPreviewed;
     private bool hasPreviewStarted;
     private GameObject previewingKeyPartObject;
+    #endregion
 
-    public void RegisterCombinedKey(Interactable1stPuzzleObject newKey) 
-    {
-        combinedKeys.Add(newKey);
-    }
-
-    public void UnregisterCombinedKey(Interactable1stPuzzleObject newKey)
-    {
-        combinedKeys.Remove(newKey);
-    }
-
-    public Interactable1stPuzzleObject GetKeyInCombinedKeys(GameObject obj) //controls if it is main key or any key that is attached to it
-    {
-        Interactable1stPuzzleObject key = obj.GetComponentInParent<Interactable1stPuzzleObject>();
-
-        if (key != null)
-            return combinedKeys.Find(x => x == key);
-
-        return null;
-    }
-
-    public Transform GetKeysInitialParent()
-    {
-        return keysInitialParent;
-    }
+    #region Unity Lifecycle Methods
 
     private void Awake()
     {
         SetInstance();
-    }
-
-    private void SetInstance()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
     }
 
     protected override void Start()
@@ -87,9 +59,30 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         SubscribeEvents();
     }
 
+    private void Update()
+    {
+        if (!isPuzzleCompleted)
+        {
+            DetectTakeMainPartInHand();
+            DetectInteractionConditionsMet();
+            DetectProceedToNextDoor();
+        }
+    }
+
     private void OnDestroy()
     {
         UnsubscribeEvents();
+    }
+    #endregion
+
+    #region Initialization and Setup
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
     }
 
     private void InitializeVariables()
@@ -119,17 +112,9 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         SnapHandler.Instance.OnKeyUnsnappedFromSocket -= InteractionManager1stPuzzle_KeyUnsnappedFromSocket;
         UI_Puzzle1Manager.Instance.OnHoveredInventorySlotChanged -= InteractionManager1stPuzzle_HoveredInventorySlotChanged;
     }
+    #endregion
 
-    private void Update()
-    {
-        if (!isPuzzleCompleted)
-        {
-            DetectTakeMainPartInHand();
-            DetectInteractionConditionsMet();
-            DetectProceedToNextDoor();
-        }
-    }
-
+    #region Interaction Detection and Handling
     private void DetectTakeMainPartInHand() //this will happen when that scene's some exact part is finished SO EDIT LATER
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -181,7 +166,9 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         //display the main key on screen
         //make background blurry
     }
+    #endregion
 
+    #region View Mode Change Logic
     private void ExitEditView()
     {
         currentViewMode = ViewMode.WorldView;
@@ -190,12 +177,53 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         CameraManager.Instance.SwitchToNextCamera();
     }
 
-    private void ResetMainKeyRotation()
+    private void SwitchToEditView()
     {
-        Interactable1stPuzzleMainKey mainKey = Interactable1stPuzzleMainKey.Instance;
-        mainKey.SetRotation(mainKey.GetInitialRotation());
+        currentViewMode = ViewMode.EditView;
+        //update camera view to focus on the main part and freeze the camera
+        CameraManager.Instance.FollowWithCamera(interactableInHand.transform, CameraManager.CameraName.GameplayCamera);
+        CameraManager.Instance.SwitchToNextCamera();
+        //stop showing player (make main key's parent null and update the pos to the mouse pos)
+        OnEditViewActivated?.Invoke(this, EventArgs.Empty);
+    }
+    #endregion
+
+    #region Key Part Management
+    public Interactable1stPuzzleObject GetKeyInCombinedKeys(GameObject obj) //controls if it is main key or any key that is attached to it
+    {
+        Interactable1stPuzzleObject key = obj.GetComponentInParent<Interactable1stPuzzleObject>();
+
+        if (key != null)
+            return combinedKeys.Find(x => x == key);
+
+        return null;
     }
 
+    public Transform GetKeysInitialParent()
+    {
+        return keysInitialParent;
+    }
+
+    public void RegisterCombinedKey(Interactable1stPuzzleObject newKey) 
+    {
+        combinedKeys.Add(newKey);
+    }
+
+    public void UnregisterCombinedKey(Interactable1stPuzzleObject newKey)
+    {
+        combinedKeys.Remove(newKey);
+    }
+
+    private void DeselectKeyPart()
+    {
+        if (Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
+        {
+            OnKeyDeselected?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    #endregion
+
+    #region Display and Rotation of Key Parts
     private void RotatePreviewCameraAroundKeyPart()
     {
         if (hasPreviewStarted)
@@ -218,6 +246,26 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    //display the key part on screen inventory 
+    private void HandlePreview(Interactable1stPuzzleObject keyPart)
+    {
+        GameObject displayedKeyPartGameObject = FindPreviewedGameObject(keyPart);
+        if (displayedKeyPartGameObject == null) //instantiate since it is displayed for the first time
+        {
+            displayedKeyPartGameObject = Instantiate(keyPart.gameObject, previewTransform); //rotation could be added as parameter
+            displayedKeyPartGameObject.transform.localPosition = Vector3.zero;
+            keyPartsPreviewed.Add(displayedKeyPartGameObject);
+        }
+
+        AdjustVariablesForPreview(displayedKeyPartGameObject);
+    }
+
+    private void ResetMainKeyRotation() //go back to initial rotation for when the next stick process begins
+    {
+        Interactable1stPuzzleMainKey mainKey = Interactable1stPuzzleMainKey.Instance;
+        mainKey.SetRotation(mainKey.GetInitialRotation());
+    }
+
     private void RotateMainKey()
     {
         if (!UI_Puzzle1Manager.Instance.IsMouseOverInventoryPanel())
@@ -225,15 +273,35 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
             Interactable1stPuzzleMainKey.Instance.RotateObject();
         }
     }
+    #endregion
 
-    private void DeselectKeyPart()
+    #region Key Part Helper Methods
+    //Find key part from the preview panel and return it
+    private GameObject FindPreviewedGameObject(Interactable1stPuzzleObject keyPart)
     {
-        if (Input.GetMouseButtonDown(1)) //deselect when rmb is clicked
+        foreach (GameObject displayedGameObject in keyPartsPreviewed)
         {
-            OnKeyDeselected?.Invoke(this, EventArgs.Empty);
+            Interactable1stPuzzleObject displayedKeyPart = displayedGameObject.GetComponent<Interactable1stPuzzleObject>();
+            if (displayedKeyPart.GetKeyPartData() == keyPart.GetKeyPartData())
+            {
+                return displayedGameObject;
+            }
         }
+
+        return null;
     }
 
+    private void AdjustVariablesForPreview(GameObject gameObject)
+    {
+        gameObject.Show();
+        previewingKeyPartObject = gameObject;
+        PreviewCamera.Instance.ResetPositionRotation();
+        hasPreviewStarted = true;
+        //camera shows the object
+    }
+    #endregion
+
+    #region Puzzle Progression Logic
     private void DetectProceedToNextDoor()
     {
         if (correctSnapCount == totalCorrectSnapCounts[currentDoorIndex])
@@ -247,7 +315,7 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    private void RecountCorrectSnaps()
+    private void RecountCorrectSnaps() //count correctly snapped key parts for detecting if puzzle is solved correctly
     {
         correctSnapCount = 0;
         foreach (Interactable1stPuzzleObject key in combinedKeys)
@@ -265,6 +333,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
+    private void EndPuzzle()
+    {
+        //set the follow of GameplayCamera to none
+    }
+    #endregion
+
+    #region Event Handlers
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         Interactable1stPuzzleDoor nearDoor = GetTypeNear<Interactable1stPuzzleDoor>();
@@ -286,16 +361,6 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         {
             base.PlayerInteractionManager_ObjectCollidersApproached(sender, colliderList);
         }
-    }
-
-    private void SwitchToEditView()
-    {
-        currentViewMode = ViewMode.EditView;
-        //update camera view to focus on the main part and freeze the camera
-        CameraManager.Instance.FollowWithCamera(interactableInHand.transform, CameraManager.CameraName.GameplayCamera);
-        CameraManager.Instance.SwitchToNextCamera();
-        //stop showing player (make main key's parent null and update the pos to the mouse pos)
-        OnEditViewActivated?.Invoke(this, EventArgs.Empty);
     }
 
     //approached object could be any interactable in puzzle 1 (such as table, cat etc.)
@@ -369,45 +434,5 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
 
         HandlePreview(currentSlot.GetKeyPart());
     }
-
-    private void HandlePreview(Interactable1stPuzzleObject keyPart)
-    {
-        GameObject displayedKeyPartGameObject = FindPreviewedGameObject(keyPart);
-        if (displayedKeyPartGameObject == null) //instantiate since it is displayed for the first time
-        {
-            displayedKeyPartGameObject = Instantiate(keyPart.gameObject, previewTransform); //rotation could be added as parameter
-            displayedKeyPartGameObject.transform.localPosition = Vector3.zero;
-            keyPartsPreviewed.Add(displayedKeyPartGameObject);
-        }
-
-        AdjustVariablesForPreview(displayedKeyPartGameObject);
-    }
-
-    private GameObject FindPreviewedGameObject(Interactable1stPuzzleObject keyPart)
-    {
-        foreach (GameObject displayedGameObject in keyPartsPreviewed)
-        {
-            Interactable1stPuzzleObject displayedKeyPart = displayedGameObject.GetComponent<Interactable1stPuzzleObject>();
-            if (displayedKeyPart.GetKeyPartData() == keyPart.GetKeyPartData())
-            {
-                return displayedGameObject;
-            }
-        }
-
-        return null;
-    }
-
-    private void AdjustVariablesForPreview(GameObject gameObject)
-    {
-        gameObject.Show();
-        previewingKeyPartObject = gameObject;
-        PreviewCamera.Instance.ResetPositionRotation();
-        hasPreviewStarted = true;
-        //camera shows the object
-    }
-
-    private void EndPuzzle()
-    {
-        //set the follow of GameplayCamera to none
-    }
+    #endregion
 }

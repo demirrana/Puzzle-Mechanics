@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class UI_Puzzle1Manager : MonoBehaviour
 {
+    #region Singleton and Events
     public static UI_Puzzle1Manager Instance { get; private set; }
 
     public class ChangeInHoveredObjectEventArgs : EventArgs
@@ -25,22 +26,17 @@ public class UI_Puzzle1Manager : MonoBehaviour
     public event EventHandler<ChangeInHoveredObjectEventArgs> OnHoveredInventorySlotChanged;
     public event EventHandler OnNoHoveredInventorySlot;
     public event EventHandler<UI_Puzzle1stObject> OnInventorySlotClicked;
+    #endregion
 
+    #region Private Fields
     private UI_Puzzle1stObject currentlyHoveredSlot;
     private UI_Puzzle1stObject currentlyClickedSlot;
+    #endregion
 
+    #region Lifecycle Methods
     private void Awake()
     {
         SetInstance();
-    }
-
-    private void SetInstance()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
     }
 
     private void Start()
@@ -57,6 +53,22 @@ public class UI_Puzzle1Manager : MonoBehaviour
         InteractionManager1stPuzzle.Instance.OnDoorNear += UI_Puzzle1Manager_DoorNear;
     }
 
+    private void OnDestroy()
+    {
+        InteractionManager1stPuzzle.Instance.OnInteractableApproached -= UI_Puzzle1Manager_InteractableApproached;
+        InteractionManager1stPuzzle.Instance.OnNoInteractableNear -= UI_Puzzle1Manager_NoInteractableNear;
+        InteractionManager1stPuzzle.Instance.OnAnyKeyPartCollected -= UI_Puzzle1Manager_KeyPartCollected;
+        SnapHandler.Instance.OnKeySnappedToSocket -= UI_Puzzle1Manager_KeySnappedToSocket;
+        SnapHandler.Instance.OnSnappedSocketChanged -= UI_Puzzle1Manager_SnappedSocketChanged;
+        SnapHandler.Instance.OnKeyUnsnappedFromSocket -= UI_Puzzle1Manager_KeyUnsnappedFromSocket;
+        InteractionManager1stPuzzle.Instance.OnKeyDeselected -= UI_Puzzle1Manager_KeyDeselected;
+        InteractionManager1stPuzzle.Instance.OnEditViewActivated -= UI_Puzzle1Manager_EditViewActivated;
+        InteractionManager1stPuzzle.Instance.OnEditViewDeactivated -= UI_Puzzle1Manager_EditViewDeactivated;
+        InteractionManager1stPuzzle.Instance.OnDoorNear -= UI_Puzzle1Manager_DoorNear;
+    }
+    #endregion
+
+    #region Slot Interaction Methods
     public bool IsMouseOverInventoryPanel()
     {
         PointerEventData eventData = new(EventSystem.current) { position = Input.mousePosition };
@@ -138,7 +150,9 @@ public class UI_Puzzle1Manager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Event Handlers
     private void UI_Puzzle1Manager_InteractableApproached(object sender, Interactable<IInteractableBehaviour1stPuzzle> keyPart)
     {
         InteractableBehaviourCollectKeyPart collectKeyPart = new();
@@ -225,6 +239,18 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
     private void UI_Puzzle1Manager_DoorNear(object sender, Interactable1stPuzzleDoor door)
     {
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(sender, door.transform, door.GetInteractionKey());
+        InteractionPanelMovable.Instance.RaiseInteractionPanelActivated(sender, door.transform, door.GetInteractionKey());
     }
+    #endregion
+
+    #region Helper Methods
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
+    }
+    #endregion
 }

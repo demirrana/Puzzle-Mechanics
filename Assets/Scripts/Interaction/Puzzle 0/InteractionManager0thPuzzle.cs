@@ -5,18 +5,21 @@ using UnityEngine;
 
 public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehaviour0thPuzzle> //to be changed to 0thPuzzle
 {
+    #region Singleton and Events
     public static InteractionManager0thPuzzle Instance { get; private set; }
 
     public event EventHandler OnWorldViewActivated;
     public event EventHandler OnPlatformViewActivated;
-
-    [SerializeField] private Transform puzzle0ObjectsHolder;
 
     private enum GameState
     {
         WorldView,
         BookPlatformView
     }
+    #endregion
+
+    #region Fields
+    [SerializeField] private Transform puzzle0ObjectsHolder; //objects are children of this transform in the world view
 
     public List<Interactable0thPuzzleObject> allBooks;
     public List<Interactable0thPuzzleObject> representativeBooks;
@@ -28,7 +31,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private InteractionPanelMovable InteractionPanelIndividual;
     private bool wasUIActivatedPreviousFrame;
     private bool isUIActivatedThisFrame;
+    #endregion
 
+    #region Lifecycle Methods
     private void Awake()
     {
         SetInstance();
@@ -52,7 +57,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         DetectAnyColliderApproached();
         DetectInteractionConditionsMet();
 
-        if (!isUIActivatedThisFrame && wasUIActivatedPreviousFrame) //Deactivate only if previously activated
+        if (!isUIActivatedThisFrame && wasUIActivatedPreviousFrame) //Deactivate interaction panel only if previously activated
         {
             //Debug.Log("Changed from activated to deactivated");
             TriggerInteractionPanelIndividualDeactivated(this);
@@ -68,7 +73,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         OnWorldViewActivated -= InteractionManager0thPuzzle_ActiveViewChanged;
         OnPlatformViewActivated -= InteractionManager0thPuzzle_ActiveViewChanged;
     }
+    #endregion
 
+    #region Getter Methods
     public Transform GetObjectsHolderTransform()
     {
         return puzzle0ObjectsHolder;
@@ -84,6 +91,22 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         return bookPlatform.GetNextBookPos();
     }
 
+    //A new list is created with the books that are not on platform (the distinction is made here) //TO DO LATER
+    private Interactable0thPuzzleObject GetNearestBookToScreen(List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables)
+    {
+        foreach (Interactable0thPuzzleObject book in nearInteractables.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
+        {
+            if (book != null && !bookPlatform.HasTheBook(book))
+            {
+                return book;
+            }
+        }
+
+        return null;
+    }
+    #endregion
+
+    #region Book Interaction Detection Methods
     protected override void DetectInteractionConditionsMet()
     {
         if (currentState == GameState.WorldView)
@@ -98,18 +121,19 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private void DetectInteractionConditionsMet_WorldView()
     {
-        if (AreHandsFull())
+        if (AreHandsFull()) //either put book on shelf or put book on platform
         {
             DetectIfBookShelfNear_HandsFull();
             DetectIfBookPlatformNear_HandsFull();
         }
-        else
+        else //either pick book up from shelf or pick book up from platform
         {
             DetectIfBooksNear_HandsEmpty();
             DetectIfBookPlatformNear_HandsEmpty();
         }
     }
 
+    //Either pick book up from platform or switch to world view
     private void DetectInteractionConditionsMet_BookPlatformView()
     {
         //Debug.Log("Platform view");
@@ -153,8 +177,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
     }
 
-    private void DetectIfBooksNear_HandsEmpty() //Handled by event OnInteractableApproached
+    private void DetectIfBooksNear_HandsEmpty()
     {
+        //Debug.Log("DetectIfBooksNear_HandsEmpty method call");
         List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables = GetNearInteractablesList(nearColliders);
         if (nearInteractables.Count > 0)
         {
@@ -197,6 +222,19 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         TriggerInteractionPanelIndividualActivated(this, platformTopTransform, platformViewEnterKey);
     }
 
+    private void DetectPickUpPointedBook()
+    {
+        Interactable0thPuzzleObject pointedBook = bookPlatform.GetPointedBook();
+        if (pointedBook != null)
+        {
+            InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform = new();
+            RaiseInteractionConditionsMet(this, pointedBook, pickUpFromPlatform);
+        }
+    }
+    #endregion
+
+    #region Event Handlers
+    //Keep track of the near colliders 
     protected override void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         nearColliders = colliderList;
@@ -231,30 +269,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     {
         ToggleViewAndUpdate();
     }
+    #endregion
 
-    private void DetectPickUpPointedBook()
-    {
-        Interactable0thPuzzleObject pointedBook = bookPlatform.GetPointedBook();
-        if (pointedBook != null)
-        {
-            InteractableBehaviourPickUpFromBookPlatform pickUpFromPlatform = new();
-            RaiseInteractionConditionsMet(this, pointedBook, pickUpFromPlatform);
-        }
-    }
-
-    //A new list is created with the books that are not on platform (the distinction is made here) //TO DO LATER
-    private Interactable0thPuzzleObject GetNearestBookToScreen(List<Interactable<IInteractableBehaviour0thPuzzle>> nearInteractables)
-    {
-        foreach (Interactable0thPuzzleObject book in nearInteractables.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
-        {
-            if (book != null && !bookPlatform.HasTheBook(book))
-            {
-                return book;
-            }
-        }
-
-        return null;
-    }
+    #region Event Raising Methods
 
     private void TriggerInteractionPanelIndividualActivated(object sender, InteractionBehaviourEventArgs e)
     {
@@ -305,7 +322,9 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         //Debug.Log("panel deactivated");
         InteractionPanelIndividual.RaiseInteractionPanelDeactivated(sender);
     }
+    #endregion
 
+    #region Helper Methods
     private void ToggleViewAndUpdate()
     {
         //Debug.Log("ToggleViewAndUpdate method call");
@@ -342,4 +361,5 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         }
         Instance = this;
     }
+    #endregion
 }

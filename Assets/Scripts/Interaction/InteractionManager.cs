@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehaviour
 {
+    #region Events
     public event EventHandler<List<Collider>> OnObjectCollidersApproached;
     public event EventHandler OnNoInteractableNear;
     public event EventHandler<Interactable<T>> OnInteractableApproached;
@@ -12,7 +13,9 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractionKeyPressed; //Invoked if an interactable is approached
     public event EventHandler<InteractionBehaviourEventArgs> OnInteractableInteracted; //for now, considered as the same with OnInteractionKeyPressed
     public event EventHandler<Interactable<T>> OnInteractableInHandChanged;
+    #endregion
 
+    #region Event Args
     public class InteractionBehaviourEventArgs : EventArgs
     {
         public Interactable<T> InteractedObject { get; }
@@ -24,7 +27,9 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
             InteractionBehaviour = interactionBehaviour;
         }
     }
+    #endregion
 
+    #region Fields
     [SerializeField] protected float proximityThreshold = 1f; //The minimum distance to an Interactable in order to detect it
     [SerializeField] protected float playerHeight = 1.67f; //Can be moved to another script
     [SerializeField] protected int rayCount = 5;
@@ -33,7 +38,9 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     protected Interactable<T> interactableInHand = null;
     private bool interactedOnceKeyIsPressed = true; //is behaviour performed as soon as key is pressed or not
     private static int lastFrameUsed = -1;
+    #endregion
 
+    #region Unity Lifecycle
     protected virtual void Start()
     {
         OnInteractionConditionsMet += InteractionManager_InteractionConditionsMet;
@@ -49,17 +56,9 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractableInteracted -= InteractionManager_InteractableInteracted;
         OnInteractableInHandChanged -= InteractionManager_InteractableInHandChanged;
     }
+    #endregion
 
-    public Vector3 GetHandPosition()
-    {
-        return handTransform.position;
-    }
-
-    public Transform GetHandTransform()
-    {
-        return handTransform;
-    }
-
+    #region Event Raisers
     public void RaiseInteractableInHandChanged(Interactable<T> interactable) //Behaviours raise this event
     {
         OnInteractableInHandChanged?.Invoke(this, interactable);
@@ -80,6 +79,15 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         OnInteractableApproached?.Invoke(sender, interactable);
     }
 
+    protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable, T behaviour)
+    {
+        if (behaviour == null)
+            return;
+        OnInteractionConditionsMet?.Invoke(sender, new InteractionBehaviourEventArgs(interactable, behaviour));
+    }
+    #endregion
+
+    #region Interaction Core System
     protected void DetectAnyColliderApproached()
     {
         List<Collider> hitColliders = GetCollidersApproached();
@@ -100,6 +108,40 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         Debug.Log("Base class called DetectWhenInteractionConditionsMet");
     }
 
+    protected virtual void DetectInteractableApproached(List<Interactable<T>> interactableObjects)
+    {
+        switch (interactableObjects.Count)
+        {
+            case 0:
+                break;
+            default: //CHOOSE THE OBJECT CLOSER TO MOUSE LATER
+                Interactable<T> interactable = interactableObjects[0];
+                RaiseInteractableApproached(this, interactable);
+                break;
+        }
+    }
+
+    //Might be used when more than one behaviour can be applied to an object simultaneously
+    protected void DetectBehavioursApplied(Interactable<T> interactable)
+    {
+        foreach (T interactionBehaviour in interactable.GetInteractionBehaviours())
+        {
+            DetectBehaviourApplied(interactable, interactionBehaviour);
+        }
+    }
+
+    //Invokes the key pressing process by checking that behaviour's specific key
+    protected void DetectBehaviourApplied(Interactable<T> interactable, T interactionBehaviour)
+    {
+        if (interactable.HasBehaviour(interactionBehaviour) && IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
+        {
+            InteractionBehaviourEventArgs e = new(interactable, interactionBehaviour);
+            OnInteractionKeyPressed?.Invoke(this, e);
+        }
+    }
+    #endregion
+
+    #region Event Handlers
     protected virtual void PlayerInteractionManager_ObjectCollidersApproached(object sender, List<Collider> colliderList)
     {
         List<Interactable<T>> interactableObjects = GetNearInteractablesList(colliderList);
@@ -142,6 +184,18 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     {
         interactableInHand = interactable;
     }
+    #endregion
+
+    #region Getter Methods
+    public Vector3 GetHandPosition()
+    {
+        return handTransform.position;
+    }
+
+    public Transform GetHandTransform()
+    {
+        return handTransform;
+    }
 
     protected virtual List<Interactable<T>> GetNearInteractablesList(List<Collider> colliderList)
     {
@@ -167,38 +221,6 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         }
 
         return interactableObjects;
-    }
-
-    protected virtual void DetectInteractableApproached(List<Interactable<T>> interactableObjects)
-    {
-        switch (interactableObjects.Count)
-        {
-            case 0:
-                break;
-            default: //CHOOSE THE OBJECT CLOSER TO MOUSE LATER
-                Interactable<T> interactable = interactableObjects[0];
-                RaiseInteractableApproached(this, interactable);
-                break;
-        }
-    }
-
-    //Might be used when more than one behaviour can be applied to an object simultaneously
-    protected void DetectBehavioursApplied(Interactable<T> interactable)
-    {
-        foreach (T interactionBehaviour in interactable.GetInteractionBehaviours())
-        {
-            DetectBehaviourApplied(interactable, interactionBehaviour);
-        }
-    }
-
-    //Invokes the key pressing process by checking that behaviour's specific key
-    protected void DetectBehaviourApplied(Interactable<T> interactable, T interactionBehaviour)
-    {
-        if (interactable.HasBehaviour(interactionBehaviour) && IsInteractionKeyPressed(interactionBehaviour.InteractionKeyCode))
-        {
-            InteractionBehaviourEventArgs e = new(interactable, interactionBehaviour);
-            OnInteractionKeyPressed?.Invoke(this, e);
-        }
     }
 
     //5 rays are cast along the height of the player to detect more than one objects near if there are any
@@ -260,19 +282,6 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         return hitColliders;
     }
 
-    protected bool IsNear(Transform transform)
-    {
-        List<Collider> hitColliders = GetCollidersApproached();
-
-        foreach (Collider collider in hitColliders)
-        {
-            if (collider.gameObject == transform.gameObject)
-                return true;
-        }
-
-        return false;
-    }
-
     protected C GetTypeNear<C>() where C : Component
     {
         List<Collider> hitColliders = GetCollidersApproached();
@@ -285,12 +294,20 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
         return null;
     }
+    #endregion
 
-    protected void RaiseInteractionConditionsMet(object sender, Interactable<T> interactable, T behaviour)
+    #region Helper Methods
+    protected bool IsNear(Transform transform)
     {
-        if (behaviour == null)
-            return;
-        OnInteractionConditionsMet?.Invoke(sender, new InteractionBehaviourEventArgs(interactable, behaviour));
+        List<Collider> hitColliders = GetCollidersApproached();
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.gameObject == transform.gameObject)
+                return true;
+        }
+
+        return false;
     }
 
     protected bool AreHandsFull()
@@ -319,4 +336,5 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
 
         return false;
     }
+    #endregion
 }
