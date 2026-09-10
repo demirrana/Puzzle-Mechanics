@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionPanelIndividual : InteractionPanelBase
+public class InteractionPanelMovable : InteractionPanelBase
 {
-    public static InteractionPanelIndividual Instance { get; private set; }
+    public static InteractionPanelMovable Instance { get; private set; }
 
     public class TransformKeyCodeEventArgs : EventArgs
     {
@@ -74,6 +74,7 @@ public class InteractionPanelIndividual : InteractionPanelBase
         Hide();
     }
 
+    //Place the panel on the object that is being interacted with
     private void UpdatePosition(Transform targetTransform)
     {
         Vector3 screenPos = Camera.main.WorldToScreenPoint(targetTransform.position);

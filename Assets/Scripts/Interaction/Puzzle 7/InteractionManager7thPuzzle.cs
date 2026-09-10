@@ -18,7 +18,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     [SerializeField] private ParticleSystem choosingCircle1;
     [SerializeField] private ParticleSystem choosingCircle2;
 
-    private InteractionPanelIndividual InteractionPanelIndividual;
+    private InteractionPanelMovable InteractionPanelIndividual;
     private Interactable7thPuzzleObject interactable1stChosen;
     private Interactable7thPuzzleObject interactable2ndChosen; //2nd interactable chosen to swap with the one in hand
     private Interactable<IInteractableBehaviour7thPuzzle> approachedInteractable;
@@ -68,7 +68,7 @@ public class InteractionManager7thPuzzle : InteractionManager<IInteractableBehav
     private void InitializeInstances()
     {
         interactable1stChosen = interactableInHand as Interactable7thPuzzleObject;
-        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        InteractionPanelIndividual = InteractionPanelMovable.Instance;
         interactable2ndChosen = null;
         approachedInteractable = null;
         swapKey = KeyCode.K;

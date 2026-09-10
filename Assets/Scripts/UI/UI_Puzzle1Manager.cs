@@ -142,12 +142,12 @@ public class UI_Puzzle1Manager : MonoBehaviour
     private void UI_Puzzle1Manager_InteractableApproached(object sender, Interactable<IInteractableBehaviour1stPuzzle> keyPart)
     {
         InteractableBehaviourCollectKeyPart collectKeyPart = new();
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(sender, keyPart.transform, collectKeyPart.InteractionKeyCode);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelActivated(sender, keyPart.transform, collectKeyPart.InteractionKeyCode);
     }
 
     private void UI_Puzzle1Manager_NoInteractableNear(object sender, EventArgs e)
     {
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(sender);
     }
 
     private void UI_Puzzle1Manager_KeyPartCollected(object sender, Interactable1stPuzzleObject keyPart)
@@ -160,7 +160,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
     {
         currentlyClickedSlot.Hide();
         currentlyClickedSlot = null;
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(sender);
     }
 
     private void UI_Puzzle1Manager_SnappedSocketChanged(object sender, SnapHandler.SnapToSocketEventArgs e)
@@ -170,7 +170,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
 
         if (socket == null) //stop displaying key on previous socket
         {
-            InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+            InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(sender);
             return;
         }
 
@@ -178,12 +178,12 @@ public class UI_Puzzle1Manager : MonoBehaviour
         InteractableBehaviourSnapToKeySocket snapToKey = new();
         Transform targetTransform = socket.socketTransform;
         KeyCode targetKey = snapToKey.InteractionKeyCode;
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(this, targetTransform, targetKey);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelActivated(this, targetTransform, targetKey);
     }
 
     private void UI_Puzzle1Manager_KeyUnsnappedFromSocket(object sender, SnapHandler.SnapToSocketEventArgs e)
     {
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(sender);
 
         //find hidden slot of the unsnapped key and update currently clicked slot
         Interactable1stPuzzleObject unsnappedKey = e.SnappedKey;
@@ -202,7 +202,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
     {
         currentlyClickedSlot.Show();
         currentlyClickedSlot = null;
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(sender);
     }
 
     private void UI_Puzzle1Manager_EditViewActivated(object sender, EventArgs e)
@@ -210,7 +210,7 @@ public class UI_Puzzle1Manager : MonoBehaviour
         PlayerUIManager.Instance.HideExceptHand();
         MouseManager.Instance.ChangeMouseVisibility();
 
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(sender);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(sender);
         OnInventoryPanelActivated?.Invoke(sender, e);
         //maybe hide other objects around too
     }

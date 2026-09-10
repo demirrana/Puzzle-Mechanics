@@ -25,7 +25,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
 
     private GameState currentState = GameState.WorldView;
     private Interactable0thPuzzlePlatform bookPlatform;
-    private InteractionPanelIndividual InteractionPanelIndividual;
+    private InteractionPanelMovable InteractionPanelIndividual;
     private bool wasUIActivatedPreviousFrame;
     private bool isUIActivatedThisFrame;
 
@@ -329,7 +329,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void InitializeObjects()
     {
         bookPlatform = Interactable0thPuzzlePlatform.Instance;
-        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        InteractionPanelIndividual = InteractionPanelMovable.Instance;
         isUIActivatedThisFrame = false;
         wasUIActivatedPreviousFrame = false;
     }

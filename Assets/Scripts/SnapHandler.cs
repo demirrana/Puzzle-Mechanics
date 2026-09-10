@@ -160,7 +160,7 @@ public class SnapHandler : MonoBehaviour
 
         if (keyPointedAt == null || keyPointedAt.transform.TryGetComponent<Interactable1stPuzzleMainKey>(out _)) //disregard main key
         {
-            InteractionPanelIndividual.Instance.RaiseInteractionPanelDeactivated(this);
+            InteractionPanelMovable.Instance.RaiseInteractionPanelDeactivated(this);
             return;
         }
 
@@ -173,7 +173,7 @@ public class SnapHandler : MonoBehaviour
         KeyCode unsnapKey = unsnap.InteractionKeyCode;
 
         //show keycode on the key that is about to be unsnapped (keyPointedAt)
-        InteractionPanelIndividual.Instance.RaiseInteractionPanelActivated(this, keyPointedAt.transform, unsnapKey);
+        InteractionPanelMovable.Instance.RaiseInteractionPanelActivated(this, keyPointedAt.transform, unsnapKey);
         //this stays opened on wrong places
 
         if (Input.GetKeyDown(unsnapKey))

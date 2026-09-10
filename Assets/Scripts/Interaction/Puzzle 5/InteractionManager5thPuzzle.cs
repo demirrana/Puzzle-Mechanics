@@ -19,7 +19,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     private GameState currentState = GameState.WorldView;
     private Interactable5thPuzzleTableSlot pointedSlotBeforeKeyPress = null;
-    private InteractionPanelIndividual InteractionPanelIndividual;
+    private InteractionPanelMovable InteractionPanelIndividual;
     private Interactable5thPuzzleTable puzzle5Table;
     private float dropRadius = 0.5f;
     #endregion
@@ -246,7 +246,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     private void InitializeInstances()
     { 
         puzzle5Table = Interactable5thPuzzleTable.Instance;
-        InteractionPanelIndividual = InteractionPanelIndividual.Instance;
+        InteractionPanelIndividual = InteractionPanelMovable.Instance;
     }
 
     private void SetInstance()

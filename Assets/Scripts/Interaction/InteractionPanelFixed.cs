@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionPanel : InteractionPanelBase
+public class InteractionPanelFixed : InteractionPanelBase
 {
-    public static InteractionPanel Instance { get; private set; }
+    public static InteractionPanelFixed Instance { get; private set; }
 
     [SerializeField] private Color originalBackgroundColor;
     private readonly Color swapKeyPressColor = new(0.3f, 0.35f, 0f, 0.4f);
