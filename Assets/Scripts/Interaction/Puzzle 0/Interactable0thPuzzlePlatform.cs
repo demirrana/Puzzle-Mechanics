@@ -21,7 +21,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
 
     private void Awake()
     {
-        yValueToPutNextBook = topCenterPointTransform.position.y;
+        yValueToPutNextBook = topCenterPointTransform.position.y; //Initialize y position value to put next book on platform
         SetInstance();
     }
 
@@ -30,7 +30,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         InitializeValues();
     }
 
-    public Vector3 GetNextBookPos()
+    public Vector3 GetNextBookPos() //returns the position to put the next book on the platform
     {
         if (booksOnPlatform.Count == 0)
         {
@@ -44,7 +44,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         }
     }
 
-    public Interactable0thPuzzleObject GetPointedBook()
+    public Interactable0thPuzzleObject GetPointedBook() //In platform view, choose book to pick up via mouse position (returns that book)
     {
         if (!HasBooks())
         {
@@ -91,6 +91,8 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         return booksOnPlatform.Contains(book);
     }
 
+    //This method is called by the behaviour InteractableBehaviourPutOnBookPlatform when a book is put on the platform
+    //Updates the y position to put next book on the platform after adding a book to the platform
     public void AddBookAndUpdate(Interactable0thPuzzleObject newBook)
     {
         AddBook(newBook);
@@ -98,6 +100,8 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         UpdateAfterAdd_yValueForNextBook();
     }
 
+    //This method is called by the behaviour InteractableBehaviourPickUpFromBookPlatform when a book is picked up from the platform
+    //Updates the y position to put next book on the platform after removing a book from the platform
     public void RemoveBookAndUpdate(Interactable0thPuzzleObject book)
     {
         int removedBookOrder = booksOnPlatform.IndexOf(book) + 1;
@@ -127,6 +131,7 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
         return Input.GetKeyDown(ExitPlatformViewKey);
     }
 
+    //This method shifts down the books that are above the removed book on the platform after it is removed from the platform
     private void ShiftBooksDownAfterRemoval(int removedBookOrderOnPlatform)
     {
         int currentBookOrder = removedBookOrderOnPlatform;
