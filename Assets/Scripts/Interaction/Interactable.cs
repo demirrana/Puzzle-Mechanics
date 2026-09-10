@@ -23,6 +23,11 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
         OnGotInteracted += GetInteracted_Interactable;
     }
 
+    private void OnDestroy()
+    {
+        OnGotInteracted -= GetInteracted_Interactable;
+    }
+
     public void GetInteracted(T interactionBeaviour)
     {
         //Debug.Log("GetInteracted from Interactable class is called.");

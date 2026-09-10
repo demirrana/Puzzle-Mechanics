@@ -45,6 +45,12 @@ public class PlayerMovementManager : MonoBehaviour
         playerInputActions.PlayerMap.Disable();
     }
 
+    private void OnDestroy()
+    {
+        playerInputActions.PlayerMap.Movement.performed -= OnMovementPerformed;
+        playerInputActions.PlayerMap.Movement.canceled -= OnMovementCancelled;
+    }
+
     private List<RaycastHit> GetHitRaycasts(Vector3 movementInput)
     {
         RaycastHit[] raycastsHit = Physics.CapsuleCastAll(

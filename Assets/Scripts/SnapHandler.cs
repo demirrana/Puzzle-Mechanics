@@ -57,6 +57,13 @@ public class SnapHandler : MonoBehaviour
         UI_Puzzle1Manager.Instance.OnInventorySlotClicked += SnapHandler_InventorySlotClicked;
     }
 
+    private void OnDestroy()
+    {
+        InteractionManager1stPuzzle.Instance.OnEditViewDeactivated -= SnapHandler_EditViewDeactivated;
+        InteractionManager1stPuzzle.Instance.OnKeyDeselected -= SnapHandler_KeyDeselected;
+        UI_Puzzle1Manager.Instance.OnInventorySlotClicked -= SnapHandler_InventorySlotClicked;
+    }
+
     public void SnapKeyPlugToSocket()
     {
         Transform plugTransform = movingKeyPart.GetPlugTransform();

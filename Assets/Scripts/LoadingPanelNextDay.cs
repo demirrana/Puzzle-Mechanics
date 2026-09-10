@@ -16,6 +16,11 @@ public class LoadingPanelNextDay : MonoBehaviour
         SceneManager.Instance.OnLoadNextDay += ToggleActivationOfLoadingPanelNextDay;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.Instance.OnLoadNextDay -= ToggleActivationOfLoadingPanelNextDay;        
+    }
+
     public void ToggleActivationOfLoadingPanelNextDay(object sender, EventArgs e)
     {
         Debug.Log("ToggleActivationOfLoadingPanelNextDay");

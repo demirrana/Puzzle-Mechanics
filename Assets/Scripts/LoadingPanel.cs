@@ -16,6 +16,11 @@ public class LoadingPanel : MonoBehaviour
         SceneManager.Instance.OnLoadScene += ToggleActivationOfLoadingPanel;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.Instance.OnLoadScene -= ToggleActivationOfLoadingPanel;        
+    }
+
     public void ToggleActivationOfLoadingPanel(object sender, EventArgs e)
     {
         Debug.Log("ToggleActivationOfLoadingPanel");

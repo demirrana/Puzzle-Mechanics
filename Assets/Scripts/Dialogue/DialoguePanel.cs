@@ -27,6 +27,13 @@ public class DialoguePanel : MonoBehaviour
         DialogueManager.Instance.OnDialogueDeactivated += ManageOnDialoguePanelDeactivated;
     }
 
+    private void OnDestroy()
+    {
+        DialogueManager.Instance.OnDayTextActivated -= ManageOnDayPanelActivated;
+        DialogueManager.Instance.OnDialogueActivated -= ManageOnDialoguePanelActivated;
+        DialogueManager.Instance.OnDialogueDeactivated -= ManageOnDialoguePanelDeactivated;
+    }
+
     public void SetDialogue(String dialogueInput)
     {
         dialogueText.text = dialogueInput;
