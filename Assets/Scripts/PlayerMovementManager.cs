@@ -56,7 +56,7 @@ public class PlayerMovementManager : MonoBehaviour
         RaycastHit[] raycastsHit = Physics.CapsuleCastAll(
             transform.position,
             transform.position + Vector3.up * 1.6f,
-            0.5f,
+            0.3f,
             movementInput,
             0.1f
         );
@@ -78,6 +78,9 @@ public class PlayerMovementManager : MonoBehaviour
             return false;
         
         if (collider.transform.root.TryGetComponent<PlayerMovementManager>(out _)) //child objs of player (especially the one in hand)
+            return false;
+
+        if (collider.transform.root == transform.root)
             return false;
 
         return true;
