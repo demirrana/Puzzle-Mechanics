@@ -13,8 +13,8 @@ public class SceneNames
     }
 
     public enum AllSceneNames {
-        TimeToSwitchTo3D,
-        TimeToSwitchTo2D,
+        TimeToSwitchToWorld,
+        TimeToSwitchToPuzzle,
         TimeToSwitchToNextDay,
         FirstScene,
         SecondScene,
@@ -27,9 +27,9 @@ public class SceneNames
         AllSceneNames.FirstScene,
         AllSceneNames.SecondScene,
         AllSceneNames.ThirdScene,
-        AllSceneNames.TimeToSwitchTo2D,
+        AllSceneNames.TimeToSwitchToPuzzle,
         AllSceneNames.FourthScene,
-        AllSceneNames.TimeToSwitchTo3D,
+        AllSceneNames.TimeToSwitchToWorld,
         AllSceneNames.FifthScene,
         AllSceneNames.TimeToSwitchToNextDay
     };
@@ -38,9 +38,9 @@ public class SceneNames
         AllSceneNames.FirstScene,
         AllSceneNames.SecondScene,
         AllSceneNames.ThirdScene,
-        AllSceneNames.TimeToSwitchTo2D,
+        AllSceneNames.TimeToSwitchToPuzzle,
         AllSceneNames.FourthScene,
-        AllSceneNames.TimeToSwitchTo3D,
+        AllSceneNames.TimeToSwitchToWorld,
         AllSceneNames.FifthScene,
         AllSceneNames.TimeToSwitchToNextDay
     };
@@ -49,9 +49,9 @@ public class SceneNames
         AllSceneNames.FirstScene,
         AllSceneNames.SecondScene,
         AllSceneNames.ThirdScene,
-        AllSceneNames.TimeToSwitchTo2D,
+        AllSceneNames.TimeToSwitchToPuzzle,
         AllSceneNames.FourthScene,
-        AllSceneNames.TimeToSwitchTo3D,
+        AllSceneNames.TimeToSwitchToWorld,
         AllSceneNames.FifthScene,
         AllSceneNames.TimeToSwitchToNextDay
     };

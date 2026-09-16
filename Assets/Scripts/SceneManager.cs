@@ -114,13 +114,13 @@ public class SceneManager : MonoBehaviour
     private SceneNames.AllSceneNames? IsTheCurrentSceneComplete()
     {
         //Debug.Log("IsTheCurrentSceneComplete");
-        if (currentScene == SceneNames.AllSceneNames.TimeToSwitchTo3D)
+        if (currentScene == SceneNames.AllSceneNames.TimeToSwitchToWorld)
         {
-            return SceneNames.AllSceneNames.TimeToSwitchTo3D;
+            return SceneNames.AllSceneNames.TimeToSwitchToWorld;
         }
-        else if (currentScene == SceneNames.AllSceneNames.TimeToSwitchTo2D)
+        else if (currentScene == SceneNames.AllSceneNames.TimeToSwitchToPuzzle)
         {
-            return SceneNames.AllSceneNames.TimeToSwitchTo2D;
+            return SceneNames.AllSceneNames.TimeToSwitchToPuzzle;
         }
         else if (currentScene == SceneNames.AllSceneNames.TimeToSwitchToNextDay)
         {
@@ -135,11 +135,11 @@ public class SceneManager : MonoBehaviour
         //Debug.Log("ManageSceneChanges");
         switch (IsTheCurrentSceneComplete())
         {
-            case SceneNames.AllSceneNames.TimeToSwitchTo3D:
+            case SceneNames.AllSceneNames.TimeToSwitchToWorld:
                 SwitchToMainScene(SceneNames.SceneTypeNames._3DScene);
                 MoveToNextScene();
                 return;
-            case SceneNames.AllSceneNames.TimeToSwitchTo2D:
+            case SceneNames.AllSceneNames.TimeToSwitchToPuzzle:
                 SwitchToMainScene(SceneNames.SceneTypeNames._2DScene);
                 MoveToNextScene();
                 return;
