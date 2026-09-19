@@ -2,16 +2,16 @@ This game has 4 puzzle mechanics that the player has to solve. Each puzzle is ba
 
 ## Interaction Flow
 
-### InteractionManager
+### 1. InteractionManager
 Each step that has been taken by the player, has its corresponding event. For the interaction process, these steps are generated as **events** under these headings:  
   
-  *OnObjectCollidersApproached -> Being close to any object  
-  *OnInteractableApproached -> Detecting that close object being an interactable object  
-  *OnInteractionConditionsMet -> Detecting if conditions are met for interacting with near interactables  
-  *OnInteractionKeyPressed -> Detecting any interaction is performed by checking the required key being pressed  
-  *OnInteractableInteracted -> Interacting with an interactable object  
-  *OnNoInteractableNear -> Having no interactable objects near the player  
-  *OnInteractableInHandChanged -> Change in the hand-held interactable object
+- OnObjectCollidersApproached -> Being close to any object  
+- OnInteractableApproached -> Detecting that close object being an interactable object  
+- OnInteractionConditionsMet -> Detecting if conditions are met for interacting with near interactables  
+- OnInteractionKeyPressed -> Detecting any interaction is performed by checking the required key being pressed  
+- OnInteractableInteracted -> Interacting with an interactable object  
+- OnNoInteractableNear -> Having no interactable objects near the player  
+- OnInteractableInHandChanged -> Change in the hand-held interactable object
   
 Each interactable object has their behaviours. After an interaction is performed on an object, the next possible interaction behaviours' list is held for each interactable in *Interactable.cs* file.
 
@@ -39,24 +39,54 @@ Generally, in the *Interact* method, the interacted object's location is updated
 ### Puzzle 0 ###
 There are representative books in shelves. Each book represents a few feelings in some proportions. For instance, book 1 may contain 20% of feeling A, 45% of feeling B, and 35% of feeling D. There is only one book that is 100% representative of each feeling. The final objective in this puzzle is to put the books that are representing each feeling **100%** on the *book platform*.  
 
-**Puzzle0Manager.cs:** Mainly bound to the superclass of it, manages the process of detecting near objects, their types, and what to do at that exact moment.  
+**InteractionManager0thPuzzle.cs:** Mainly bound to the superclass of it, manages the process of detecting near objects, their types, and what to do at that exact moment.  
 Main Update loop can be deducted as following:  
-&emsp;*Detecting approached colliders if any exists  
-&emsp;*Detecting any interaction conditions being met  
-&emsp;&emsp;-Detecting interactions in *world view* (moving character around)  
-&emsp;&emsp;&emsp;*When there is an **object in hand**, check being near either bookshelf or book platform to put it on  
-&emsp;&emsp;&emsp;*When **hands are not occupied**, check being near either a bookshelf or book platform to take a book from it  
-&emsp;&emsp;-Detecting interactions in *book platform view* (adjusting books on platform)  
-&emsp;&emsp;&emsp;*When exit key is pressed, switch back to world view  
-&emsp;&emsp;&emsp;*If not, detect player clicking on a book to take it  
+- Detecting approached colliders if any exists  
+- Detecting any interaction conditions being met
+    - Detecting interactions in *world view* (moving character around)  
+       - When there is an **object in hand**, check being near either bookshelf or book platform to put it on  
+       - When **hands are not occupied**, check being near either a bookshelf or book platform to take a book from it  
+    - Detecting interactions in *book platform view* (adjusting books on platform)  
+       - When exit key is pressed, switch back to world view  
+       - If not, detect player clicking on a book to take it  
 
-Interactions are performed via *IInteractableBehaviour0thPuzzle* extending classes. There are **4** types of behaviours in this case: Picking up a book from its shelf, putting a book back on its shelf, putting a book on the book platform, taking a book back from the platform. Each behaviour gets called from manager class, and adjusts the books' parents and locations based on the specific situation. As addition to these, updates the platform's book list, and manages player's hand being occupied by that book or not. Following that behaviour, it updates the possible next behaviours (behavioursList for each Interactable).
+Interactions are performed via *IInteractableBehaviour0thPuzzle* extending classes. There are **4** types of behaviours in this case: 
+- **InteractableBehaviourPickUpFromShelf:** Picking up a book from its shelf
+- **InteractableBehaviourPutOnShelf:** Putting a book back on its shelf
+- **InteractableBehaviourPutOnBookPlatform:** Putting a book on the book platform
+- **InteractableBehaviourPickUpFromBookPlatform:** Taking a book back from the platform.
+  
+Each behaviour gets called from manager class, and adjusts the books' parents and locations based on the specific situation. As addition to these, updates the platform's book list, and manages player's hand being occupied by that book or not. Following that behaviour, it updates the possible next behaviours (behavioursList for each Interactable).
 
 ### Puzzle 1 ###
-There are objects that can be switched as pairs. Each object has its correct locations which are mostly different at the start of the puzzle. The main objective is to switch objects to reach their rightful locations by swapping them.  
+There is a main key part on player, which can be obtained by **pressing B**. There are also little parts that can be attached to the main key's designated spots. The main objective in this puzzle is to create a key that suits the door lock's key hole shape correctly. 
+
+**InteractionManager1stPuzzle:** This script manages obtaining key parts and taking the main key part in hand, in general.  
+Main Update loop can be deducted as following:
+
+ - Detection of obtaining the **main key part** by pressing the required key
+ - Detecting interaction conditions being met or not
+   - In *world view*, detect near colliders and trigger events if they are interactables
+   - In *editing key view*, either exit to world view, or move key parts on screen based on player's mouse inputs
+ - Detecting the completion of finding the right key combination for that door
+
+Key parts are collected by pressing **E** into an inventory which can be activated/deactivated via the key **I** during world view.  
+After key parts are collected and are being used, snapping them on the main key is only possible when in edit view which can be opened by pressing **2** on keypad while being near the target door for that puzzle. 
+Key parts have their Interactable1stPuzzleObject script for each of them. As a difference from other puzzle objects, they have their data embedded in scriptable objects for each.  
+
+**SOCollectibleKeyPart:** As each key part can be found more than one time, and have their distinct elements (such as ID, name, inventory icon), scriptable object structure is used for each key part.  
+
+**SnapHandler:** This class has the methods related to snapping/unsnapping the key parts to the main key. It has its own EventArgs named *SnapToSocketEventArgs* that holds the values of the *socket* and the *key* that is snapped onto that socket. In order to further manage the snapping process, there are 2 additional main events:
+
+- OnKeySnappedToSocket
+- OnKeyUnsnappedFromKey
+
+Aside from these events' names are self-explanatory, they are subscribed from the *InteractionManager1stPuzzle* class to check if that snap is a correct step toward finding the door's target key. 
+
+**Detecting Correct Snaps:** Each key part has a list of sockets. That stands for the sockets that key has on it as other keys may have socket to snap onto each other, not only main key. That is represented as *List<SocketData>* in the script *Interactable1stPuzzleObject*. As *SocketData* is a serializable class, it holds the target IDs for each door in a list. Therefore, based on the current door, this list is checked for each socket in the method *RecountCorrectSnaps* in the script *InteractionManager1stPuzzle*. 
 
 ### Puzzle 5 ###
 There are 5 spots on a table where collected interactable objects can be placed onto. Each object can be placed on any of the spots on the table. The ultimate goal is to place the correct object onto the right spots.
 
 ### Puzzle 7 ###
-There is a main key part on player, which can be obtained by **pressing B**. There are also little parts that can be attached to the main key's designated spots. The main objective in this puzzle is to create a key that suits the door keyframe correctly.
+There are objects that can be switched as pairs. Each object has its correct locations which are mostly different at the start of the puzzle. The main objective is to switch objects to reach their rightful locations by swapping them. 
