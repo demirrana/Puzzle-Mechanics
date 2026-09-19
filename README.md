@@ -50,13 +50,16 @@ Main Update loop can be deducted as following:
        - When exit key is pressed, switch back to world view  
        - If not, detect player clicking on a book to take it  
 
+**Behaviours:**  
 Interactions are performed via *IInteractableBehaviour0thPuzzle* extending classes. There are **4** types of behaviours in this case: 
 - **InteractableBehaviourPickUpFromShelf:** Picking up a book from its shelf
 - **InteractableBehaviourPutOnShelf:** Putting a book back on its shelf
 - **InteractableBehaviourPutOnBookPlatform:** Putting a book on the book platform
 - **InteractableBehaviourPickUpFromBookPlatform:** Taking a book back from the platform.
   
-Each behaviour gets called from manager class, and adjusts the books' parents and locations based on the specific situation. As addition to these, updates the platform's book list, and manages player's hand being occupied by that book or not. Following that behaviour, it updates the possible next behaviours (behavioursList for each Interactable).
+Each behaviour gets called from manager class, and adjusts the books' parents and locations based on the specific situation. As addition to these, updates the platform's book list, and manages player's hand being occupied by that book or not. Following that behaviour, it updates the possible next behaviours (behavioursList for each Interactable).  
+
+**Scriptable Objects:** There are 2 types of scriptable objects: feeling that is represented (**SOFeeling**) and book data (**SOBookData**). Since each book can represent one or more feelings to some extent for each feeling, each book has its own list of feelings. For the very same reason, book data has a *serializable* struct named *FeelingAffinity*. This structure contains feeling data and the book's representation degree of that feeling.
 
 ### Puzzle 1 ###
 There is a main key part on player, which can be obtained by **pressing B**. There are also little parts that can be attached to the main key's designated spots. The main objective in this puzzle is to create a key that suits the door lock's key hole shape correctly. 
@@ -86,7 +89,58 @@ Aside from these events' names are self-explanatory, they are subscribed from th
 **Detecting Correct Snaps:** Each key part has a list of sockets. That stands for the sockets that key has on it as other keys may have socket to snap onto each other, not only main key. That is represented as *List<SocketData>* in the script *Interactable1stPuzzleObject*. As *SocketData* is a serializable class, it holds the target IDs for each door in a list. Therefore, based on the current door, this list is checked for each socket in the method *RecountCorrectSnaps* in the script *InteractionManager1stPuzzle*. 
 
 ### Puzzle 5 ###
-There are 5 spots on a table where collected interactable objects can be placed onto. Each object can be placed on any of the spots on the table. The ultimate goal is to place the correct object onto the right spots.
+There are 5 spots on a table where collected interactable objects can be placed onto. Each object can be placed on any of the spots on the table. The ultimate goal is to place the correct object onto the right spots. 
+
+**InteractionManager5thPuzzle:** Detects near interactables (including object table), lets player obtain or drop an interactable object. Provides the switch between table view and game view. 
+Update cycle is mainly as the following:
+
+- Detecting interaction conditions being met or not
+  - Detecting conditions in *world view*
+    - When *hands are occupied* by an interactable
+      - Detecting dropping that interactable on floor
+    - When *hands are empty*
+      - Detecting near colliders
+      - When the table is near with at least one interactable on it, detecting switch to table view
+  - Detecting conditions in *table view*
+    - When *hands are occupied* by an interactable
+      - Moving the interactable with mouse movements
+      - Detecting switching back to game view (manages object being in hand afterwards in the game view)
+      - Detecting taking an interactable from a slot of the table
+    - When *hands are empty*
+      - Detecting occupied slots to obtain the interactable on that slot
+      - Detecting switching back to game view
+
+**Behaviours:** After the detections are complete, changes in the interactables (such as their positions, parent objects etc.) are managed by **behaviours**. There are 6 behaviours that can be applied on the interactables:
+
+- InteractableBehaviourPickUpFromFloor
+- InteractableBehaviourPickUpFromTableToHand
+- InteractableBehaviourDropOnFloor
+- InteractableBehaviourPutOnTableSlot
+- InteractableBehaviourDragOnTableFromHand -> After entering table view with an interactable in hand, dragging that with mouse movements
+- InteractableBehaviourDragOnTableFromSlot -> After obtaining an interactable from a table slot, dragging that with mouse movements
+
+The ones changing the table slots' states, update the slot accordingly.  
+All of the behaviours update held-interactable.  
+They provide new position, new parent, and next possible behaviours list. Therefore, these information are obtained by *Interactable5thPuzzleObject* script of that interactable and its state is updated using these in the method *GetInteracted_Interactable*.  
+Activating/deactivating the table view is also managed by behaviours.  
+
+**Interactable5thPuzzleTable:** Contains methods that activate/deactivate table view. Holds the lists of empty and occupied slots on it. The other methods update these lists accordingly after a behaviour is performed. Aside from these, has a method named *GetPointedSlot* that casts a ray on screen to detect the interactable pointed by mouse.
 
 ### Puzzle 7 ###
-There are objects that can be switched as pairs. Each object has its correct locations which are mostly different at the start of the puzzle. The main objective is to switch objects to reach their rightful locations by swapping them. 
+There are objects that can be switched as pairs. Each object has its correct locations which are mostly different at the start of the puzzle. The main objective is to switch objects to reach their correct locations by swapping them. 
+  
+**InteractionManager7thPuzzle:** Manages selecting/deselecting process of the interactable objects that will be swapped. Swapping process is conducted by this script's methods, unlike some of other puzzles which are using behaviours for the same goal.  
+Main Update loop can be deducted as following:  
+
+- Detecting interaction conditions being met or not
+  - Detecting near colliders to control it through event subscription method of the event OnInteractableApproached
+  - When *no interactable is selected* to be swapped
+    - Detecting choosing an interactable
+  - When *only one interactable is selected* to be swapped
+    - When near interactable is the previously selected one, detecting deselecting it
+    - When otherwise, detecting selecting near interactable
+  - When *two interactables are selected* to be swapped
+      - Detecting deselecting the approached interactable
+      - Detecting swap between 2 selected interactables
+     
+Through behaviours of this puzzle, only the selection and deselection methods of manager class are called. 
