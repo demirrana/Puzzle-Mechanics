@@ -28,6 +28,7 @@ public class InteractionPanelFixed : InteractionPanelBase
         Interactable5thPuzzleTable.Instance.OnTableViewDeactivated += Puzzle5Table_TableViewDeactivated;
         InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_InteractionManager5thPuzzle;
         InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen += BothInteractablesAreChosen_InteractionPanel;
+        InteractionManager7thPuzzle.Instance.OnAnyInteractableIsDeselected += AnyInteractableIsDeselected_InteractionPanel;
         InteractionManager7thPuzzle.Instance.OnSwapKeyPressed += SwapKeyPressed_InteractionPanel;
     }
 
@@ -39,6 +40,7 @@ public class InteractionPanelFixed : InteractionPanelBase
         Interactable5thPuzzleTable.Instance.OnTableViewDeactivated -= Puzzle5Table_TableViewDeactivated;
         InteractionManager5thPuzzle.Instance.OnInteractableInteracted -= InteractableInteracted_InteractionManager5thPuzzle;
         InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen -= BothInteractablesAreChosen_InteractionPanel;
+        InteractionManager7thPuzzle.Instance.OnAnyInteractableIsDeselected -= AnyInteractableIsDeselected_InteractionPanel;
         InteractionManager7thPuzzle.Instance.OnSwapKeyPressed -= SwapKeyPressed_InteractionPanel;
     }
 
@@ -62,6 +64,11 @@ public class InteractionPanelFixed : InteractionPanelBase
     {
         UpdateInteractionKeyText(swapKey.ToString());
         Show();
+    }
+
+    private void AnyInteractableIsDeselected_InteractionPanel(object sender, EventArgs e)
+    {
+        Hide();
     }
 
     private void SwapKeyPressed_InteractionPanel(object sender, EventArgs e)
