@@ -7,21 +7,30 @@ public class PlayerMovementManager : MonoBehaviour
 {
     public static PlayerMovementManager Instance { get; private set; }
 
+    [Header("Gravity & Ground Settings")]
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private float gravity = -9.81f;
+
+    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 10f;
 
-    private readonly int NON_BLOCKING_LAYER = 9;
-
     private PlayerInputActions playerInputActions;
-
     private Vector2 inputMoveVector;
+
+    private float verticalVelocity;
 
     private void Awake()
     {
         SetInstance();
+        // Ensure characterController is assigned if not set from Inspector
+        if (characterController == null)
+        {
+            characterController = GetComponent<CharacterController>();
+        }
+
         //Below ones should execute after InputActionManager's.
         playerInputActions = InputActionsManager.Instance.PlayerInputActions;
-        playerInputActions.PlayerMap.Enable();
     }
 
     private void Start()
@@ -32,95 +41,82 @@ public class PlayerMovementManager : MonoBehaviour
 
     private void Update()
     {
-        MovePlayer();
+        Vector3 verticalMove = CalculateGravity();
+        Vector3 horizontalMove = CalculateMovement();
+
+        //Combine horizontal move and gravity into a single CharacterController.Move call
+        Vector3 finalVelocity = horizontalMove + verticalMove;
+        characterController.Move(finalVelocity * Time.deltaTime);
     }
 
     private void OnEnable()
     {
-        playerInputActions.PlayerMap.Enable();
+        if (playerInputActions != null)
+            playerInputActions.PlayerMap.Enable();
     }
 
     private void OnDisable()
     {
-        playerInputActions.PlayerMap.Disable();
+        if (playerInputActions != null)
+            playerInputActions.PlayerMap.Disable();
     }
 
     private void OnDestroy()
     {
-        playerInputActions.PlayerMap.Movement.performed -= OnMovementPerformed;
-        playerInputActions.PlayerMap.Movement.canceled -= OnMovementCancelled;
-    }
-
-    private List<RaycastHit> GetHitRaycasts(Vector3 movementInput)
-    {
-        RaycastHit[] raycastsHit = Physics.CapsuleCastAll(
-            transform.position,
-            transform.position + Vector3.up * 1.6f,
-            0.3f,
-            movementInput,
-            0.1f
-        );
-
-        List<RaycastHit> filteredRaycastsHit = new();
-
-        foreach (RaycastHit raycastHit in raycastsHit)
+        if (playerInputActions != null)
         {
-            if (IsColliderBlockingMovements(raycastHit.collider))
-                filteredRaycastsHit.Add(raycastHit);
+            playerInputActions.PlayerMap.Movement.performed -= OnMovementPerformed;
+            playerInputActions.PlayerMap.Movement.canceled -= OnMovementCancelled;
         }
-
-        return filteredRaycastsHit;
     }
 
-    private bool IsColliderBlockingMovements(Collider collider)
-    {
-        if (collider.gameObject.layer == NON_BLOCKING_LAYER)
-            return false;
-        
-        if (collider.transform.root.TryGetComponent<PlayerMovementManager>(out _)) //child objs of player (especially the one in hand)
-            return false;
-
-        if (collider.transform.root == transform.root)
-            return false;
-
-        return true;
-    }
-
-    private void MovePlayer()
+    private Vector3 CalculateMovement()
     {
         float xMoveInput = inputMoveVector.x;
         float yMoveInput = inputMoveVector.y;
 
-        //Vector3 movementInput = new(xMoveInput, 0f, yMoveInput);
+        if (xMoveInput == 0f && yMoveInput == 0f)
+            return Vector3.zero;
 
-        if (xMoveInput != 0f || yMoveInput != 0f)
+        CinemachineVirtualCameraBase activeCamera = CameraManager.Instance.GetCameraUnderTheName(CameraManager.Instance.GetActiveCameraName());
+        Vector3 camForward = activeCamera.transform.forward;
+        Vector3 camRight = activeCamera.transform.right;
+
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 movementInput = (camForward * yMoveInput) + (camRight * xMoveInput);
+
+        if (movementInput != Vector3.zero)
         {
-            CinemachineVirtualCameraBase activeCamera = CameraManager.Instance.GetCameraUnderTheName(CameraManager.Instance.GetActiveCameraName());
-            Vector3 camForward = activeCamera.transform.forward;
-            Vector3 camRight = activeCamera.transform.right;
+            Quaternion targetRotation = Quaternion.LookRotation(movementInput);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            camForward.y = 0f;
-            camRight.y = 0f;
+            return movementInput * moveSpeed;
+        }
 
-            camForward.Normalize();
-            camRight.Normalize();
+        return Vector3.zero;
+    }
 
-            Vector3 movementInput = (camForward * yMoveInput) + (camRight * xMoveInput);
-
-            if (movementInput != Vector3.zero)
+    private Vector3 CalculateGravity()
+    {
+        if (characterController.isGrounded)
+        {
+            if (verticalVelocity < 0f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(movementInput);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
-
-            List<RaycastHit> hits = GetHitRaycasts(movementInput);
-            bool isHit = hits.Count > 0;
-
-            if (!isHit)
-            {
-                transform.position += moveSpeed * Time.deltaTime * movementInput;
+                //Small negative force to keep the player anchored to slopes/stairs
+                verticalVelocity = -2f;
             }
         }
+        else
+        {
+            //Continuous acceleration downwards when no floor detected
+            verticalVelocity += gravity * Time.deltaTime;
+        }
+
+        return new Vector3(0f, verticalVelocity, 0f);
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext context)
@@ -130,7 +126,7 @@ public class PlayerMovementManager : MonoBehaviour
 
     private void OnMovementCancelled(InputAction.CallbackContext context)
     {
-        inputMoveVector = Vector3.zero;
+        inputMoveVector = Vector2.zero;
     }
 
     private void SetInstance()
@@ -138,6 +134,7 @@ public class PlayerMovementManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
         Instance = this;
     }

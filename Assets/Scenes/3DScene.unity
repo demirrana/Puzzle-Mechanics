@@ -15334,6 +15334,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4355419a39e70c42b7fa2056fc65616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: -9.81
+  groundedOffset: 0.1
+  groundCheckRadius: 0.2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 512
   moveSpeed: 6
   rotationSpeed: 10
 --- !u!114 &1868460032
@@ -15402,7 +15408,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868460029}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f909567b27a340143b4c3b84f2ad1876, type: 3}
   m_Name: 
@@ -15425,7 +15431,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868460029}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7091b19113c9e0e418af941d6dde1ec0, type: 3}
   m_Name: 
