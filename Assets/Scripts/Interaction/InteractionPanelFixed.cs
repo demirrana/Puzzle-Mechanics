@@ -24,9 +24,9 @@ public class InteractionPanelFixed : InteractionPanelBase
     {
         InteractionManager0thPuzzle.Instance.OnInteractionConditionsMet += InteractionConditionsMet_InteractionManager0thPuzzle;
         InteractionManager5thPuzzle.Instance.OnInteractionConditionsMet += InteractionConditionsMet_InteractionManager5thPuzzle;
-        //InteractionManager5thPuzzle.Instance.OnInteractableApproached += InteractableApproached_PlayerInteractionManager;
-        InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_PlayerInteractionManager;
-        InteractionManager5thPuzzle.Instance.OnNoInteractableNear += NoInteractableNear_PlayerInteractionManager;
+        Interactable5thPuzzleTable.Instance.OnTableViewActivated += Puzzle5Table_TableViewActivated;
+        Interactable5thPuzzleTable.Instance.OnTableViewDeactivated += Puzzle5Table_TableViewDeactivated;
+        InteractionManager5thPuzzle.Instance.OnInteractableInteracted += InteractableInteracted_InteractionManager5thPuzzle;
         InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen += BothInteractablesAreChosen_InteractionPanel;
         InteractionManager7thPuzzle.Instance.OnSwapKeyPressed += SwapKeyPressed_InteractionPanel;
     }
@@ -35,9 +35,9 @@ public class InteractionPanelFixed : InteractionPanelBase
     {
         InteractionManager0thPuzzle.Instance.OnInteractionConditionsMet -= InteractionConditionsMet_InteractionManager0thPuzzle;
         InteractionManager5thPuzzle.Instance.OnInteractionConditionsMet -= InteractionConditionsMet_InteractionManager5thPuzzle;
-        //InteractionManager5thPuzzle.Instance.OnInteractableApproached -= InteractableApproached_PlayerInteractionManager;
-        InteractionManager5thPuzzle.Instance.OnInteractableInteracted -= InteractableInteracted_PlayerInteractionManager;
-        InteractionManager5thPuzzle.Instance.OnNoInteractableNear -= NoInteractableNear_PlayerInteractionManager;
+        Interactable5thPuzzleTable.Instance.OnTableViewActivated -= Puzzle5Table_TableViewActivated;
+        Interactable5thPuzzleTable.Instance.OnTableViewDeactivated -= Puzzle5Table_TableViewDeactivated;
+        InteractionManager5thPuzzle.Instance.OnInteractableInteracted -= InteractableInteracted_InteractionManager5thPuzzle;
         InteractionManager7thPuzzle.Instance.OnBothInteractablesAreChosen -= BothInteractablesAreChosen_InteractionPanel;
         InteractionManager7thPuzzle.Instance.OnSwapKeyPressed -= SwapKeyPressed_InteractionPanel;
     }
@@ -55,26 +55,7 @@ public class InteractionPanelFixed : InteractionPanelBase
     private void InteractionConditionsMet_InteractionManager0thPuzzle(object sender, InteractionManager0thPuzzle.InteractionBehaviourEventArgs e)
     {
         //Handle displaying the key for that behaviour
-    }
-
-    //Interactable<T> may be required for more manager classes handling
-    private void InteractableApproached_PlayerInteractionManager(object sender, Interactable<IInteractableBehaviour5thPuzzle> interactable)
-    {
-        //Debug.Log("Interactable approached");
-        Show();
-    }
-
-    //Interactable<T> may be required for more manager classes handling
-    private void InteractableInteracted_PlayerInteractionManager(object sender, InteractionManager<IInteractableBehaviour5thPuzzle>.InteractionBehaviourEventArgs e)
-    {
-        //Debug.Log("Interactable interacted");
-        Hide();
-    }
-
-    private void NoInteractableNear_PlayerInteractionManager(object sender, EventArgs e)
-    {
-        //Debug.Log("No Interactable approached");
-        Hide();
+        UpdateInteractionKeyText(e.InteractionBehaviour.InteractionKeyCode.ToString());
     }
 
     private void BothInteractablesAreChosen_InteractionPanel(object sender, KeyCode swapKey)
@@ -98,20 +79,36 @@ public class InteractionPanelFixed : InteractionPanelBase
 
     private void InteractionConditionsMet_InteractionManager5thPuzzle(object sender, InteractionManager5thPuzzle.InteractionBehaviourEventArgs e)
     {
-        bool isDragOnTableFromHand = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDragOnTableFromHand);
-        bool isDropOnFloor = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDropOnFloor);
-        bool isPutOnTableSlot = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourPutOnTableSlot);
-        bool isPickUpFromSlot = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDragOnTableFromSlot);
-        bool isPickUpFromTableToHand = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourPickUpFromTableToHand);
+        if (!InteractionManager5thPuzzle.Instance.AreHandsFull()) return; //this event gets triggered before dropping obj, so check it
 
-        if (isDragOnTableFromHand || isDropOnFloor || isPutOnTableSlot || isPickUpFromSlot || isPickUpFromTableToHand)
+        bool isDropOnFloor = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDropOnFloor);
+        if (isDropOnFloor)
         {
+            UpdateInteractionKeyText(e.InteractionBehaviour.InteractionKeyCode.ToString());
             Show();
         }
-        else
+    }
+
+    private void Puzzle5Table_TableViewActivated(object sender, EventArgs e)
+    {
+        UpdateInteractionKeyText(Interactable5thPuzzleTable.Instance.GetKeyForCloseTableView().ToString());
+        Show();
+    }
+
+    //Hide "drop object key" after it is dropped
+    private void InteractableInteracted_InteractionManager5thPuzzle(object sender, InteractionManager5thPuzzle.InteractionBehaviourEventArgs e)
+    {
+        bool isDropOnFloor = e.InteractionBehaviour.GetType() == typeof(InteractableBehaviourDropOnFloor);
+
+        if (isDropOnFloor)
         {
             Hide();
         }
+    }
+
+    private void Puzzle5Table_TableViewDeactivated(object sender, EventArgs e)
+    {
+        Hide();
     }
 
     private void SetInstance()

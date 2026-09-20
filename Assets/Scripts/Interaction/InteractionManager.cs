@@ -310,7 +310,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         return false;
     }
 
-    protected bool AreHandsFull()
+    public bool AreHandsFull()
     {
         return interactableInHand != null;
     }
