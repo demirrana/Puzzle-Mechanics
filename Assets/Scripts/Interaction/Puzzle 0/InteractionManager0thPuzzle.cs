@@ -268,6 +268,7 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
     private void InteractionManager0thPuzzle_ActiveViewChanged(object sender, EventArgs e)
     {
         ToggleViewAndUpdate();
+        TogglePlayerMesh();
     }
     #endregion
 
@@ -333,6 +334,12 @@ public class InteractionManager0thPuzzle : InteractionManager<IInteractableBehav
         MouseManager.Instance.ChangeMouseVisibility();
         if (PlayerMovementManager.Instance.enabled) PlayerScriptsManager.Instance.DisableMovementScript();
         else PlayerScriptsManager.Instance.EnableMovementScript();
+    }
+
+    private void TogglePlayerMesh() //stop displaying player when platform is shown (camera is between player and platform)
+    {
+        MeshRenderer playerMesh = PlayerMovementManager.Instance.GetComponentInChildren<MeshRenderer>();
+        playerMesh.enabled = !playerMesh.enabled;
     }
 
     private void ChangeGameState()
