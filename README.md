@@ -14,6 +14,24 @@ https://github.com/user-attachments/assets/ded1db09-a49e-4873-911a-2fa25704fca3
 ### Puzzle 7: Swapping Objects
 https://github.com/user-attachments/assets/b39e0098-7476-4d3c-8326-f1729520871c
 
+## Technical Requirements and Dependencies
+### Unity Version
+**Unity Engine:** Unity 6.5 (6000.5.3f1)
+
+### Packages & Libraries
+Before running the project, ensure the following dependencies are installed via the Unity Package Manager or integrated into the project:  
+
+- **Core & Gameplay Systems:**  
+    - **Cinemachine:** 3.1.7  
+- **UI & Rendering:**  
+    - **TextMeshPro**
+ 
+### Getting Started
+- Clone the project: `git clone https://github.com/demirrana/Puzzle-Mechanics.git`
+- Open project with Unity version 6.5 (6000.5.3f1) on Unity Hub.
+- Navigate to Assets/Scenes/3DScene.unity and press Play.
+- Activate/deactivate scripts on Player to apply that specific puzzle mechanic (each puzzle requirement is stated below, in their parts with the banner "**Note**").
+
 ## Interaction Flow
 
 ### 1. InteractionManager
