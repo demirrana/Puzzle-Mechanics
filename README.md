@@ -1,4 +1,18 @@
-This game has 4 puzzle mechanics that the player has to solve. Each puzzle is based on the same main logic.
+# Project: 4 Puzzle Mechanics
+This project has 4 puzzle mechanics that the player has to solve. Each puzzle is based on the same main logic.
+
+## How Does Mechanic Work?
+### Puzzle 0: Placing Books
+https://github.com/user-attachments/assets/2d955700-e4c1-4b23-9c02-ea72c26244d5
+
+### Puzzle 1: Snapping Key Parts
+https://github.com/user-attachments/assets/e7f25bfc-24d0-4844-b02a-4bf0236ceed3
+
+### Puzzle 5: Placing Objects on Table Slots
+https://github.com/user-attachments/assets/ded1db09-a49e-4873-911a-2fa25704fca3
+
+### Puzzle 7: Swapping Objects
+https://github.com/user-attachments/assets/b39e0098-7476-4d3c-8326-f1729520871c
 
 ## Interaction Flow
 
