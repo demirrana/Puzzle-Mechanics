@@ -1,7 +1,7 @@
 # Project: 4 Puzzle Mechanics
 This project has 4 puzzle mechanics that the player has to solve. Each puzzle is based on the same main logic.
 
-## How Does Mechanic Work?
+## How Do Mechanics Work?
 ### Puzzle 0: Placing Books
 https://github.com/user-attachments/assets/2d955700-e4c1-4b23-9c02-ea72c26244d5
 
