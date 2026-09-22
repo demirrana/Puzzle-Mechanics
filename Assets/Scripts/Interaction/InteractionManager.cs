@@ -275,7 +275,7 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
         Collider[] hitCollidersArray = Physics.OverlapCapsule(
             rayOriginBottom,
             rayOriginTop,
-            0.6f
+            0.9f
         );
 
         List<Collider> hitColliders = new();
