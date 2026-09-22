@@ -37,6 +37,8 @@ Generally, in the *Interact* method, the interacted object's location is updated
 ## Puzzles' Distinct Logics ##
 
 ### Puzzle 0 ###
+**Note:** To execute this mechanic on **Unity**, *all interaction manager classes* on **Player** should be *deactivated* **except** for **InteractionManager0thPuzzle**. **PlayerUIManager** should stay *activated*. As **UI_Puzzle1Manager and SnapHandler** is related to puzzle 1, they should be also *deactivated*.  
+  
 There are representative books in shelves. Each book represents a few feelings in some proportions. For instance, book 1 may contain 20% of feeling A, 45% of feeling B, and 35% of feeling D. There is only one book that is 100% representative of each feeling. The final objective in this puzzle is to put the books that are representing each feeling **100%** on the *book platform*.  
 
 **InteractionManager0thPuzzle.cs:** Mainly bound to the superclass of it, manages the process of detecting near objects, their types, and what to do at that exact moment.  
@@ -62,6 +64,8 @@ Each behaviour gets called from manager class, and adjusts the books' parents an
 **Scriptable Objects:** There are 2 types of scriptable objects: feeling that is represented (**SOFeeling**) and book data (**SOBookData**). Since each book can represent one or more feelings to some extent for each feeling, each book has its own list of feelings. For the very same reason, book data has a *serializable* struct named *FeelingAffinity*. This structure contains feeling data and the book's representation degree of that feeling.
 
 ### Puzzle 1 ###
+**Note:** To execute this mechanic on **Unity**, *all interaction manager classes* on **Player** should be *deactivated* **except** for **InteractionManager1stPuzzle, UI_Puzzle1Manager, and SnapHandler**. **PlayerUIManager** should stay *activated*
+  
 There is a main key part on player, which can be obtained by **pressing B**. There are also little parts that can be attached to the main key's designated spots. The main objective in this puzzle is to create a key that suits the door lock's key hole shape correctly. 
 
 **InteractionManager1stPuzzle:** This script manages obtaining key parts and taking the main key part in hand, in general.  
@@ -89,6 +93,8 @@ Aside from these events' names are self-explanatory, they are subscribed from th
 **Detecting Correct Snaps:** Each key part has a list of sockets. That stands for the sockets that key has on it as other keys may have socket to snap onto each other, not only main key. That is represented as *List<SocketData>* in the script *Interactable1stPuzzleObject*. As *SocketData* is a serializable class, it holds the target IDs for each door in a list. Therefore, based on the current door, this list is checked for each socket in the method *RecountCorrectSnaps* in the script *InteractionManager1stPuzzle*. 
 
 ### Puzzle 5 ###
+**Note:** To execute this mechanic on **Unity**, *all interaction manager classes* on **Player** should be *deactivated* **except** for **InteractionManager5thPuzzle**. **PlayerUIManager** should stay *activated*. As **UI_Puzzle1Manager and SnapHandler** is related to puzzle 1, they should be also *deactivated*.  
+  
 There are 5 spots on a table where collected interactable objects can be placed onto. Each object can be placed on any of the spots on the table. The ultimate goal is to place the correct object onto the right spots. 
 
 **InteractionManager5thPuzzle:** Detects near interactables (including object table), lets player obtain or drop an interactable object. Provides the switch between table view and game view. 
@@ -127,6 +133,8 @@ Activating/deactivating the table view is also managed by behaviours.
 **Interactable5thPuzzleTable:** Contains methods that activate/deactivate table view. Holds the lists of empty and occupied slots on it. The other methods update these lists accordingly after a behaviour is performed. Aside from these, has a method named *GetPointedSlot* that casts a ray on screen to detect the interactable pointed by mouse.
 
 ### Puzzle 7 ###
+**Note:** To execute this mechanic on **Unity**, *all interaction manager classes* on **Player** should be *deactivated* **except** for **InteractionManager7thPuzzle**. **PlayerUIManager** should stay *activated*. As **UI_Puzzle1Manager and SnapHandler** is related to puzzle 1, they should be also *deactivated*.  
+  
 There are objects that can be switched as pairs. Each object has its correct locations which are mostly different at the start of the puzzle. The main objective is to switch objects to reach their correct locations by swapping them. 
   
 **InteractionManager7thPuzzle:** Manages selecting/deselecting process of the interactable objects that will be swapped. Swapping process is conducted by this script's methods, unlike some of other puzzles which are using behaviours for the same goal.  
