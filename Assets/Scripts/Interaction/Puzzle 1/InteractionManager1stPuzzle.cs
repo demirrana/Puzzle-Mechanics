@@ -172,6 +172,12 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     private void ExitEditView()
     {
         currentViewMode = ViewMode.WorldView;
+
+        if (PlayerScriptsManager.Instance != null)
+            PlayerScriptsManager.Instance.EnableMovementScript();
+        if (TryGetComponent<CharacterController>(out CharacterController characterController)) 
+            characterController.enabled = true;
+
         OnEditViewDeactivated?.Invoke(this, EventArgs.Empty);
         ResetMainKeyRotation();
         CameraManager.Instance.SwitchToNextCamera();
@@ -183,7 +189,13 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         //update camera view to focus on the main part and freeze the camera
         CameraManager.Instance.FollowWithCamera(interactableInHand.transform, CameraManager.CameraName.GameplayCamera);
         CameraManager.Instance.SwitchToNextCamera();
+
+        if (PlayerScriptsManager.Instance != null)
+            PlayerScriptsManager.Instance.DisableMovementScript();
         //stop showing player (make main key's parent null and update the pos to the mouse pos)
+        if (TryGetComponent<CharacterController>(out CharacterController characterController)) 
+            characterController.enabled = false;
+        
         OnEditViewActivated?.Invoke(this, EventArgs.Empty);
     }
     #endregion
