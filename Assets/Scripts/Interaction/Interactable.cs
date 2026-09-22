@@ -7,7 +7,7 @@ public class Interactable<T> : MonoBehaviour where T : IInteractableBehaviour
 {
     public event EventHandler<T> OnGotInteracted;
 
-    protected List<T> behavioursList = new();
+    protected List<T> behavioursList = new(); //an interactable can have only the possible behaviours at that moment (this list is updated after a behaviour is applied)
 
     private int initialLayerIndex;
 

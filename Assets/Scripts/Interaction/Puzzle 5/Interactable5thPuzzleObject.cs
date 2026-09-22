@@ -3,31 +3,16 @@ using UnityEngine;
 
 public class Interactable5thPuzzleObject : Interactable5thPuzzle
 {
-    public event EventHandler<Interactable5thPuzzleState> OnInteractableStateChanged; //Might as well be in the Interactable
     public event EventHandler OnInteractableInHand;
-
-    public enum Interactable5thPuzzleState
-    {
-        InHand,
-        OnFloor,
-        OnTable,
-        LoadingTableView,
-        ExittingTableView
-    }
-
-    private Interactable5thPuzzleState currentState;
 
     private void Awake()
     {
-        currentState = Interactable5thPuzzleState.OnFloor;
         behavioursList.Add(new InteractableBehaviourPickUpFromFloor());
     }
 
     protected override void Start()
     {
-        //Debug.Log($"[Child Start] {name} subscribing to OnInteractableStateChanged. InstanceID={GetInstanceID()}");
         base.Start();
-        //OnInteractableStateChanged += Interactable5thPuzzle_OnInteractableStateChanged;
     }
 
     //Interact with the object, update its state and behaviours

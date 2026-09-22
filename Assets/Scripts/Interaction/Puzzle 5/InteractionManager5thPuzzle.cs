@@ -57,7 +57,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     public Interactable5thPuzzleTableSlot GetPointedSlotBeforeKeyPress()
     {
-        Debug.Log("GetPointedSlotBeforeKeyPress is called. The pointed slot is: " + pointedSlotBeforeKeyPress.name);
+        //Debug.Log("GetPointedSlotBeforeKeyPress is called. The pointed slot is: " + pointedSlotBeforeKeyPress.name);
         return pointedSlotBeforeKeyPress;
     }
 
@@ -163,7 +163,7 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
 
     protected void DetectConditionsMet_TableViewHandsFull()
     {
-        Debug.Log("Hands are full in the table view.");
+        //Debug.Log("Hands are full in the table view.");
         MoveInteractableWithMouse(); //object is dragged on table
         RaiseInteractionConditionsMet(this, interactableInHand, interactableInHand.GetRequestedBehaviourFromList(new InteractableBehaviourPickUpFromTableToHand())); //exitting table view
         DetectEmptySlotsOnTable(); //finds slots to put the object on and raises that event
@@ -195,13 +195,13 @@ public class InteractionManager5thPuzzle : InteractionManager<IInteractableBehav
     //interaction panel is displayed on the empty slot that is pointed by the mouse
     private void DetectEmptySlotsOnTable()
     {
-        Debug.Log("DetectEmptySlotsOnTable is called.");
+        //Debug.Log("DetectEmptySlotsOnTable is called.");
         if (AreHandsFull() && puzzle5Table.HasEmptySlots()) //hands may be empty if game view is active in the loop
         {
-            Debug.Log("Hands are full and there are empty slots on the table.");
+            //Debug.Log("Hands are full and there are empty slots on the table.");
             SetPointedSlotBeforeKeyPress(puzzle5Table.GetPointedEmptySlot());
             Transform pointedSlotTransform = pointedSlotBeforeKeyPress.transform;
-            Debug.Log("Pointed slot before key press is: " + pointedSlotBeforeKeyPress.name);
+            //Debug.Log("Pointed slot before key press is: " + pointedSlotBeforeKeyPress.name);
             InteractableBehaviourPutOnTableSlot putOnSlot = new();
             ActivateInteractionPanel(this, pointedSlotTransform, putOnSlot.InteractionKeyCode);
             //Debug.Log("there are empty slots and the pointed one is named: " + pointedEmptySlot.name);

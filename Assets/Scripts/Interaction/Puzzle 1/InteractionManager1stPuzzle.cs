@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehaviour1stPuzzle> //to be changed into 1stPuzzle
+public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehaviour1stPuzzle>
 {
     #region Singleton and Events
     public static InteractionManager1stPuzzle Instance { get; private set; }
