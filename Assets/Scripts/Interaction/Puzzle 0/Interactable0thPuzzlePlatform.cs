@@ -104,10 +104,10 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     //Updates the y position to put next book on the platform after removing a book from the platform
     public void RemoveBookAndUpdate(Interactable0thPuzzleObject book)
     {
-        int removedBookOrder = booksOnPlatform.IndexOf(book) + 1;
+        int removedBookIndex = booksOnPlatform.IndexOf(book);
         RemoveBook(book);
-        if (removedBookOrder != booksOnPlatform.Count + 1) //no shift required when lastly put book removed
-            ShiftBooksDownAfterRemoval(removedBookOrder);
+        if (removedBookIndex != booksOnPlatform.Count) //no shift required when lastly put book removed
+            ShiftBooksDownAfterRemoval(removedBookIndex);
         UpdateAfterRemove_yValueForNextBook();
     }
 
@@ -132,17 +132,16 @@ public class Interactable0thPuzzlePlatform : MonoBehaviour
     }
 
     //This method shifts down the books that are above the removed book on the platform after it is removed from the platform
-    private void ShiftBooksDownAfterRemoval(int removedBookOrderOnPlatform)
+    private void ShiftBooksDownAfterRemoval(int removedBookIndexOnPlatform)
     {
-        int currentBookOrder = removedBookOrderOnPlatform;
         List<Interactable<IInteractableBehaviour0thPuzzle>> booksToShiftDown;
-        booksToShiftDown = booksOnPlatform.GetRange(removedBookOrderOnPlatform - 1, booksOnPlatform.Count);
+        int countAboveDeleted = booksOnPlatform.Count - removedBookIndexOnPlatform;
+        booksToShiftDown = booksOnPlatform.GetRange(removedBookIndexOnPlatform, countAboveDeleted);
 
         foreach (Interactable0thPuzzleObject book in booksToShiftDown.OfType<Interactable<IInteractableBehaviour0thPuzzle>>())
         {
             Vector3 newBookPosition = book.GetPosition();
-            float yBookValue = (currentBookOrder - 1) * BookThickness;
-            newBookPosition.y = yBookValue + topCenterPointTransform.position.y;
+            newBookPosition.y = newBookPosition.y - BookThickness;
             book.SetPosition(newBookPosition);
         }
     }
