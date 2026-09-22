@@ -141,7 +141,8 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
     {
         if (currentViewMode == ViewMode.WorldView)
         {
-            DetectAnyColliderApproached();
+            List<Collider> combinedKeyColliders = GetCombinedKeyColliders(); //prevent detecting picking up interactable already sticked to combined keys
+            DetectAnyColliderApproached(combinedKeyColliders);
         }
         else if (currentViewMode == ViewMode.EditView)
         {
@@ -310,6 +311,19 @@ public class InteractionManager1stPuzzle : InteractionManager<IInteractableBehav
         PreviewCamera.Instance.ResetPositionRotation();
         hasPreviewStarted = true;
         //camera shows the object
+    }
+
+    private List<Collider> GetCombinedKeyColliders() //Return collider list of keys that are sticked to main key and each other
+    {
+        List<Collider> combinedKeyColliders = new();
+
+        foreach (Interactable1stPuzzle key in combinedKeys)
+        {
+            Collider keyCollider = key.transform.GetComponentInChildren<Collider>();
+            if (keyCollider != null)    combinedKeyColliders.Add(keyCollider);
+        }
+
+        return combinedKeyColliders;
     }
     #endregion
 

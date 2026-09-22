@@ -88,9 +88,18 @@ public class InteractionManager<T> : MonoBehaviour where T : IInteractableBehavi
     #endregion
 
     #region Interaction Core System
-    protected void DetectAnyColliderApproached()
+    protected void DetectAnyColliderApproached(List<Collider> exceptionalColliders = null)
     {
         List<Collider> hitColliders = GetCollidersApproached();
+
+        if (exceptionalColliders != null)
+            for (int i = hitColliders.Count - 1; i >= 0; i--)
+            {
+                if (exceptionalColliders.Contains(hitColliders[i]))
+                {
+                    hitColliders.RemoveAt(i); 
+                }
+            }
 
         switch (hitColliders.Count)
         {
